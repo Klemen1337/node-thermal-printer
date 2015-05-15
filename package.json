@@ -1,0 +1,28 @@
+{
+  "name": "node-thermal-printer",
+  "version": "0.0.1",
+  "description": "Made to work with Epson thermal printers",
+  "main": "printer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Klemen1337/node-thermal-printer"
+  },
+  "keywords": [
+    "thermal",
+    "printer",
+    "epson"
+  ],
+  "author": "Klemen Kastelic <klemen.kast@gmail.com> (http://kastelic.net/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Klemen1337/node-thermal-printer/issues"
+  },
+  "homepage": "https://github.com/Klemen1337/node-thermal-printer",
+  "dependencies": {
+    "lwip": "0.0.6",
+    "write-file-queue": "0.0.1"
+  }
+}
