@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
-    "lwip": "0.0.6",
+    "lwip": "0.0.7",
     "write-file-queue": "0.0.1"
   }
 }
