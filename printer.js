@@ -1,5 +1,7 @@
+"use strict";
+
 var lwip = require("lwip"),
-    exec = require("child_process").exec,
+    net = require("net"),
     writeFile = require("write-file-queue")({
     retries  : 1000, // Number of write attempts before failing
     waitTime : 200,  // Number of milliseconds to wait between write attempts
@@ -65,7 +67,7 @@ const CTL_LF          = "\x0a",             // Print and line feed
 //      CHARCODE_THAI18 = "\x1b\x74\x1b",     // Thai character code 18
 
 // Barcode format
-      BARCODE_TXT_OFF = "\x1d\x48\x00",     // HRI barcode chars OFF
+      BARCODE_TXT_OFF = "\x1d\x48\x48",     // HRI barcode chars OFF
       BARCODE_TXT_ABV = "\x1d\x48\x01",     // HRI barcode chars above
       BARCODE_TXT_BLW = "\x1d\x48\x02",     // HRI barcode chars below
       BARCODE_TXT_BTH = "\x1d\x48\x03",     // HRI barcode chars both above and below
@@ -73,11 +75,15 @@ const CTL_LF          = "\x0a",             // Print and line feed
       BARCODE_FONT_B  = "\x1d\x66\x01",     // Font type B for HRI barcode chars
       BARCODE_HEIGHT  = "\x1d\x68\x64",     // Barcode Height [1-255]
       BARCODE_WIDTH   = "\x1d\x77\x03",     // Barcode Width  [2-6]
+
+// Barcode type
       BARCODE_UPC_A   = "\x1d\x6b\x00",     // Barcode type UPC-A
       BARCODE_UPC_E   = "\x1d\x6b\x01",     // Barcode type UPC-E
       BARCODE_EAN13   = "\x1d\x6b\x02",     // Barcode type EAN13
       BARCODE_EAN8    = "\x1d\x6b\x03",     // Barcode type EAN8
       BARCODE_CODE39  = "\x1d\x6b\x04",     // Barcode type CODE39
+      BARCODE_CODE93  = "\x1d\x6b\x48",     // Barcode type CODE93
+      BARCODE_CODE128 = "\x1d\x6b\x49",     // Barcode type CODE128
       BARCODE_ITF     = "\x1d\x6b\x05",     // Barcode type ITF
       BARCODE_NW7     = "\x1d\x6b\x06",     // Barcode type NW7
 
@@ -93,7 +99,7 @@ const CTL_LF          = "\x0a",             // Print and line feed
       PD_N25          = "\x1d\x7c\x02",     // Printing Density -25%
       PD_N12          = "\x1d\x7c\x03",     // Printing Density -12.5%
       PD_0            = "\x1d\x7c\x04",     // Printing Density  0%
-      PD_P50          = "\x1d\x7c\x08",     // Printing Density +50%
+      PD_P50          = "\x1d\x7c\x08",     // Printing Den%
       PD_P37          = "\x1d\x7c\x07",     // Printing Density +37.5%
       PD_P25          = "\x1d\x7c\x06";     // Printing Density +25%
 
@@ -195,6 +201,12 @@ String.prototype.parseHex = function parseHex() {
     });
 };
 
+String.prototype.toHex = function parseHex() {
+    return this.split("").map(function replace(a) {
+        return "\\x" + ( "0" + a.charCodeAt(0).toString(16)).slice(-2);
+    }).join("");
+};
+
 function printImage(filename) {
     var width, height, pix_line;
     lwip.open(filename, function parseImage(err, image) {
@@ -226,16 +238,18 @@ function printImage(filename) {
 function barcode(code, type, width, height, position, font) {
     alignCenter();
 
+    let bcode = "";
+
     try {
         if ( height >= 2 && height <= 6) {
-            append(BARCODE_HEIGHT);
+            bcode += BARCODE_HEIGHT;
         }
         else {
             throw("Barcode height must be between 2 and 6");
         }
 
         if ( width >= 1 && width <= 255 ) {
-            append(BARCODE_WIDTH);
+            bcode += BARCODE_WIDTH;
         }
         else {
             throw("Barcode width must be between 1 and 255");
@@ -249,55 +263,71 @@ function barcode(code, type, width, height, position, font) {
         }
 
         if ( position.toUpperCase() == "OFF" ) {
-            append(BARCODE_TXT_OFF);
+            bcode += BARCODE_TXT_OFF;
         }
         else if ( position.toUpperCase() == "BOTH" ) {
-            append(BARCODE_TXT_BTH);
+            bcode += BARCODE_TXT_BTH;
         }
         else if ( position.toUpperCase() == "ABOVE" ) {
-            append(BARCODE_TXT_ABV);
+            bcode += BARCODE_TXT_ABV;
         }
         else {
-            append(BARCODE_TXT_BLW);
+            bcode += BARCODE_TXT_BLW;
         }
 
         if (type.toUpperCase() == "UPC-A") {
-            append(BARCODE_UPC_A);
+            bcode += BARCODE_UPC_A;
         }
         else if (type.toUpperCase() == "UPC-E") {
-            append(BARCODE_UPC_E);
+            bcode += BARCODE_UPC_E;
         }
         else if (type.toUpperCase() == "EAN13") {
-            append(BARCODE_EAN13);
+            bcode += BARCODE_EAN13;
         }
         else if (type.toUpperCase() == "EAN8") {
-            append(BARCODE_EAN8);
+            bcode += BARCODE_EAN8;
         }
         else if (type.toUpperCase() == "CODE39") {
-            append(BARCODE_CODE39);
+            bcode += BARCODE_CODE39;
         }
         else if (type.toUpperCase() == "ITF") {
-            append(BARCODE_ITF);
+            bcode += BARCODE_ITF;
         }
         else if (type.toUpperCase() == "NW7") {
-            append(BARCODE_NW7);
+            bcode += BARCODE_NW7;
+        }
+        else if (type.toUpperCase() == "CODE93") {
+            if ( code.length > 14 ) {
+                throw "Code too big for printer"
+            }
+            bcode += BARCODE_CODE93;
+            bcode += String.fromCharCode(code.length);
+        }
+        else if (type.toUpperCase() == "CODE128") {
+            let aux = createBarcode(code);
+            bcode  += BARCODE_CODE128;
+            bcode  += String.fromCharCode(aux[0]);
+            code    = aux[1];
         }
         else {
             throw "Barcode type error";
         }
 
         if (code) {
-            append(code);
+            bcode += code;
         }
         else {
             throw "No code!";
         }
 
+        append(bcode);
+
     } catch (err) {
+        append("Malformed Barcode\n");
         console.error(err);
     }
 
-    alignLeft();
+        alignLeft();
 }
 
 function intToHex(int) {
@@ -310,21 +340,11 @@ function append(text) {
 
 function execute(location) {
 
-    console.log(printText);
-
     if ( !!location ) {
-        print = "echo \'" + printText + "\' | nc -w 1 " + location + " 9100";
-        exec( print, function print(error, stdout, stderr) {
-            if (error) {
-                console.log(error);
-            }
-            else if (stderr) {
-                console.log(stderr);
-            }
-            else {
-                printText = "";
-            }
-        });
+
+       let printer = net.connect({host : location, port : 9100});
+       printer.write(printText);
+       printer.end();
 
     }
     else {
@@ -355,3 +375,66 @@ function raw(text) {
     }
 });
 */
+
+function createBarcode(text)
+ {
+    const tableB = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~\xc3";
+    let code_string = "";
+    let code_length = 2;
+    let i = 0,
+        j = 0;
+
+    // check each characters
+    let len = text.length;
+    for ( i = 0; i < len; i++ ) {
+        if ( tableB.indexOf(text[i]) === -1 ) {
+            throw "Invalid characters";
+        }
+    }
+
+    // check first characters : start with C table only if enought numeric
+    let tableCActivated = ( len > 1 );
+    let c = '';
+
+    for ( i = 0; i < 3 && i < len; i++ ) {
+        tableCActivated &= !!text[i].match(/[0-9]/);
+    }
+
+    code_string += tableCActivated ? "\x7b\x43" : "\x7b\x42";
+
+    i = 0;
+    while (i < len) {
+        if (!tableCActivated) {
+            j = 0;
+            // check next character to activate C table if interresting
+            while ( (i + j < len) && text[i + j].match(/[0-9]/) ) {
+                j += 1;
+            }
+
+            // 6 min everywhere or 4 mini at the end
+            tableCActivated = (j > 5) || ( (i + j - 1 === len) && (j > 3) );
+
+            if (tableCActivated) {
+                code_string += "\x7b\x43"; // C table
+                code_length += 2;
+            }
+
+        // 2 min for table C so need table B
+        } else if ( (i === len - 1) || text[i].match(/[^0-9]/) || text[i + 1].match(/[^0-9]/) ) {
+            tableCActivated = false;
+            code_string += "\x7b\x42"; // B table
+            code_length += 2;
+        }
+        if ( tableCActivated ) {
+            code_string += String.fromCharCode(parseInt(text.substr(i, 2))); // Add two characters (numeric)
+            code_length += 1;
+            i += 2;
+        } else {
+            code_string += text[i]; // Add one character
+            code_length += 1;
+            i += 1;
+        }
+    }
+
+    return [code_length, code_string];
+};
