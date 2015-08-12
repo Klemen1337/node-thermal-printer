@@ -13,6 +13,7 @@ $ npm install node-thermal-printer
 
 ### Features
 ```js
+printer.init('epson');              // 'star' or 'epson'
 printer.execute();                  // Executes all the commands
 printer.print("Hello World");       // Append text
 printer.println("Hello World");     // Append text with new line
@@ -37,6 +38,7 @@ printer.setTextQuadArea();          // Set text to quad area
 ### Examples
 ```js
 var printer = require("node-thermal-printer");
+printer.init('epson');
 printer.alignCenter();
 printer.println("Hello world");
 printer.cut();
