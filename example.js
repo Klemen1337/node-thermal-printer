@@ -1,4 +1,6 @@
 var printer = require("./printer");
+printer.init('star'); // 'star' or 'epson'
+
 printer.print("Hello world, this is a test page");
 printer.drawLine();
 
