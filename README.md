@@ -2,6 +2,11 @@
 Commands are sent to ```/dev/usb/lp0```
 
 ### Installation
+Dependency requires build-essentials
+```bash
+sudo apt-get install build-essential
+```
+
 ```bash
 $ npm install node-thermal-printer
 ```
