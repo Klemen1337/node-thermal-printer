@@ -74,11 +74,7 @@ module.exports = {
     	append(config.TXT_BOLD_ON);
     	append("\n-----------------------------------------------\n");
     	append(config.TXT_BOLD_OFF);
-    },
-    setLogos: function(fileNames) {
-
     }
-
 };
 
 var append = function(text){
