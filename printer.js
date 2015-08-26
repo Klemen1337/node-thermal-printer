@@ -28,6 +28,8 @@ module.exports = {
         });
     },
     cut: function(){
+        append(config.CTL_VT);
+    	append(config.CTL_VT);
     	append(config.CTL_VT);
     	append(config.CTL_VT);
         append(config.PAPER_FULL_CUT);
@@ -38,6 +40,9 @@ module.exports = {
     },
     println: function(text){
     	append(text + "\n");
+    },
+    printVerticalTab: function(){
+        append(config.CTL_VT);
     },
     bold: function(enabled){
     	if(enabled) append(config.TXT_BOLD_ON);
