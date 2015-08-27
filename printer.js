@@ -77,7 +77,7 @@ module.exports = {
     },
     drawLine: function(){
     	append(config.TXT_BOLD_ON);
-    	append("\n-----------------------------------------------\n");
+    	append("\n------------------------------------------------\n");
     	append(config.TXT_BOLD_OFF);
     }
 };

@@ -29,8 +29,8 @@ module.exports = {
     TXT_UNDERL_OFF  : '\x1b\x2d\x00', // Underline font OFF
     TXT_UNDERL_ON   : '\x1b\x2d\x01', // Underline font 1-dot ON
     TXT_UNDERL2_ON  : '\x1b\x2d\x02', // Underline font 2-dot ON
-    TXT_BOLD_OFF    : '\x1b\x45', // Bold font OFF
-    TXT_BOLD_ON     : '\x1b\x46', // Bold font ON
+    TXT_BOLD_OFF    : '\x1b\x46', // Bold font OFF
+    TXT_BOLD_ON     : '\x1b\x45', // Bold font ON
     TXT_FONT_A      : '', // Font type A
     TXT_FONT_B      : '', // Font type B
     TXT_ALIGN_LT    : '\x1b\x1d\x61\x00', // Left justification
