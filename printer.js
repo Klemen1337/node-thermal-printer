@@ -14,10 +14,18 @@ module.exports = {
         } else {
             config = require('./epsonConfig');
         }
-        printText = "";
     },
 
     execute: function(){
+        printText = printText.replace(/š/g, 's');
+        printText = printText.replace(/Š/g, 'S');
+        printText = printText.replace(/č/g, 'c');
+        printText = printText.replace(/Č/g, 'C');
+        printText = printText.replace(/ć/g, 'c');
+        printText = printText.replace(/Ć/g, 'c');
+        printText = printText.replace(/ž/g, 'z');
+        printText = printText.replace(/Ž/g, 'Z');
+
         writeFile('/dev/usb/lp0', printText, function (err) {
             if (err) {
                 console.log('Print failed', err);
