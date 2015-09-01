@@ -1,6 +1,6 @@
 {
   "name": "node-thermal-printer",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Made to work with Epson and Star thermal printers",
   "main": "printer.js",
   "scripts": {
@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
-    "lwip": "0.0.7",
     "write-file-queue": "0.0.1"
   }
 }

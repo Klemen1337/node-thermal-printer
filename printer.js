@@ -1,4 +1,3 @@
-var lwip = require('lwip');
 var writeFile = require('write-file-queue')({
     retries : 1000 						// number of write attempts before failing
     , waitTime : 200 					// number of milliseconds to wait between write attempts
