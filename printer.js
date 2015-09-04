@@ -86,6 +86,13 @@ module.exports = {
     	append(config.TXT_BOLD_ON);
     	append("\n------------------------------------------------\n");
     	append(config.TXT_BOLD_OFF);
+    },
+
+    isPrinterConnected: function(exists){
+        var fs = require('fs');
+        fs.exists('/dev/usb/lp0', function(ex){
+            exists(ex);
+        });
     }
 };
 
