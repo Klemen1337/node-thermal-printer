@@ -33,6 +33,9 @@ printer.setTextNormal();            // Set text to normal
 printer.setTextDoubleHeight();      // Set text to double height
 printer.setTextDoubleWidth();       // Set text to double width
 printer.setTextQuadArea();          // Set text to quad area
+
+print.clear();                      // Clears printText value
+print.getText();                    // Returns printText value
 ```
 
 ### Examples
