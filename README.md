@@ -13,7 +13,11 @@ $ npm install node-thermal-printer
 
 ### Features
 ```js
-printer.init('epson');              // 'star' or 'epson'
+printer.init({
+  type: 'epson',                    // Printer type: 'star' or 'epson'
+  interface: '/dev/usb/lp0'
+});
+printer.isPrinterConnected()        // Check if printer is connected
 printer.execute();                  // Executes all the commands
 printer.print("Hello World");       // Append text
 printer.println("Hello World");     // Append text with new line
@@ -41,7 +45,10 @@ print.getText();                    // Returns printText value
 ### Examples
 ```js
 var printer = require("node-thermal-printer");
-printer.init('epson');
+printer.init({
+  type: 'epson',
+  interface: '/dev/usb/lp0'
+});
 printer.alignCenter();
 printer.println("Hello world");
 printer.cut();

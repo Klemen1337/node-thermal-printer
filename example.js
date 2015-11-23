@@ -1,5 +1,14 @@
 var printer = require("./printer");
-printer.init('star'); // 'star' or 'epson'
+printer.init({
+  type: 'star', // 'star' or 'epson'
+  interface: '/dev/usb/lp0',
+  // ip: "localhost",
+  // port: 9000
+});
+
+printer.isPrinterConnected(function(response){
+  console.log(response);
+});
 
 printer.print("Hello world, this is a test page");
 printer.drawLine();
