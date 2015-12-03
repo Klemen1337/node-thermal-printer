@@ -1,7 +1,6 @@
 # node-thermal-printer
 
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-Commands are sent to ```/dev/usb/lp0```
 
 ### Installation
 Dependency requires build-essentials
