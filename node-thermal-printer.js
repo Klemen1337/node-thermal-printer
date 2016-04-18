@@ -158,6 +158,47 @@ module.exports = {
     }
   },
 
+
+  // Options: text, align, width, bold
+  tableCustom: function(data){
+    var cellWidth = printerConfig.width/data.length;
+    for(var i=0; i<data.length; i++){
+      var obj = data[i];
+
+      if(obj.width) cellWidth = printerConfig.width * obj.width;
+      if(obj.bold) module.exports.bold(true);
+
+      if(obj.align == "CENTER"){
+        var spaces = (cellWidth - obj.text.toString().length) / 2;
+        for(var j=0; j<spaces; j++){
+          append(new Buffer(" "));
+        }
+        append(new Buffer(obj.text));
+        for(var j=0; j<spaces-1; j++){
+          append(new Buffer(" "));
+        }
+
+      } else if(obj.align == "RIGHT") {
+        var spaces = cellWidth - obj.text.toString().length;
+        for(var j=0; j<spaces; j++){
+          append(new Buffer(" "));
+        }
+        append(new Buffer(obj.text));
+
+      } else {
+        append(new Buffer(obj.text));
+        var spaces = cellWidth - obj.text.toString().length;
+        for(var j=0; j<spaces; j++){
+          append(new Buffer(" "));
+        }
+
+      }
+
+      if(obj.bold) module.exports.bold(false);
+
+    }
+  },
+
   isPrinterConnected: function(exists){
     if(printerConfig.interface){
       var fs = require('fs');

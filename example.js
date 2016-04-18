@@ -43,6 +43,12 @@ printer.code128("barcode");
 printer.leftRight("Left", "Right");
 printer.table(["One", "Two", "Three", "Four"]);
 
+printer.tableCustom([
+  { text:"Left", align:"LEFT", width:0.5 },
+  { text:"Center", align:"CENTER", width:0.25, bold:true },
+  { text:"Right", align:"RIGHT", width:0.25 }
+]);
+
 
 printer.cut();
 printer.execute();
