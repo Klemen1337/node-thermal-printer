@@ -1,7 +1,8 @@
-var printer = require("./printer");
+var printer = require("./node-thermal-printer");
 printer.init({
   type: 'star', // 'star' or 'epson'
   interface: '/dev/usb/lp0',
+  width: 48 // Number of characters in one line (default 48)
   // ip: "localhost",
   // port: 9000
 });
@@ -16,7 +17,7 @@ printer.drawLine();
 printer.setTypeFontB();
 printer.println("Type font B");
 printer.setTypeFontA();
-printer.println("Type font A");
+printer.print("Type font A");
 printer.drawLine();
 
 printer.alignCenter();
@@ -24,7 +25,7 @@ printer.println("This text is in the middle");
 printer.alignRight();
 printer.println("This text is on the right");
 printer.alignLeft();
-printer.println("This text is on the left");
+printer.print("This text is on the left");
 printer.drawLine();
 
 printer.setTextDoubleHeight();
@@ -32,10 +33,16 @@ printer.println("This text is double height");
 printer.setTextDoubleWidth();
 printer.println("Double width wooo!");
 printer.setTextQuadArea();
-printer.println("What is a quad area text?");
+printer.println("Quad text!");
 printer.setTextNormal();
-printer.println("Back to normal");
+printer.print("Back to normal");
 printer.drawLine();
+
+printer.code128("barcode");
+//printer.printQR("Test");
+printer.leftRight("Left", "Right");
+printer.table(["One", "Two", "Three", "Four"]);
+
 
 printer.cut();
 printer.execute();

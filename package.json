@@ -1,8 +1,8 @@
 {
   "name": "node-thermal-printer",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Made to work with Epson and Star thermal printers",
-  "main": "printer.js",
+  "main": "node-thermal-printer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

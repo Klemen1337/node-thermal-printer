@@ -15,32 +15,41 @@ $ npm install node-thermal-printer
 ### Features
 ```js
 printer.init({
-  type: 'epson',                    // Printer type: 'star' or 'epson'
+  type: 'star',                         // Printer type: 'star' or 'epson'
   interface: '/dev/usb/lp0'
 });
-printer.isPrinterConnected()        // Check if printer is connected
-printer.execute();                  // Executes all the commands
-printer.print("Hello World");       // Append text
-printer.println("Hello World");     // Append text with new line
-printer.cut();                      // Cuts the paper
 
-printer.bold(true);                 // Set text bold
-printer.drawLine();                 // Draws a line
+printer.isPrinterConnected()            // Check if printer is connected
+printer.execute();                      // Executes all the commands
+printer.raw(new Buffer("Hello world")); // Print instantly
+printer.print("Hello World");           // Append text
+printer.println("Hello World");         // Append text with new line
+printer.cut();                          // Cuts the paper
 
-printer.alignCenter();              // Align text to center
-printer.alignLeft();                // Align text to left
-printer.alignRight();               // Align text to right
+printer.bold(true);                     // Set text bold
+printer.drawLine();                     // Draws a line
+printer.newLine();                      // Insers break line
 
-printer.setTypeFontA();             // Set font type to A (default)
-printer.setTypeFontB();             // Set font type to B
+printer.alignCenter();                  // Align text to center
+printer.alignLeft();                    // Align text to left
+printer.alignRight();                   // Align text to right
 
-printer.setTextNormal();            // Set text to normal
-printer.setTextDoubleHeight();      // Set text to double height
-printer.setTextDoubleWidth();       // Set text to double width
-printer.setTextQuadArea();          // Set text to quad area
+printer.setTypeFontA();                 // Set font type to A (default)
+printer.setTypeFontB();                 // Set font type to B
 
-print.clear();                      // Clears printText value
-print.getText();                    // Returns printText value
+printer.setTextNormal();                // Set text to normal
+printer.setTextDoubleHeight();          // Set text to double height
+printer.setTextDoubleWidth();           // Set text to double width
+printer.setTextQuadArea();              // Set text to quad area
+
+printer.leftRight("Left", "Right");     // Prints text left and right
+printer.table(["One", "Two", "Three"]); // Prints table equaly
+
+printer.code128("Code128");             // Print code128 bar code
+
+print.clear();                          // Clears printText value
+print.getText();                        // Returns printer buffer string value
+print.getBuffer();                      // Returns printer buffer
 ```
 
 ### Examples
