@@ -123,5 +123,18 @@ module.exports = {
     PD_0            : new Buffer([0x1d, 0x7c, 0x04]), // Printing Density  0%
     PD_P50          : new Buffer([0x1d, 0x7c, 0x08]), // Printing Density +50%
     PD_P37          : new Buffer([0x1d, 0x7c, 0x07]), // Printing Density +37.5%
-    PD_P25          : new Buffer([0x1d, 0x7c, 0x06]) // Printing Density +25%
+    PD_P25          : new Buffer([0x1d, 0x7c, 0x06]), // Printing Density +25%
+
+    specialCharacters: {
+      "Č": 172,
+      "č": 159,
+      "Š": 230,
+      "š": 231,
+      "Ž": 166,
+      "ž": 167,
+      "Đ": 209,
+      "đ": 208,
+      "Ć": 143,
+      "ć": 134
+    }
 }

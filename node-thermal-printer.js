@@ -12,9 +12,9 @@ var buffer = null;
 module.exports = {
   init: function(initConfig){
     if(initConfig.type === 'star'){
-      config = require('./starConfig');
+      config = require('./configs/starConfig');
     } else {
-      config = require('./epsonConfig');
+      config = require('./configs/epsonConfig');
     }
 
     if(!initConfig.width) initConfig.width = 48;
@@ -23,23 +23,15 @@ module.exports = {
   },
 
   execute: function(){
-    //printText = printText.replace(/š/g, 's');
-    //printText = printText.replace(/Š/g, 'S');
-    //printText = printText.replace(/č/g, 'c');
-    //printText = printText.replace(/Č/g, 'C');
-    //printText = printText.replace(/ć/g, 'c');
-    //printText = printText.replace(/Ć/g, 'c');
-    //printText = printText.replace(/ž/g, 'z');
-    //printText = printText.replace(/Ž/g, 'Z');
-
     if(printerConfig.ip){
-      var printer = net.connect({host : printerConfig.ip, port : printerConfig.port });
+      var printer = net.connect({
+        host : printerConfig.ip,
+        port : printerConfig.port
+      });
       printer.write(buffer);
       printer.end();
 
     } else {
-      console.log(buffer.toString());
-
       writeFile(printerConfig.interface , buffer, function (err) {
         if (err) {
           console.error('Print failed', err);
@@ -72,13 +64,17 @@ module.exports = {
     buffer = null;
   },
 
+  add: function(buffer){
+    append(buffer);
+  },
+
   print: function(text){
-    append(new Buffer(text, "utf-8"));
+    append(text.toString());
   },
 
   println: function(text){
-    append(new Buffer(text, "utf-8"));
-    append(new Buffer("\n"));
+    append(text.toString());
+    append("\n");
   },
 
   printVerticalTab: function(){
@@ -139,18 +135,18 @@ module.exports = {
   },
 
   leftRight: function(left, right){
-    append(new Buffer(left, "utf-8"));
+    append(left);
     var width = printerConfig.width - left.toString().length - right.toString().length;
     for(var i=0; i<width; i++){
       append(new Buffer(" "));
     }
-    append(new Buffer(right, "utf-8"));
+    append(right);
   },
 
   table: function(data){
     var cellWidth = printerConfig.width/data.length;
     for(var i=0; i<data.length; i++){
-      append(new Buffer(data[i]));
+      append(data[i].toString());
       var spaces = cellWidth - data[i].toString().length;
       for(var j=0; j<spaces; j++){
         append(new Buffer(" "));
@@ -164,6 +160,7 @@ module.exports = {
     var cellWidth = printerConfig.width/data.length;
     for(var i=0; i<data.length; i++){
       var obj = data[i];
+      obj.text = obj.text.toString();
 
       if(obj.width) cellWidth = printerConfig.width * obj.width;
       if(obj.bold) module.exports.bold(true);
@@ -173,7 +170,7 @@ module.exports = {
         for(var j=0; j<spaces; j++){
           append(new Buffer(" "));
         }
-        append(new Buffer(obj.text));
+        append(obj.text);
         for(var j=0; j<spaces-1; j++){
           append(new Buffer(" "));
         }
@@ -183,10 +180,10 @@ module.exports = {
         for(var j=0; j<spaces; j++){
           append(new Buffer(" "));
         }
-        append(new Buffer(obj.text));
+        append(obj.text);
 
       } else {
-        append(new Buffer(obj.text));
+        append(obj.text);
         var spaces = cellWidth - obj.text.toString().length;
         for(var j=0; j<spaces; j++){
           append(new Buffer(" "));
@@ -272,7 +269,7 @@ module.exports = {
       var msb = parseInt(s / 256);
 
       append(new Buffer([lsb, msb]));  // nL, nH
-      append(new Buffer(str));  // Data
+      append(new Buffer(str.toString()));  // Data
       append(new Buffer([0x0a])); // NL (new line)
 
 
@@ -322,8 +319,6 @@ module.exports = {
     }
   },
 
-
-
   raw: function(text) {
     if (printerConfig.ip) {
       var printer = net.connect({
@@ -346,6 +341,26 @@ module.exports = {
 };
 
 var append = function(buff){
-  if(buffer) buffer = Buffer.concat([buffer,buff]);
-  else buffer = buff;
+  if(typeof buff == "string"){
+
+    for(var i=0; i<buff.length; i++){
+      var value = buff[i];
+      var tempBuff = new Buffer(value);
+      // Replace special characters
+      for(var key in config.specialCharacters){
+        if(value == key){
+          tempBuff = new Buffer([config.specialCharacters[key]]);
+          break;
+        }
+      }
+
+      if(buffer) buffer = Buffer.concat([buffer,tempBuff]);
+      else buffer = tempBuff;
+    }
+
+  } else {
+    if(buffer) buffer = Buffer.concat([buffer,buff]);
+    else buffer = buff;
+
+  }
 };
