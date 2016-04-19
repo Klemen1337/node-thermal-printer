@@ -135,12 +135,12 @@ module.exports = {
   },
 
   leftRight: function(left, right){
-    append(left);
+    append(left.toString());
     var width = printerConfig.width - left.toString().length - right.toString().length;
     for(var i=0; i<width; i++){
       append(new Buffer(" "));
     }
-    append(right);
+    append(right.toString());
   },
 
   table: function(data){
@@ -279,8 +279,6 @@ module.exports = {
       // When receiving this command, if there is unprinted data in the image buffer, the printer will print the bar code after printing the unprinted print data.
       // A margin of more than 4 cells is required around the QR code. The user should ensure that space. Always check printed bar codes in actual use.
       append(config.QRCODE_PRINT);
-
-      //append(new Buffer([0x1b, 0x1d, 0x79, 0x49]));
       append(new Buffer("\n"));
     } else {
       console.error("Not yet supported");
@@ -288,7 +286,7 @@ module.exports = {
   },
 
 
-  code128: function(data) {
+  code128: function(data, settings) {
     if (printerConfig.type == 'star') {
       append(config.BARCODE_CODE128);
 
@@ -297,23 +295,82 @@ module.exports = {
       // 2 - Text on bottom
       // 3 - No text inline
       // 4 - Text on bottom inline
-      append(config.BARCODE_CODE128_TEXT_2);
+      if(settings){
+        if(settings.text == 1) append(config.BARCODE_CODE128_TEXT_1);
+        else if(settings.text == 2) append(config.BARCODE_CODE128_TEXT_2);
+        else if(settings.text == 3) append(config.BARCODE_CODE128_TEXT_3);
+        else if(settings.text == 4) append(config.BARCODE_CODE128_TEXT_4);
+      } else {
+        append(config.BARCODE_CODE128_TEXT_2);
+      }
 
       // Barcode width
       // 31 - Small
       // 32 - Medium
       // 33 - Large
-      append(config.BARCODE_CODE128_WIDTH_LARGE);
+      if(settings) {
+        if (settings.width == "SMALL") append(config.BARCODE_CODE128_WIDTH_SMALL);
+        else if (settings.width == "MEDIUM") append(config.BARCODE_CODE128_WIDTH_MEDIUM);
+        else if (settings.width == "LARGE") append(config.BARCODE_CODE128_WIDTH_LARGE);
+      } else {
+        append(config.BARCODE_CODE128_WIDTH_LARGE);
+      }
 
       // Barcode height
-      append(new Buffer([0x50]));
+      if(settings && settings.height) append(new Buffer([settings.height]));
+      else append(new Buffer([0x50]));
 
       // Barcode data
-      append(new Buffer(data, "utf-8"));
+      append(new Buffer(data.toString()));
 
       // Append RS(record separator)
       append(new Buffer([0x1e]));
       append(new Buffer("\n"));
+    } else {
+      console.error("Not yet supported");
+    }
+  },
+
+  pdf417: function(data) {
+    if (printerConfig.type == 'star') {
+      //(1) Bar code type setting (<ESC> <GS> “x” “S”)
+      //(2) Bar code data setting (<ESC> <GS> “x” “D”)
+      //(3) Bar code printing (<ESC> <GS> “x” “P”)
+      //(4) Bar code expansion information acquisition (<ESC> <GS> “x” “I”)
+
+
+      // Set PDF417 bar code size
+      // 1B 1D 78 53 30 n p1 p2
+      append(new Buffer([0x1b, 0x1d, 0x78, 0x53, 0x30, 0x00, 0x01, 0x02]));
+
+      // Set PDF417 ECC (security level)
+      // 1B 1D 78 53 31 n
+      append(new Buffer([0x1b, 0x1d, 0x78, 0x53, 0x31, 0x02]));
+
+      // Set PDF417 module X direction size
+      // 1B 1D 78 53 32 n
+      append(new Buffer([0x1b, 0x1d, 0x78, 0x53, 0x32, 0x02]));
+
+      // Set PDF417 module aspect ratio
+      // 1B 1D 78 53 33 n
+      append(new Buffer([0x1b, 0x1d, 0x78, 0x53, 0x33, 0x03]));
+
+      // Set PDF417 bar code data
+      // 1B 1D 78 44 nL nH d1 d2 … dk
+      var s = data.length;
+      var lsb = parseInt(s % 256);
+      var msb = parseInt(s / 256);
+
+      append(new Buffer([0x1b, 0x1d, 0x78, 0x44]));
+      append(new Buffer([lsb, msb]));  // nL, nH
+      append(new Buffer(data.toString()));  // Data
+      append(new Buffer([0x0a])); // NL (new line)
+
+
+      // Print PDF417 bar code
+      // 1B 1D 78 50
+      append(new Buffer([0x1b, 0x1d, 0x78, 0x50]));
+
     } else {
       console.error("Not yet supported");
     }

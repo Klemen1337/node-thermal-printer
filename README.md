@@ -57,6 +57,18 @@ print.getText();                        // Returns printer buffer string value
 print.getBuffer();                      // Returns printer buffer
 ```
 
+### Code 128 settings
+```js
+printer.code128("Code128", {
+    width: "LARGE",          // "SMALL", "MEDIUM", "LARGE",
+    height: 80,              // 50 < x < 80
+    text: 2,                 // 1 - No text
+                             // 2 - Text on bottom
+                             // 3 - No text inline
+                             // 4 - Text on bottom inline
+}); 
+```
+
 ### Examples
 ```js
 var printer = require("node-thermal-printer");
