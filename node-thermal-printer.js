@@ -208,6 +208,7 @@ module.exports = {
 
   printQR: function(str){
     if (printerConfig.type == 'star') {
+      // ------------------------------ Star QR ------------------------------
       // [Name] Set QR code model
       // [Code] Hex. 1B 1D 79 53 30 n
       // [Defined Area] 1 ≤ n ≤ 2
@@ -279,9 +280,114 @@ module.exports = {
       // When receiving this command, if there is unprinted data in the image buffer, the printer will print the bar code after printing the unprinted print data.
       // A margin of more than 4 cells is required around the QR code. The user should ensure that space. Always check printed bar codes in actual use.
       append(config.QRCODE_PRINT);
-      append(new Buffer("\n"));
+
     } else {
+      // ------------------------------ Epson QR ------------------------------
+
+      // [Name] Select the QR code model
+      // [Code] 1D 28 6B 04 00 31 41 n1 n2
+      // n1
+      // [49 x31, model 1]
+      // [50 x32, model 2]
+      // [51 x33, micro qr code]
+      // n2 = 0
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=140
+      append(config.QRCODE_MODEL1);
+
+      // [Name]: Set the size of module
+      // 1D 28 6B 03 00 31 43 n
+      // n depends on the printer
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=141
+      append(config.QRCODE_CELLSIZE_6);
+
+
+      // [Name] Select the error correction level
+      // 1D 28 6B 03 00 31 45 n
+      // n
+      // [48 x30 -> 7%]
+      // [49 x31-> 15%]
+      // [50 x32 -> 25%]
+      // [51 x33 -> 30%]
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=142
+      append(config.QRCODE_CORRECTION_M);
+
+
+      // [Name] Store the data in the symbol storage area
+      // 1D 28  6B pL pH 31 50 30 d1...dk
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=143
+      var s = str.length + 3;
+      var lsb = parseInt(s % 256);
+      var msb = parseInt(s / 256);
+      append(new Buffer([0x1d, 0x28, 0x6b, lsb, msb, 0x31, 0x50, 0x30]));
+      append(new Buffer(str));
+
+
+      // [Name] Print the symbol data in the symbol storage area
+      // 1D 28 6B 03 00 31 51 m
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=144
+      append(config.QRCODE_PRINT);
+
+    }
+  },
+
+
+  printBarcode: function(data, settings){
+    if (printerConfig.type == 'star'){
+      // ------------------------------ Star Barcode ------------------------------
       console.error("Not yet supported");
+
+    } else {
+      // ------------------------------ Epson Barcode ------------------------------
+      // [Name] Select bar code height
+      // [Code] Hex 1D 68 n
+      // [Range] 1 ≤ n ≤ 255
+      // [Default] n = 162
+      // [Description] Selects the height of the bar code as n dots.
+      //append(new Buffer([162]));
+
+      // [Name] Print bar code
+      // [Code]  (1) 1D 6B m d1...dk 00
+      //         (2) 1D 6B m n d1...dn
+      // [Range] (1) 0 ≤ m ≤ 6 (k and d depend on the bar code system used)
+      //         (2) 65 ≤ m ≤ 73 (n and d depend on the bar code system used)
+      // [Description] Selects a bar code system and print the bar code.
+
+      // (1)
+      // m   Bar code       Range of k        Range of d
+      // --------------------------------------------------
+      // 0   UPC-A          11 <= k <= 12     48 <= d <= 57
+      // 1   UPC-E          11 <= k <= 12     48 <= d <= 57
+      // 2   JAN13(EAN13)   12 <= k <= 13     48 <= d <= 57
+      // 3   JAN8(EAN8)      7 <= k <= 8      48 <= d <= 57
+      // 4   CODE39          1 <= k           48 <= d <= 57, 65 <= d <= 90, d = 32, 36, 37, 43, 45, 46, 47
+      // 5   ITF             1 <= k (even)    48 <= d <= 57
+      // 6   CODEBAR(NW7)    1 <= k           48 <= d <= 57, 65 <= d <= 68, d = 36, 43, 45, 46, 47, 58
+
+      // (2)
+      // m   Bar code       Range of n        Range of d
+      // --------------------------------------------------
+      // 65   UPC-A          11 <= n <= 12     48 <= d <= 57
+      // 66   UPC-E          11 <= n <= 12     48 <= d <= 57
+      // 67   JAN13(EAN13)   12 <= n <= 13     48 <= d <= 57
+      // 68   JAN8(EAN8)      7 <= n <= 8      48 <= d <= 57
+      // 69   CODE39          1 <= n <= 255    48 <= d <= 57, 65 <= d <= 90, d = 32, 36, 37, 43, 45, 46, 47
+      // 70   ITF             1 <= k <= 255    48 <= d <= 57
+      // 71   CODEBAR(NW7)    1 <= k <= 255    48 <= d <= 57, 65 <= d <= 68, d = 36, 43, 45, 46, 47, 58
+      // 72   CODE93          1 <= k <= 255     0 <= d <= 127
+      // 73   CODE128         2 <= n <= 255     0 <= d <= 127
+      //append(new Buffer([0x1d, 0x6B, 73]));
+      //append(new Buffer([data.length]));
+      //append(new Buffer(data));
+
+      //append(new Buffer([0x1d, 0x6B, 50]));
+      //append(new Buffer([0x1d, 0x77, 2]));
+      //append(new Buffer([0x1d, 0x48, 2]));
+
+      append(new Buffer([0x1d, 0x6B, 0x49]));
+      append(new Buffer([data.length+1]));
+      append(new Buffer(data));
+      append(new Buffer([0x10]));
+
     }
   },
 
@@ -325,7 +431,6 @@ module.exports = {
 
       // Append RS(record separator)
       append(new Buffer([0x1e]));
-      append(new Buffer("\n"));
     } else {
       console.error("Not yet supported");
     }
