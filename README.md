@@ -15,46 +15,47 @@ $ npm install node-thermal-printer
 ### Features
 ```js
 printer.init({
-  type: 'star',                         // Printer type: 'star' or 'epson'
-  interface: '/dev/usb/lp0'
+  type: 'star',                                     // Printer type: 'star' or 'epson'
+  interface: '/dev/usb/lp0',                        // Printer interface
+  characterSet: 'SLOVENIA'                          // Printer character set
 });
 
-printer.isPrinterConnected()            // Check if printer is connected
-printer.execute();                      // Executes all the commands
-printer.raw(new Buffer("Hello world")); // Print instantly
-printer.print("Hello World");           // Append text
-printer.println("Hello World");         // Append text with new line
-printer.cut();                          // Cuts the paper
+printer.isPrinterConnected()                        // Check if printer is connected
+printer.execute();                                  // Executes all the commands
+printer.raw(new Buffer("Hello world"));             // Print instantly
+printer.print("Hello World");                       // Append text
+printer.println("Hello World");                     // Append text with new line
+printer.cut();                                      // Cuts the paper
 
-printer.bold(true);                     // Set text bold
-printer.drawLine();                     // Draws a line
-printer.newLine();                      // Insers break line
+printer.bold(true);                                 // Set text bold
+printer.drawLine();                                 // Draws a line
+printer.newLine();                                  // Insers break line
 
-printer.alignCenter();                  // Align text to center
-printer.alignLeft();                    // Align text to left
-printer.alignRight();                   // Align text to right
+printer.alignCenter();                              // Align text to center
+printer.alignLeft();                                // Align text to left
+printer.alignRight();                               // Align text to right
 
-printer.setTypeFontA();                 // Set font type to A (default)
-printer.setTypeFontB();                 // Set font type to B
+printer.setTypeFontA();                             // Set font type to A (default)
+printer.setTypeFontB();                             // Set font type to B
 
-printer.setTextNormal();                // Set text to normal
-printer.setTextDoubleHeight();          // Set text to double height
-printer.setTextDoubleWidth();           // Set text to double width
-printer.setTextQuadArea();              // Set text to quad area
+printer.setTextNormal();                            // Set text to normal
+printer.setTextDoubleHeight();                      // Set text to double height
+printer.setTextDoubleWidth();                       // Set text to double width
+printer.setTextQuadArea();                          // Set text to quad area
 
-printer.leftRight("Left", "Right");     // Prints text left and right
-printer.table(["One", "Two", "Three"]); // Prints table equaly
-printer.tableCustom([                   // Prints table with custom settings (text, align, width, bold)
+printer.leftRight("Left", "Right");                 // Prints text left and right
+printer.table(["One", "Two", "Three"]);             // Prints table equaly
+printer.tableCustom([                               // Prints table with custom settings (text, align, width, bold)
   { text:"Left", align:"LEFT", width:0.5 },
   { text:"Center", align:"CENTER", width:0.25, bold:true },
   { text:"Right", align:"RIGHT", width:0.25 }
 ]);
 
-printer.code128("Code128");             // Print code128 bar code
+printer.code128("Code128");                         // Print code128 bar code
 
-print.clear();                          // Clears printText value
-print.getText();                        // Returns printer buffer string value
-print.getBuffer();                      // Returns printer buffer
+print.clear();                                      // Clears printText value
+print.getText();                                    // Returns printer buffer string value
+print.getBuffer();                                  // Returns printer buffer
 ```
 
 ### Code 128 settings

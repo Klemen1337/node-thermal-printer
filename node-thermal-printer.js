@@ -18,6 +18,7 @@ module.exports = {
     }
 
     if(!initConfig.width) initConfig.width = 48;
+    if(!initConfig.characterSet) initConfig.characterSet = "SLOVENIA";
 
     printerConfig = initConfig;
   },
@@ -205,6 +206,7 @@ module.exports = {
     }
 
   },
+
 
   printQR: function(str){
     if (printerConfig.type == 'star') {
@@ -502,9 +504,39 @@ module.exports = {
   }
 };
 
+
+var setInternationalCharacterSet = function(charSet){
+  if (printerConfig.type == 'star') {
+    // ------------------------------ Star Character set ------------------------------
+    return null;
+  } else {
+    // ------------------------------ Epson Character set ------------------------------
+    if(charSet == "USA") return config.CHARCODE_USA;
+    if(charSet == "FRANCE") return config.CHARCODE_FRANCE;
+    if(charSet == "GERMANY") return config.CHARCODE_GERMANY;
+    if(charSet == "UK") return config.CHARCODE_UK;
+    if(charSet == "DENMARK1") return config.CHARCODE_DENMARK1;
+    if(charSet == "SWEDEN") return config.CHARCODE_SWEDEN;
+    if(charSet == "ITALY") return config.CHARCODE_ITALY;
+    if(charSet == "SPAIN1") return config.CHARCODE_SPAIN1;
+    if(charSet == "JAPAN") return config.CHARCODE_JAPAN;
+    if(charSet == "NORWAY") return config.CHARCODE_NORWAY;
+    if(charSet == "DENMARK2") return config.CHARCODE_DENMARK2;
+    if(charSet == "SPAIN2") return config.CHARCODE_SPAIN2;
+    if(charSet == "LATINA") return config.CHARCODE_LATINA;
+    if(charSet == "KOREA") return config.CHARCODE_KOREA;
+    if(charSet == "SLOVENIA") return config.CHARCODE_SLOVENIA;
+    if(charSet == "CHINA") return config.CHARCODE_CHINA;
+    if(charSet == "VIETNAM") return config.CHARCODE_VIETNAM;
+    if(charSet == "ARABIA") return config.CHARCODE_ARABIA;
+    return null;
+  }
+};
+
 var append = function(buff){
   if(typeof buff == "string"){
 
+    var endBuff = null;
     for(var i=0; i<buff.length; i++){
       var value = buff[i];
       var tempBuff = new Buffer(value);
@@ -516,13 +548,17 @@ var append = function(buff){
         }
       }
 
-      if(buffer) buffer = Buffer.concat([buffer,tempBuff]);
-      else buffer = tempBuff;
+      if(endBuff) endBuff = Buffer.concat([endBuff,tempBuff]);
+      else endBuff = tempBuff;
     }
 
-  } else {
-    if(buffer) buffer = Buffer.concat([buffer,buff]);
-    else buffer = buff;
+    buff = endBuff;
+  }
 
+  if(!buffer && printerConfig.characterSet) buffer = setInternationalCharacterSet(printerConfig.characterSet);
+  if (buffer) {
+    buffer = Buffer.concat([buffer,buff]);
+  } else {
+    buffer = buff;
   }
 };

@@ -37,26 +37,25 @@ module.exports = {
     TXT_ALIGN_RT    : new Buffer([0x1b, 0x61, 0x02]), // Right justification
 
     // Char code table
-    CHARCODE_PC437  : new Buffer([0x1b, 0x74, 0x00]), // USA: Standard Europe
-    CHARCODE_JIS    : new Buffer([0x1b, 0x74, 0x01]), // Japanese Katakana
-    CHARCODE_PC850  : new Buffer([0x1b, 0x74, 0x02]), // Multilingual
-    CHARCODE_PC860  : new Buffer([0x1b, 0x74, 0x03]), // Portuguese
-    CHARCODE_PC863  : new Buffer([0x1b, 0x74, 0x04]), // Canadian-French
-    CHARCODE_PC865  : new Buffer([0x1b, 0x74, 0x05]), // Nordic
-    CHARCODE_WEU    : new Buffer([0x1b, 0x74, 0x06]), // Simplified Kanji, Hirakana
-    CHARCODE_GREEK  : new Buffer([0x1b, 0x74, 0x07]), // Simplified Kanji
-    CHARCODE_HEBREW : new Buffer([0x1b, 0x74, 0x08]), // Simplified Kanji
-    CHARCODE_PC1252 : new Buffer([0x1b, 0x74, 0x11]), // Western European Windows Code Set
-    CHARCODE_PC866  : new Buffer([0x1b, 0x74, 0x12]), // Cirillic //2
-    CHARCODE_PC852  : new Buffer([0x1b, 0x74, 0x13]), // Latin 2
-    CHARCODE_PC858  : new Buffer([0x1b, 0x74, 0x14]), // Euro
-    CHARCODE_THAI42 : new Buffer([0x1b, 0x74, 0x15]), // Thai character code 42
-    CHARCODE_THAI11 : new Buffer([0x1b, 0x74, 0x16]), // Thai character code 11
-    CHARCODE_THAI13 : new Buffer([0x1b, 0x74, 0x17]), // Thai character code 13
-    CHARCODE_THAI14 : new Buffer([0x1b, 0x74, 0x18]), // Thai character code 14
-    CHARCODE_THAI16 : new Buffer([0x1b, 0x74, 0x19]), // Thai character code 16
-    CHARCODE_THAI17 : new Buffer([0x1b, 0x74, 0x1a]), // Thai character code 17
-    CHARCODE_THAI18 : new Buffer([0x1b, 0x74, 0x1b]), // Thai character code 18
+    CHARCODE_USA        : new Buffer([0x1b, 0x52, 0x00]), // USA
+    CHARCODE_FRANCE     : new Buffer([0x1b, 0x52, 0x01]), // France
+    CHARCODE_GERMANY    : new Buffer([0x1b, 0x52, 0x02]), // Germany
+    CHARCODE_UK         : new Buffer([0x1b, 0x52, 0x03]), // U.K.
+    CHARCODE_DENMARK1   : new Buffer([0x1b, 0x52, 0x04]), // Denmark I
+    CHARCODE_SWEDEN     : new Buffer([0x1b, 0x52, 0x05]), // Sweden
+    CHARCODE_ITALY      : new Buffer([0x1b, 0x52, 0x06]), // Italy
+    CHARCODE_SPAIN1     : new Buffer([0x1b, 0x52, 0x07]), // Spain I
+    CHARCODE_JAPAN      : new Buffer([0x1b, 0x52, 0x08]), // Japan
+    CHARCODE_NORWAY     : new Buffer([0x1b, 0x52, 0x09]), // Norway
+    CHARCODE_DENMARK2   : new Buffer([0x1b, 0x52, 0x0A]), // Denmark II
+    CHARCODE_SPAIN2     : new Buffer([0x1b, 0x52, 0x0B]), // Spain II
+    CHARCODE_LATINA     : new Buffer([0x1b, 0x52, 0x0C]), // Latin America
+    CHARCODE_KOREA      : new Buffer([0x1b, 0x52, 0x0D]), // Korea
+    CHARCODE_SLOVENIA   : new Buffer([0x1b, 0x52, 0x0E]), // Slovenia
+    CHARCODE_CHINA      : new Buffer([0x1b, 0x52, 0x0F]), // China
+    CHARCODE_VIETNAM    : new Buffer([0x1b, 0x52, 0x10]), // Vietnam
+    CHARCODE_ARABIA     : new Buffer([0x1b, 0x52, 0x11]), // ARABIA
+
 
     // Barcode format
     BARCODE_TXT_OFF : new Buffer([0x1d, 0x48, 0x00]), // HRI barcode chars OFF
@@ -112,5 +111,18 @@ module.exports = {
     PD_0            : new Buffer([0x1d, 0x7c, 0x04]), // Printing Density  0%
     PD_P50          : new Buffer([0x1d, 0x7c, 0x08]), // Printing Density +50%
     PD_P37          : new Buffer([0x1d, 0x7c, 0x07]), // Printing Density +37.5%
-    PD_P25          : new Buffer([0x1d, 0x7c, 0x06])  // Printing Density +25%
+    PD_P25          : new Buffer([0x1d, 0x7c, 0x06]), // Printing Density +25%
+
+    specialCharacters: {
+      "Č": 94,
+      "č": 126,
+      "Š": 91,
+      "š": 123,
+      "Ž": 64,
+      "ž": 96,
+      "Đ": 92,
+      "đ": 124,
+      "Ć": 93,
+      "ć": 125
+    }
 }
