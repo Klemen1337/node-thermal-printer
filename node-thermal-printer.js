@@ -47,8 +47,6 @@ module.exports = {
   cut: function(){
     append(config.CTL_VT);
     append(config.CTL_VT);
-    append(config.CTL_VT);
-    append(config.CTL_VT);
     append(config.PAPER_FULL_CUT);
     append(config.HW_INIT);
   },
@@ -124,7 +122,7 @@ module.exports = {
   },
 
   newLine: function(){
-    append(new Buffer("\n"));
+    append(config.CTL_LF);
   },
 
   drawLine: function(){

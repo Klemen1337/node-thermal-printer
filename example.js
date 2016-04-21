@@ -1,8 +1,9 @@
 var printer = require("./node-thermal-printer");
 printer.init({
-  type: 'star', // 'star' or 'epson'
+  type: 'star',            // 'star' or 'epson'
   interface: '/dev/usb/lp0',
-  width: 48 // Number of characters in one line (default 48)
+  width: 48,                // Number of characters in one line (default 48)
+  characterSet: 'SLOVENIA'  // Character set default SLOVENIA
   // ip: "localhost",
   // port: 9000
 });
@@ -11,7 +12,8 @@ printer.isPrinterConnected(function(response){
   console.log(response);
 });
 
-printer.print("Hello world, this is a test page");
+
+printer.println("Hello World!");
 printer.drawLine();
 
 printer.setTypeFontB();
@@ -38,9 +40,17 @@ printer.setTextNormal();
 printer.print("Back to normal");
 printer.drawLine();
 
-printer.code128("barcode");
-//printer.printQR("Test");
+printer.printBarcode("4126570807191");
+printer.code128("4126570807191", {
+  height: 50,
+  text: 1
+});
+
+// printer.pdf417("4126565129008670807191");
+printer.printQR("4170807191412657080719141265708");
+
 printer.leftRight("Left", "Right");
+
 printer.table(["One", "Two", "Three", "Four"]);
 
 printer.tableCustom([
@@ -49,6 +59,6 @@ printer.tableCustom([
   { text:"Right", align:"RIGHT", width:0.25 }
 ]);
 
-
 printer.cut();
 printer.execute();
+
