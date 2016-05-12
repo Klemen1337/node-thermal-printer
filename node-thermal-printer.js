@@ -1,3 +1,6 @@
+var unorm = require('unorm');
+var combining = /[\u0300-\u036F]/g;
+
 var writeFile = require('write-file-queue')({
     retries : 1000, 						    // number of write attempts before failing
     waitTime : 200 					        // number of milliseconds to wait between write attempts
@@ -157,19 +160,30 @@ module.exports = {
   // Options: text, align, width, bold
   tableCustom: function(data){
     var cellWidth = printerConfig.width/data.length;
+    var secondLine = [];
+    var secondLineEnabled = false;
+
     for(var i=0; i<data.length; i++){
+      var tooLong = false;
       var obj = data[i];
       obj.text = obj.text.toString();
 
       if(obj.width) cellWidth = printerConfig.width * obj.width;
       if(obj.bold) module.exports.bold(true);
 
+      // If text is too wide go to next line
+      if(cellWidth < obj.text.length){
+        tooLong = true;
+        obj.originalText = obj.text;
+        obj.text = obj.text.substring(0, cellWidth);
+      }
+
       if(obj.align == "CENTER"){
         var spaces = (cellWidth - obj.text.toString().length) / 2;
         for(var j=0; j<spaces; j++){
           append(new Buffer(" "));
         }
-        append(obj.text);
+        if(obj.text != '')  append(obj.text);
         for(var j=0; j<spaces-1; j++){
           append(new Buffer(" "));
         }
@@ -179,10 +193,10 @@ module.exports = {
         for(var j=0; j<spaces; j++){
           append(new Buffer(" "));
         }
-        append(obj.text);
+        if(obj.text != '') append(obj.text);
 
       } else {
-        append(obj.text);
+        if(obj.text != '') append(obj.text);
         var spaces = cellWidth - obj.text.toString().length;
         for(var j=0; j<spaces; j++){
           append(new Buffer(" "));
@@ -192,6 +206,20 @@ module.exports = {
 
       if(obj.bold) module.exports.bold(false);
 
+
+      if(tooLong){
+        secondLineEnabled = true;
+        obj.text = obj.originalText.substring(cellWidth-1);
+        secondLine.push(obj);
+      } else {
+        obj.text = "";
+        secondLine.push(obj);
+      }
+    }
+
+    // Print the second line
+    if(secondLineEnabled){
+      module.exports.tableCustom(secondLine);
     }
   },
 
@@ -531,8 +559,10 @@ var setInternationalCharacterSet = function(charSet){
   }
 };
 
+
 var append = function(buff){
   if(typeof buff == "string"){
+    buff = unorm.nfkd(buff).replace(combining, '');
 
     var endBuff = null;
     for(var i=0; i<buff.length; i++){
@@ -553,10 +583,18 @@ var append = function(buff){
     buff = endBuff;
   }
 
+
+
+
   if(!buffer && printerConfig.characterSet) buffer = setInternationalCharacterSet(printerConfig.characterSet);
   if (buffer) {
     buffer = Buffer.concat([buffer,buff]);
   } else {
     buffer = buff;
   }
+};
+
+
+var fix = function(str){
+  return unorm.nfkd(str).replace(combining, '');
 };
