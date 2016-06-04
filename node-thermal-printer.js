@@ -54,6 +54,10 @@ module.exports = {
     append(config.HW_INIT);
   },
 
+  getWidth: function(){
+    return printerConfig.getWidth;
+  },
+
   getText: function(){
     return buffer.toString();
   },
@@ -362,7 +366,7 @@ module.exports = {
   printBarcode: function(data, settings){
     if (printerConfig.type == 'star'){
       // ------------------------------ Star Barcode ------------------------------
-      console.error("Not yet supported");
+      console.error("Barcode not supported on STAR yet");
 
     } else {
       // ------------------------------ Epson Barcode ------------------------------
@@ -460,7 +464,7 @@ module.exports = {
       // Append RS(record separator)
       append(new Buffer([0x1e]));
     } else {
-      console.error("Not yet supported");
+      console.error("Code128 not supported on EPSON yet");
     }
   },
 
@@ -505,7 +509,7 @@ module.exports = {
       append(new Buffer([0x1b, 0x1d, 0x78, 0x50]));
 
     } else {
-      console.error("Not yet supported");
+      console.error("PDF417 not supported on EPSON yet");
     }
   },
 
