@@ -231,7 +231,7 @@ module.exports = {
     if(printerConfig.interface){
       var fs = require('fs');
       fs.exists(printerConfig.interface, function(ex){
-        return ex;
+        exists(ex);
       });
     }
 

@@ -20,7 +20,7 @@ printer.init({
   characterSet: 'SLOVENIA'                          // Printer character set
 });
 
-printer.isPrinterConnected()                        // Check if printer is connected
+printer.isPrinterConnected( function(isConnected){ } ) // Check if printer is connected, callback passes bool of status
 printer.execute();                                  // Executes all the commands
 printer.raw(new Buffer("Hello world"));             // Print instantly
 printer.print("Hello World");                       // Append text
