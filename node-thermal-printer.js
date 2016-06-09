@@ -55,7 +55,7 @@ module.exports = {
   },
 
   getWidth: function(){
-    return printerConfig.getWidth;
+    return parseInt(printerConfig.width);
   },
 
   getText: function(){
