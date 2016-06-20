@@ -28,6 +28,8 @@ printer.println("Hello World");                            // Append text with n
 printer.cut();                                             // Cuts the paper
 
 printer.bold(true);                                 // Set text bold
+printer.underline(true);                            // Underline text (1 dot thickness)
+printer.underlineThick(true);                       // Underline text with thick line (2 dot thickness)
 printer.drawLine();                                 // Draws a line
 printer.newLine();                                  // Insers break line
 

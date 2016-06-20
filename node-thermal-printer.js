@@ -99,6 +99,16 @@ module.exports = {
     if(enabled) append(config.TXT_BOLD_ON);
     else append(config.TXT_BOLD_OFF);
   },
+  
+  underline: function(enabled){
+    if(enabled) append(config.TXT_UNDERL_ON);
+    else append(config.TXT_UNDERL_OFF);
+  },
+
+  underlineThick: function(enabled){
+    if(enabled) append(config.TXT_UNDERL2_ON);
+    else append(config.TXT_UNDERL2_OFF);
+  },
 
   alignCenter: function (){
     append(config.TXT_ALIGN_CT);
