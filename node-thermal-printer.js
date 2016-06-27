@@ -107,7 +107,16 @@ module.exports = {
 
   underlineThick: function(enabled){
     if(enabled) append(config.TXT_UNDERL2_ON);
-    else append(config.TXT_UNDERL2_OFF);
+    else append(config.TXT_UNDERL_OFF);
+  },
+
+  openCashDrawer: function(){
+    if(printerConfig.type == 'star'){
+      append(config.CD_KICK);
+    } else {
+      append(config.CD_KICK_2);
+      append(config.CD_KICK_5);
+    }
   },
 
   alignCenter: function (){

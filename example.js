@@ -60,5 +60,6 @@ printer.tableCustom([
 ]);
 
 printer.cut();
+printer.openCashDrawer();
 printer.execute();
 
