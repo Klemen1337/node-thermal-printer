@@ -20,14 +20,16 @@ printer.init({
   characterSet: 'SLOVENIA'                          // Printer character set
 });
 
-printer.isPrinterConnected( function(isConnected){ } ) // Check if printer is connected, callback passes bool of status
-printer.execute();                                  // Executes all the commands
-printer.raw(new Buffer("Hello world"));             // Print instantly
-printer.print("Hello World");                       // Append text
-printer.println("Hello World");                     // Append text with new line
-printer.cut();                                      // Cuts the paper
+printer.isPrinterConnected( function(isConnected){ } )     // Check if printer is connected, callback passes bool of status
+printer.execute( function(err){ } );                       // Executes all the commands. Optional callback returns null if no error, else error message
+printer.raw(new Buffer("Hello world"), function(err){ } ); // Print instantly. Optional callback returns null if no error, else error message
+printer.print("Hello World");                              // Append text
+printer.println("Hello World");                            // Append text with new line
+printer.cut();                                             // Cuts the paper
 
 printer.bold(true);                                 // Set text bold
+printer.underline(true);                            // Underline text (1 dot thickness)
+printer.underlineThick(true);                       // Underline text with thick line (2 dot thickness)
 printer.drawLine();                                 // Draws a line
 printer.newLine();                                  // Insers break line
 
@@ -80,5 +82,11 @@ printer.init({
 printer.alignCenter();
 printer.println("Hello world");
 printer.cut();
-printer.execute();
+printer.execute(function(err){
+  if (err) {
+    console.error("Print failed", err);
+  } else {
+   console.log("Print done");
+  }
+});
 ```

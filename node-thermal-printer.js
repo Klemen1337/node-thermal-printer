@@ -26,7 +26,7 @@ module.exports = {
     printerConfig = initConfig;
   },
 
-  execute: function(){
+  execute: function(cb){
     if(printerConfig.ip){
       var printer = net.connect({
         host : printerConfig.ip,
@@ -38,10 +38,18 @@ module.exports = {
     } else {
       writeFile(printerConfig.interface , buffer, function (err) {
         if (err) {
-          console.error('Print failed', err);
+          if ("function" == typeof cb) {
+            cb("Print failed: " + err);
+          } else {
+            console.error("Print failed", err);
+          }
         } else {
-          console.log('Print done');
           buffer = null;
+          if ("function" == typeof cb) {
+            cb( null );
+          } else {
+            console.log("Print done");
+          }
         }
       });
     }
@@ -90,6 +98,16 @@ module.exports = {
   bold: function(enabled){
     if(enabled) append(config.TXT_BOLD_ON);
     else append(config.TXT_BOLD_OFF);
+  },
+  
+  underline: function(enabled){
+    if(enabled) append(config.TXT_UNDERL_ON);
+    else append(config.TXT_UNDERL_OFF);
+  },
+
+  underlineThick: function(enabled){
+    if(enabled) append(config.TXT_UNDERL2_ON);
+    else append(config.TXT_UNDERL2_OFF);
   },
 
   alignCenter: function (){
@@ -513,7 +531,7 @@ module.exports = {
     }
   },
 
-  raw: function(text) {
+  raw: function(text,cb) {
     if (printerConfig.ip) {
       var printer = net.connect({
         host: printerConfig.ip,
@@ -525,9 +543,17 @@ module.exports = {
     } else {
       writeFile(printerConfig.interface, text, function (err) {
         if (err) {
-          console.error('Print failed', err);
+          if ('function' == typeof cb) {
+            cb("Print failed: " + err);
+          } else {
+            console.error("Print failed", err);
+          }
         } else {
-          console.log('Print done');
+          if ('function' == typeof cb) {
+            cb("Print failed: " + err);
+          } else {
+            console.log("Print done");
+          }
         }
       });
     }
