@@ -19,7 +19,7 @@ printer.drawLine();
 printer.setTypeFontB();
 printer.println("Type font B");
 printer.setTypeFontA();
-printer.print("Type font A");
+printer.println("Type font A");
 printer.drawLine();
 
 printer.alignCenter();
@@ -27,7 +27,7 @@ printer.println("This text is in the middle");
 printer.alignRight();
 printer.println("This text is on the right");
 printer.alignLeft();
-printer.print("This text is on the left");
+printer.println("This text is on the left");
 printer.drawLine();
 
 printer.setTextDoubleHeight();
@@ -37,7 +37,7 @@ printer.println("Double width wooo!");
 printer.setTextQuadArea();
 printer.println("Quad text!");
 printer.setTextNormal();
-printer.print("Back to normal");
+printer.println("Back to normal");
 printer.drawLine();
 
 printer.printBarcode("4126570807191");
@@ -48,6 +48,8 @@ printer.code128("4126570807191", {
 
 // printer.pdf417("4126565129008670807191");
 printer.printQR("4170807191412657080719141265708");
+
+printer.newLine();
 
 printer.leftRight("Left", "Right");
 

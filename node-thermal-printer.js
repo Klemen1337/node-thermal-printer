@@ -160,7 +160,7 @@ module.exports = {
   },
 
   drawLine: function(){
-    module.exports.newLine();
+    // module.exports.newLine();
     for(var i=0; i<printerConfig.width; i++){
       append(new Buffer("-"));
     }
@@ -174,6 +174,7 @@ module.exports = {
       append(new Buffer(" "));
     }
     append(right.toString());
+    module.exports.newLine();
   },
 
   table: function(data){
@@ -185,6 +186,7 @@ module.exports = {
         append(new Buffer(" "));
       }
     }
+    module.exports.newLine();
   },
 
 
@@ -247,6 +249,8 @@ module.exports = {
         secondLine.push(obj);
       }
     }
+
+    module.exports.newLine();
 
     // Print the second line
     if(secondLineEnabled){
