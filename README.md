@@ -25,6 +25,7 @@ printer.execute( function(err){ } );                       // Executes all the c
 printer.raw(new Buffer("Hello world"), function(err){ } ); // Print instantly. Optional callback returns null if no error, else error message
 printer.print("Hello World");                              // Append text
 printer.println("Hello World");                            // Append text with new line
+printer.openCashDrawer();                                  // Kick the cash drawer
 printer.cut();                                             // Cuts the paper
 
 printer.bold(true);                                 // Set text bold

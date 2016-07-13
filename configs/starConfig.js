@@ -14,8 +14,9 @@ module.exports = {
     HW_RESET   : new Buffer([0x1b, 0x3f, 0x0a, 0x00]),  // Reset printer hardware
 
     // Cash Drawer
-    CD_KICK_2  : new Buffer([0x1b, 0x70, 0x00]),      // Sends a pulse to pin 2 []
-    CD_KICK_5  : new Buffer([0x1b, 0x70, 0x01]),      // Sends a pulse to pin 5 []
+    CD_KICK_2  : new Buffer([0x1b, 0x70, 0x00]),              // Sends a pulse to pin 2 []
+    CD_KICK_5  : new Buffer([0x1b, 0x70, 0x01]),              // Sends a pulse to pin 5 []
+    CD_KICK    : new Buffer([0x1b, 0x07, 0x0b, 0x37, 0x07]),  // Kick the cash drawer
 
     // Paper
     PAPER_FULL_CUT  : new Buffer([0x1b, 0x64, 0x02]), // Full cut paper

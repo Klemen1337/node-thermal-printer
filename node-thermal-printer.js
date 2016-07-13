@@ -63,7 +63,7 @@ module.exports = {
   },
 
   getWidth: function(){
-    return printerConfig.getWidth;
+    return parseInt(printerConfig.width);
   },
 
   getText: function(){
@@ -107,7 +107,16 @@ module.exports = {
 
   underlineThick: function(enabled){
     if(enabled) append(config.TXT_UNDERL2_ON);
-    else append(config.TXT_UNDERL2_OFF);
+    else append(config.TXT_UNDERL_OFF);
+  },
+
+  openCashDrawer: function(){
+    if(printerConfig.type == 'star'){
+      append(config.CD_KICK);
+    } else {
+      append(config.CD_KICK_2);
+      append(config.CD_KICK_5);
+    }
   },
 
   alignCenter: function (){
@@ -151,7 +160,7 @@ module.exports = {
   },
 
   drawLine: function(){
-    module.exports.newLine();
+    // module.exports.newLine();
     for(var i=0; i<printerConfig.width; i++){
       append(new Buffer("-"));
     }
@@ -165,6 +174,7 @@ module.exports = {
       append(new Buffer(" "));
     }
     append(right.toString());
+    module.exports.newLine();
   },
 
   table: function(data){
@@ -176,6 +186,7 @@ module.exports = {
         append(new Buffer(" "));
       }
     }
+    module.exports.newLine();
   },
 
 
@@ -238,6 +249,8 @@ module.exports = {
         secondLine.push(obj);
       }
     }
+
+    module.exports.newLine();
 
     // Print the second line
     if(secondLineEnabled){
