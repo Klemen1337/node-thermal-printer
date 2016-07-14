@@ -11,6 +11,7 @@ module.exports = {
     HW_INIT    : new Buffer([0x1b, 0x40]),          // Clear data in buffer and reset modes
     HW_SELECT  : new Buffer([0x1b, 0x3d, 0x01]),      // Printer select
     HW_RESET   : new Buffer([0x1b, 0x3f, 0x0a, 0x00]),  // Reset printer hardware
+    BEEP       : new Buffer([0x1b, 0x1e]),              // Sounds built-in buzzer (if equipped)
 
     // Cash Drawer
     CD_KICK_2  : new Buffer([0x1b, 0x70, 0x00]),      // Sends a pulse to pin 2 []
@@ -30,6 +31,8 @@ module.exports = {
     TXT_UNDERL2_ON  : new Buffer([0x1b, 0x2d, 0x02]), // Underline font 2-dot ON
     TXT_BOLD_OFF    : new Buffer([0x1b, 0x45, 0x00]), // Bold font OFF
     TXT_BOLD_ON     : new Buffer([0x1b, 0x45, 0x01]), // Bold font ON
+    TXT_INVERT_OFF  : new Buffer([0x1d, 0x42, 0x00]), // Invert font OFF (eg. white background)
+    TXT_INVERT_ON   : new Buffer([0x1d, 0x42, 0x01]), // Invert font ON (eg. black background)
     TXT_FONT_A      : new Buffer([0x1b, 0x4d, 0x00]), // Font type A
     TXT_FONT_B      : new Buffer([0x1b, 0x4d, 0x01]), // Font type B
     TXT_ALIGN_LT    : new Buffer([0x1b, 0x61, 0x00]), // Left justification

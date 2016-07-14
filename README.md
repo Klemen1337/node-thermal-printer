@@ -26,9 +26,12 @@ printer.raw(new Buffer("Hello world"), function(err){ } ); // Print instantly. O
 printer.print("Hello World");                              // Append text
 printer.println("Hello World");                            // Append text with new line
 printer.openCashDrawer();                                  // Kick the cash drawer
-printer.cut();                                             // Cuts the paper
+printer.cut();                                             // Cuts the paper (if printer only supports one mode use this)
+printer.partialCut();                                      // Cuts the paper leaving a small bridge in middle (if printer supports multiple cut modes)
+printer.beep();                                            // Sound internal beeper/buzzer (if available)
 
 printer.bold(true);                                 // Set text bold
+printer.invert(true);                               // Background/text color inversion
 printer.underline(true);                            // Underline text (1 dot thickness)
 printer.underlineThick(true);                       // Underline text with thick line (2 dot thickness)
 printer.drawLine();                                 // Draws a line
