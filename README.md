@@ -29,6 +29,7 @@ printer.openCashDrawer();                                  // Kick the cash draw
 printer.cut();                                             // Cuts the paper (if printer only supports one mode use this)
 printer.partialCut();                                      // Cuts the paper leaving a small bridge in middle (if printer supports multiple cut modes)
 printer.beep();                                            // Sound internal beeper/buzzer (if available)
+printer.upsideDown(true);                                  // Content is printed upside down (rotated 180 degrees)
 
 printer.bold(true);                                 // Set text bold
 printer.invert(true);                               // Background/text color inversion
