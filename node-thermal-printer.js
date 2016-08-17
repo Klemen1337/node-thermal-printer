@@ -125,6 +125,15 @@ module.exports = {
     else append(config.TXT_UNDERL_OFF);
   },
   
+  upsideDown: function(enabled){
+     if (printerConfig.type == 'star'){
+      console.error("Upside down not supported on STAR yet");
+      return;
+    }
+    if(enabled) append(config.UPSIDE_DOWN_ON);
+    else append(config.UPSIDE_DOWN_OFF);
+  },
+  
   invert: function(enabled){
     if (printerConfig.type == 'star'){
       console.error("Invert not supported on STAR yet");

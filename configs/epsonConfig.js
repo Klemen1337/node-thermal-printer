@@ -12,6 +12,8 @@ module.exports = {
     HW_SELECT  : new Buffer([0x1b, 0x3d, 0x01]),      // Printer select
     HW_RESET   : new Buffer([0x1b, 0x3f, 0x0a, 0x00]),  // Reset printer hardware
     BEEP       : new Buffer([0x1b, 0x1e]),              // Sounds built-in buzzer (if equipped)
+    UPSIDE_DOWN_ON  : new Buffer([0x1b,0x7b,0x01]),     // Upside down printing ON (rotated 180 degrees).
+    UPSIDE_DOWN_OFF : new Buffer([0x1b,0x7b,0x00]),     // Upside down printing OFF (default).
 
     // Cash Drawer
     CD_KICK_2  : new Buffer([0x1b, 0x70, 0x00]),      // Sends a pulse to pin 2 []
