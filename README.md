@@ -1,6 +1,8 @@
 # node-thermal-printer
+Node.js module for EPSON and STAR thermal printers command line printing.
 
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 ### Installation
 Dependency requires build-essentials
@@ -11,6 +13,7 @@ sudo apt-get install build-essential
 ```bash
 $ npm install node-thermal-printer
 ```
+
 
 ### Features
 ```js
@@ -77,6 +80,7 @@ printer.code128("Code128", {
 }); 
 ```
 
+
 ### Examples
 ```js
 var printer = require("node-thermal-printer");
@@ -95,3 +99,13 @@ printer.execute(function(err){
   }
 });
 ```
+
+
+### Docs
+- STAR: http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf
+- EPSON: https://reference.epson-biz.com/modules/ref_escpos/index.php
+
+
+### Tested printers:
+- Star TSP700
+- Rongta RP80US

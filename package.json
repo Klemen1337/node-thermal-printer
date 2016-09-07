@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
     "net": "^1.0.2",
+    "node-png": "^0.4.3",
     "unorm": "^1.4.1",
     "write-file-queue": "0.0.1"
   }

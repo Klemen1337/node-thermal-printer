@@ -1,5 +1,7 @@
 var unorm = require('unorm');
 var combining = /[\u0300-\u036F]/g;
+var fs = require('fs'),
+    PNG = require('node-png').PNG;
 
 var writeFile = require('write-file-queue')({
     retries : 1000, 						    // number of write attempts before failing
@@ -293,7 +295,6 @@ module.exports = {
 
   isPrinterConnected: function(exists){
     if(printerConfig.interface){
-      var fs = require('fs');
       fs.exists(printerConfig.interface, function(ex){
         exists(ex);
       });
@@ -532,6 +533,244 @@ module.exports = {
     }
   },
 
+
+  // ----------------------------------------------------- PRINT IMAGE EPSON -----------------------------------------------------
+  // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=88
+  _printImageEpson: function(image, callback){
+    fs.createReadStream(image).pipe(new PNG({
+      filterType: 4
+    })).on('parsed', function() {
+
+      // Get pixel rgba in 2D array
+      var pixels = [];
+      for (var i = 0; i < this.height; i++) {
+        var line = [];
+        for (var j = 0; j < this.width; j++) {
+          var idx = (this.width * i + j) << 2;
+          line.push({
+            r: this.data[idx],
+            g: this.data[idx + 1],
+            b: this.data[idx + 2],
+            a: this.data[idx + 3]
+          });
+        }
+        pixels.push(line);
+      }
+
+
+
+      var imageBuffer = new Buffer([]);
+      for (var i = 0; i < this.height; i++) {
+        for (var j = 0; j < parseInt(this.width/8); j++) {
+          var grayscale = 0;
+          var avgs = { r: 0, g: 0, b: 0, a: 0};
+          for (var k = 0; k < 8; k++) {
+            var pixel = pixels[i][j*8 + k];
+            avgs.r += pixel.r;
+            avgs.g += pixel.g;
+            avgs.b += pixel.b;
+            avgs.a += pixel.a;
+          }
+
+          avgs.r = avgs.r/8;
+          avgs.g = avgs.g/8;
+          avgs.b = avgs.b/8;
+          avgs.a = avgs.a/8;
+          grayscale = parseInt(0.2126 * avgs.r + 0.7152 * avgs.g + 0.0722 * avgs.b);
+
+          if(avgs.a > 126) imageBuffer = Buffer.concat([imageBuffer, new Buffer([0xFF])]);
+          else imageBuffer = Buffer.concat([imageBuffer, new Buffer([0x00])]);
+        }
+      }
+
+      // Print raster bit image
+      // GS v 0
+      // 1D 76 30	m	xL xH	yL yH d1...dk
+      // xL = (this.width >> 3) & 0xff;
+      // xH = 0x00;
+      // yL = this.height & 0xff;
+      // yH = (this.height >> 8) & 0xff;
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=94
+      append(new Buffer ([0x1d, 0x76, 0x30, 48]));
+      append(new Buffer ([(this.width >> 3) & 0xff]));
+      append(new Buffer ([0x00]));
+      append(new Buffer ([this.height & 0xff]));
+      append(new Buffer ([(this.height >> 8) & 0xff]));
+
+      // Append image data
+      append(imageBuffer);
+
+      callback(true);
+    });
+  },
+
+
+  // Experimental
+  _printImageEpson2: function(image, callback){
+    fs.createReadStream(image).pipe(new PNG({
+      filterType: 4
+    })).on('parsed', function() {
+
+      // Get pixel rgba in 2D array
+      var pixels = [];
+      for (var i = 0; i < this.height; i++) {
+        var line = [];
+        for (var j = 0; j < this.width; j++) {
+          var idx = (this.width * i + j) << 2;
+          line.push({
+            r: this.data[idx],
+            g: this.data[idx + 1],
+            b: this.data[idx + 2],
+            a: this.data[idx + 3]
+          });
+        }
+        pixels.push(line);
+      }
+
+      var imageBuffer = new Buffer([]);
+      for (var i = 0; i < this.height; i++) {
+        for (var j = 0; j < parseInt(this.width/8); j++) {
+          var grayscale = 0;
+          var avgs = { r: 0, g: 0, b: 0, a: 0};
+          for (var k = 0; k < 8; k++) {
+            var pixel = pixels[i][j*8 + k];
+            avgs.r += pixel.r;
+            avgs.g += pixel.g;
+            avgs.b += pixel.b;
+            avgs.a += pixel.a;
+          }
+
+          avgs.r = avgs.r/8;
+          avgs.g = avgs.g/8;
+          avgs.b = avgs.b/8;
+          avgs.a = avgs.a/8;
+          grayscale = parseInt(0.2126 * avgs.r + 0.7152 * avgs.g + 0.0722 * avgs.b);
+          imageBuffer = Buffer.concat([imageBuffer, new Buffer([avgs])]);
+        }
+      }
+
+
+      // GS ( L / GS 8 L <Function 112>
+      // Store the graphics data in the print buffer (raster format)
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=99
+      append(new Buffer ([0x1d, 0x28, 0x4C]));
+      append(new Buffer ([(this.width >> 3) & 0xff]));    // pL
+      append(new Buffer ([0x00]));                        // pH
+      append(new Buffer ([0x30, 0x70, 52, 1, 1, 49]));
+      append(new Buffer ([(this.width >> 3) & 0xff]));    // xL
+      append(new Buffer ([0x00]));                        // xH
+      append(new Buffer ([this.height & 0xff]));          // yL
+      append(new Buffer ([(this.height >> 8) & 0xff]));   // yH
+
+      // Append image data
+      append(imageBuffer);
+
+
+      // GS ( L   <Function 50>
+      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=98
+      append(new Buffer ([0x1d, 0x28, 0x4C, 0x02, 0x00, 0x30, 2]));
+
+      callback(true);
+    });
+  },
+
+
+  // ----------------------------------------------------- PRINT IMAGE STAR -----------------------------------------------------
+  // Experimental
+  _printImageStar: function(image, callback){
+    fs.createReadStream(image).pipe(new PNG({
+      filterType: 4
+    })).on('parsed', function() {
+
+      // Get pixel rgba in 2D array
+      var pixels = [];
+      for (var i = 0; i < this.height; i++) {
+        var line = [];
+        for (var j = 0; j < this.width; j++) {
+          var idx = (this.width * i + j) << 2;
+          line.push({
+            r: this.data[idx],
+            g: this.data[idx + 1],
+            b: this.data[idx + 2],
+            a: this.data[idx + 3]
+          });
+        }
+        pixels.push(line);
+      }
+
+      // Specify line spacing to 3 mm
+      append(new Buffer ([0x1b, 0x30]));
+
+      // Move absolute position
+      append(new Buffer ([0x1b, 0x1d, 0x61, 0x01]));
+
+
+      for (var i = 0; i < parseInt(this.height/8); i++) {
+        var imageBuffer = new Buffer (this.width);
+        for (var j = 0; j < this.width; j++) {
+          var avgs = { r: 0, g: 0, b: 0, a: 0};
+          for (var k = 0; k < 8; k++) {
+            try{
+              var pixel = pixels[i*8 + k][j];
+            } catch(e) {
+              var pixel = { r: 0, g: 0, b: 0, a: 0};
+            }
+
+            avgs.r += pixel.r;
+            avgs.g += pixel.g;
+            avgs.b += pixel.b;
+            avgs.a += pixel.a;
+          }
+
+          avgs.r = avgs.r/8;
+          avgs.g = avgs.g/8;
+          avgs.b = avgs.b/8;
+          avgs.a = avgs.a/8;
+          var grayscale = parseInt(0.2126 * avgs.r + 0.7152 * avgs.g + 0.0722 * avgs.b);
+
+          if(avgs.a > 126) imageBuffer[j] = 0xFF;
+          else imageBuffer[j] = 0x00;
+        }
+
+        // [Name] Standard density bit image
+        // [Code] 1B 4B n1 n2 d1 ... dk
+        append(new Buffer([0x1b, 0x4b, this.width, 0x00]));
+        append(imageBuffer);
+        append(new Buffer("\n"));
+      }
+
+      // Specify position alignment
+      append(new Buffer([0x1b, 0x1d, 0x61, 0x00]));
+
+      // Select line feed amount
+      append(new Buffer([0x1b, 0x7a, 0x01]));
+
+      callback(true);
+    });
+  },
+
+
+
+  // ----------------------------------------------------- PRINT IMAGE -----------------------------------------------------
+  printImage: function(image, callback){
+    if(image.slice(-4) == ".png"){ // Check for file type
+      if (printerConfig.type == 'star'){
+        module.exports._printImageStar(image, function(response){
+          callback(response);
+        });
+      } else {
+        module.exports._printImageEpson(image, function(response){
+          callback(response);
+        });
+      }
+    } else {
+      console.error("Image printing supports only PNG files.");
+      callback(false);
+    }
+  },
+
+
+  // ----------------------------------------------------- PRINT PDF417 -----------------------------------------------------
   pdf417: function(data) {
     if (printerConfig.type == 'star') {
       //(1) Bar code type setting (<ESC> <GS> “x” “S”)
@@ -576,6 +815,7 @@ module.exports = {
       console.error("PDF417 not supported on EPSON yet");
     }
   },
+
 
   raw: function(text,cb) {
     if (printerConfig.ip) {
