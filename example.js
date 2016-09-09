@@ -1,6 +1,6 @@
 var printer = require("./node-thermal-printer");
 printer.init({
-  type: 'star',            // 'star' or 'epson'
+  type: 'epson',            // 'star' or 'epson'
   interface: '/dev/usb/lp0',
   width: 48,                // Number of characters in one line (default 48)
   characterSet: 'SLOVENIA'  // Character set default SLOVENIA
@@ -61,7 +61,8 @@ printer.tableCustom([
   { text:"Right", align:"RIGHT", width:0.25 }
 ]);
 
-printer.cut();
-printer.openCashDrawer();
-printer.execute();
-
+printer.printImage('./assets/olaii-logo-black.png', function(done){
+  printer.cut();
+  printer.openCashDrawer();
+  printer.execute();
+});

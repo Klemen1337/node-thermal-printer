@@ -63,7 +63,7 @@ module.exports = {
     append(config.PAPER_FULL_CUT);
     append(config.HW_INIT);
   },
-  
+
   partialCut: function(){
     append(config.CTL_VT);
     append(config.CTL_VT);
@@ -116,7 +116,7 @@ module.exports = {
     if(enabled) append(config.TXT_BOLD_ON);
     else append(config.TXT_BOLD_OFF);
   },
-  
+
   underline: function(enabled){
     if(enabled) append(config.TXT_UNDERL_ON);
     else append(config.TXT_UNDERL_OFF);
@@ -126,7 +126,7 @@ module.exports = {
     if(enabled) append(config.TXT_UNDERL2_ON);
     else append(config.TXT_UNDERL_OFF);
   },
-  
+
   upsideDown: function(enabled){
      if (printerConfig.type == 'star'){
       console.error("Upside down not supported on STAR yet");
@@ -135,7 +135,7 @@ module.exports = {
     if(enabled) append(config.UPSIDE_DOWN_ON);
     else append(config.UPSIDE_DOWN_OFF);
   },
-  
+
   invert: function(enabled){
     if (printerConfig.type == 'star'){
       console.error("Invert not supported on STAR yet");
@@ -557,29 +557,23 @@ module.exports = {
         pixels.push(line);
       }
 
-
-
       var imageBuffer = new Buffer([]);
       for (var i = 0; i < this.height; i++) {
         for (var j = 0; j < parseInt(this.width/8); j++) {
-          var grayscale = 0;
-          var avgs = { r: 0, g: 0, b: 0, a: 0};
+          var byte = 0x0;
           for (var k = 0; k < 8; k++) {
             var pixel = pixels[i][j*8 + k];
-            avgs.r += pixel.r;
-            avgs.g += pixel.g;
-            avgs.b += pixel.b;
-            avgs.a += pixel.a;
+            if(pixel.a > 126){ // checking transparency
+              grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
+
+              if(grayscale < 128){ // checking color
+                var mask = 1 << 7-k; // setting bitwise mask
+                byte |= mask; // setting the correct bit to 1
+              }
+            }
           }
 
-          avgs.r = avgs.r/8;
-          avgs.g = avgs.g/8;
-          avgs.b = avgs.b/8;
-          avgs.a = avgs.a/8;
-          grayscale = parseInt(0.2126 * avgs.r + 0.7152 * avgs.g + 0.0722 * avgs.b);
-
-          if(avgs.a > 126) imageBuffer = Buffer.concat([imageBuffer, new Buffer([0xFF])]);
-          else imageBuffer = Buffer.concat([imageBuffer, new Buffer([0x00])]);
+          imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
         }
       }
 
@@ -591,84 +585,15 @@ module.exports = {
       // yL = this.height & 0xff;
       // yH = (this.height >> 8) & 0xff;
       // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=94
+
       append(new Buffer ([0x1d, 0x76, 0x30, 48]));
       append(new Buffer ([(this.width >> 3) & 0xff]));
       append(new Buffer ([0x00]));
       append(new Buffer ([this.height & 0xff]));
       append(new Buffer ([(this.height >> 8) & 0xff]));
 
-      // Append image data
+      // append data
       append(imageBuffer);
-
-      callback(true);
-    });
-  },
-
-
-  // Experimental
-  _printImageEpson2: function(image, callback){
-    fs.createReadStream(image).pipe(new PNG({
-      filterType: 4
-    })).on('parsed', function() {
-
-      // Get pixel rgba in 2D array
-      var pixels = [];
-      for (var i = 0; i < this.height; i++) {
-        var line = [];
-        for (var j = 0; j < this.width; j++) {
-          var idx = (this.width * i + j) << 2;
-          line.push({
-            r: this.data[idx],
-            g: this.data[idx + 1],
-            b: this.data[idx + 2],
-            a: this.data[idx + 3]
-          });
-        }
-        pixels.push(line);
-      }
-
-      var imageBuffer = new Buffer([]);
-      for (var i = 0; i < this.height; i++) {
-        for (var j = 0; j < parseInt(this.width/8); j++) {
-          var grayscale = 0;
-          var avgs = { r: 0, g: 0, b: 0, a: 0};
-          for (var k = 0; k < 8; k++) {
-            var pixel = pixels[i][j*8 + k];
-            avgs.r += pixel.r;
-            avgs.g += pixel.g;
-            avgs.b += pixel.b;
-            avgs.a += pixel.a;
-          }
-
-          avgs.r = avgs.r/8;
-          avgs.g = avgs.g/8;
-          avgs.b = avgs.b/8;
-          avgs.a = avgs.a/8;
-          grayscale = parseInt(0.2126 * avgs.r + 0.7152 * avgs.g + 0.0722 * avgs.b);
-          imageBuffer = Buffer.concat([imageBuffer, new Buffer([avgs])]);
-        }
-      }
-
-
-      // GS ( L / GS 8 L <Function 112>
-      // Store the graphics data in the print buffer (raster format)
-      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=99
-      append(new Buffer ([0x1d, 0x28, 0x4C]));
-      append(new Buffer ([(this.width >> 3) & 0xff]));    // pL
-      append(new Buffer ([0x00]));                        // pH
-      append(new Buffer ([0x30, 0x70, 52, 1, 1, 49]));
-      append(new Buffer ([(this.width >> 3) & 0xff]));    // xL
-      append(new Buffer ([0x00]));                        // xH
-      append(new Buffer ([this.height & 0xff]));          // yL
-      append(new Buffer ([(this.height >> 8) & 0xff]));   // yH
-
-      // Append image data
-      append(imageBuffer);
-
-
-      // GS ( L   <Function 50>
-      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=98
-      append(new Buffer ([0x1d, 0x28, 0x4C, 0x02, 0x00, 0x30, 2]));
 
       callback(true);
     });

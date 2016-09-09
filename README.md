@@ -63,6 +63,8 @@ printer.tableCustom([                               // Prints table with custom 
 
 printer.code128("Code128");                         // Print code128 bar code
 
+printer.printImage('./assets/olaii-logo-black.png', function(done){ }); // Print PNG image
+
 print.clear();                                      // Clears printText value
 print.getText();                                    // Returns printer buffer string value
 print.getBuffer();                                  // Returns printer buffer
@@ -77,7 +79,7 @@ printer.code128("Code128", {
                              // 2 - Text on bottom
                              // 3 - No text inline
                              // 4 - Text on bottom inline
-}); 
+});
 ```
 
 
@@ -90,14 +92,18 @@ printer.init({
 });
 printer.alignCenter();
 printer.println("Hello world");
-printer.cut();
-printer.execute(function(err){
-  if (err) {
-    console.error("Print failed", err);
-  } else {
-   console.log("Print done");
-  }
+printer.printImage('./assets/olaii-logo-black.png', function(done){
+  printer.cut();
+  printer.execute(function(err){
+    if (err) {
+      console.error("Print failed", err);
+    } else {
+     console.log("Print done");
+    }
+  });
+
 });
+
 ```
 
 
