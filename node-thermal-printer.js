@@ -623,51 +623,39 @@ module.exports = {
         pixels.push(line);
       }
 
-      // Specify line spacing to 3 mm
-      append(new Buffer ([0x1b, 0x30]));
+      append(new Buffer([0x1b, 0x30]));
 
-      // Move absolute position
-      append(new Buffer ([0x1b, 0x1d, 0x61, 0x01]));
+      // v3
+      for(var i = 0; i < Math.ceil(this.height/24); i++){
+        var imageBuffer = new Buffer([]);
+        for(var y = 0; y < 24; y++){
 
+          for (var j = 0; j < Math.ceil(this.width/8); j++) {
+            var byte = 0x0;
 
-      for (var i = 0; i < parseInt(this.height/8); i++) {
-        var imageBuffer = new Buffer (this.width);
-        for (var j = 0; j < this.width; j++) {
-          var avgs = { r: 0, g: 0, b: 0, a: 0};
-          for (var k = 0; k < 8; k++) {
-            try{
-              var pixel = pixels[i*8 + k][j];
-            } catch(e) {
-              var pixel = { r: 0, g: 0, b: 0, a: 0};
+            for (var x = 0; x < 8; x++) {
+
+              if((i*24 + y < pixels.length) && (j*8 + x < pixels[i*24 + y].length)){
+                var pixel = pixels[i*24 + y][j*8 + x];
+                if(pixel.a > 126){ // checking transparency
+                  grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
+
+                  if(grayscale < 128){ // checking color
+                    var mask = 1 << 7-x; // setting bitwise mask
+                    byte |= mask; // setting the correct bit to 1
+                  }
+                }
+              }
             }
 
-            avgs.r += pixel.r;
-            avgs.g += pixel.g;
-            avgs.b += pixel.b;
-            avgs.a += pixel.a;
+            imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
           }
-
-          avgs.r = avgs.r/8;
-          avgs.g = avgs.g/8;
-          avgs.b = avgs.b/8;
-          avgs.a = avgs.a/8;
-          var grayscale = parseInt(0.2126 * avgs.r + 0.7152 * avgs.g + 0.0722 * avgs.b);
-
-          if(avgs.a > 126) imageBuffer[j] = 0xFF;
-          else imageBuffer[j] = 0x00;
         }
-
-        // [Name] Standard density bit image
-        // [Code] 1B 4B n1 n2 d1 ... dk
-        append(new Buffer([0x1b, 0x4b, this.width, 0x00]));
+        append(new Buffer([0x1b, 0x6b, parseInt(imageBuffer.length/24), 0x00]));
         append(imageBuffer);
         append(new Buffer("\n"));
       }
 
-      // Specify position alignment
-      append(new Buffer([0x1b, 0x1d, 0x61, 0x00]));
-
-      // Select line feed amount
       append(new Buffer([0x1b, 0x7a, 0x01]));
 
       callback(true);
