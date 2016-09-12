@@ -62,12 +62,13 @@ printer.tableCustom([                               // Prints table with custom 
 ]);
 
 printer.code128("Code128");                         // Print code128 bar code
-
-printer.printImage('./assets/olaii-logo-black.png', function(done){ }); // Print PNG image
+printer.printQR("https://github.com/Klemen1337/node-thermal-printer"); // Print QR code
+printer.printImage('./assets/olaii-logo-black.png', function(done){ }); // Print PNG image (uses callback)
 
 print.clear();                                      // Clears printText value
 print.getText();                                    // Returns printer buffer string value
 print.getBuffer();                                  // Returns printer buffer
+print.getWidth();                                   // Get number of characters in one line
 ```
 
 ### Code 128 settings
@@ -101,7 +102,6 @@ printer.printImage('./assets/olaii-logo-black.png', function(done){
      console.log("Print done");
     }
   });
-
 });
 
 ```

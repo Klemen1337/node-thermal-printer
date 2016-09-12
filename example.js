@@ -1,6 +1,6 @@
 var printer = require("./node-thermal-printer");
 printer.init({
-  type: 'epson',            // 'star' or 'epson'
+  type: 'star',            // 'star' or 'epson'
   interface: '/dev/usb/lp0',
   width: 48,                // Number of characters in one line (default 48)
   characterSet: 'SLOVENIA'  // Character set default SLOVENIA
@@ -9,59 +9,74 @@ printer.init({
 });
 
 printer.isPrinterConnected(function(response){
-  console.log(response);
+  console.log("Printer connected:", response);
 });
 
-
-printer.println("Hello World!");
-printer.drawLine();
-
-printer.setTypeFontB();
-printer.println("Type font B");
-printer.setTypeFontA();
-printer.println("Type font A");
-printer.drawLine();
 
 printer.alignCenter();
-printer.println("This text is in the middle");
-printer.alignRight();
-printer.println("This text is on the right");
-printer.alignLeft();
-printer.println("This text is on the left");
-printer.drawLine();
+printer.printImage('./assets/olaii-logo-black-small.png', function(done){
+  printer.alignLeft();
+  printer.newLine();
+  printer.println("Hello World!");
+  printer.drawLine();
 
-printer.setTextDoubleHeight();
-printer.println("This text is double height");
-printer.setTextDoubleWidth();
-printer.println("Double width wooo!");
-printer.setTextQuadArea();
-printer.println("Quad text!");
-printer.setTextNormal();
-printer.println("Back to normal");
-printer.drawLine();
+  printer.upsideDown(true);
+  printer.println("Hello World upside down!");
+  printer.upsideDown(false);
+  printer.drawLine();
 
-printer.printBarcode("4126570807191");
-printer.code128("4126570807191", {
-  height: 50,
-  text: 1
-});
+  printer.invert(true);
+  printer.println("Hello World inverted!");
+  printer.invert(false);
+  printer.drawLine();
 
-// printer.pdf417("4126565129008670807191");
-printer.printQR("4170807191412657080719141265708");
+  printer.setTypeFontB();
+  printer.println("Type font B");
+  printer.setTypeFontA();
+  printer.println("Type font A");
+  printer.drawLine();
 
-printer.newLine();
+  printer.alignLeft();
+  printer.println("This text is on the left");
+  printer.alignCenter();
+  printer.println("This text is in the middle");
+  printer.alignRight();
+  printer.println("This text is on the right");
+  printer.alignLeft();
+  printer.drawLine();
 
-printer.leftRight("Left", "Right");
+  printer.setTextDoubleHeight();
+  printer.println("This is double height");
+  printer.setTextDoubleWidth();
+  printer.println("This is double width");
+  printer.setTextQuadArea();
+  printer.println("This is quad");
+  printer.setTextNormal();
+  printer.println("This is normal");
+  printer.drawLine();
 
-printer.table(["One", "Two", "Three", "Four"]);
+  printer.printBarcode("4126570807191");
+  printer.code128("4126570807191", {
+    height: 50,
+    text: 1
+  });
 
-printer.tableCustom([
-  { text:"Left", align:"LEFT", width:0.5 },
-  { text:"Center", align:"CENTER", width:0.25, bold:true },
-  { text:"Right", align:"RIGHT", width:0.25 }
-]);
+  printer.pdf417("4126565129008670807191");
+  printer.printQR("4170807191412657080719141265708");
 
-printer.printImage('./assets/olaii-logo-black.png', function(done){
+  printer.newLine();
+
+  printer.leftRight("Left", "Right");
+
+  printer.table(["One", "Two", "Three", "Four"]);
+
+  printer.tableCustom([
+    { text:"Left", align:"LEFT", width:0.5 },
+    { text:"Center", align:"CENTER", width:0.25, bold:true },
+    { text:"Right", align:"RIGHT", width:0.25 }
+  ]);
+
+
   printer.cut();
   printer.openCashDrawer();
   printer.execute();

@@ -74,9 +74,9 @@ module.exports = {
   beep: function(){
     if (printerConfig.type == 'star'){
       console.error("Beep not supported on STAR yet");
-      return;
+    } else {
+      append(config.BEEP);
     }
-    append(config.BEEP);
   },
 
   getWidth: function(){
@@ -128,19 +128,11 @@ module.exports = {
   },
 
   upsideDown: function(enabled){
-     if (printerConfig.type == 'star'){
-      console.error("Upside down not supported on STAR yet");
-      return;
-    }
-    if(enabled) append(config.UPSIDE_DOWN_ON);
-    else append(config.UPSIDE_DOWN_OFF);
+     if(enabled) append(config.UPSIDE_DOWN_ON);
+     else append(config.UPSIDE_DOWN_OFF);
   },
 
   invert: function(enabled){
-    if (printerConfig.type == 'star'){
-      console.error("Invert not supported on STAR yet");
-      return;
-    }
     if(enabled) append(config.TXT_INVERT_ON);
     else append(config.TXT_INVERT_OFF);
   },
@@ -601,7 +593,6 @@ module.exports = {
 
 
   // ----------------------------------------------------- PRINT IMAGE STAR -----------------------------------------------------
-  // Experimental
   _printImageStar: function(image, callback){
     fs.createReadStream(image).pipe(new PNG({
       filterType: 4
@@ -638,7 +629,7 @@ module.exports = {
               if((i*24 + y < pixels.length) && (j*8 + x < pixels[i*24 + y].length)){
                 var pixel = pixels[i*24 + y][j*8 + x];
                 if(pixel.a > 126){ // checking transparency
-                  grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
+                  var grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
 
                   if(grayscale < 128){ // checking color
                     var mask = 1 << 7-x; // setting bitwise mask
@@ -666,20 +657,29 @@ module.exports = {
 
   // ----------------------------------------------------- PRINT IMAGE -----------------------------------------------------
   printImage: function(image, callback){
-    if(image.slice(-4) == ".png"){ // Check for file type
-      if (printerConfig.type == 'star'){
-        module.exports._printImageStar(image, function(response){
-          callback(response);
-        });
+    try {
+      // Check if file exists
+      fs.accessSync(image);
+
+      if(image.slice(-4) == ".png"){ // Check for file type
+        if (printerConfig.type == 'star'){
+          module.exports._printImageStar(image, function(response){
+            callback(response);
+          });
+        } else {
+          module.exports._printImageEpson(image, function(response){
+            callback(response);
+          });
+        }
       } else {
-        module.exports._printImageEpson(image, function(response){
-          callback(response);
-        });
+        console.error("Image printing supports only PNG files.");
+        callback(false);
       }
-    } else {
-      console.error("Image printing supports only PNG files.");
+    }
+    catch (e) {
       callback(false);
     }
+
   },
 
 
