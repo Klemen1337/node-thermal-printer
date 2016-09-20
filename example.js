@@ -1,9 +1,11 @@
 var printer = require("./node-thermal-printer");
 printer.init({
-  type: 'star',            // 'star' or 'epson'
+  type: 'star',                  // 'star' or 'epson'
   interface: '/dev/usb/lp0',
-  width: 48,                // Number of characters in one line (default 48)
-  characterSet: 'SLOVENIA'  // Character set default SLOVENIA
+  width: 48,                      // Number of characters in one line (default 48)
+  characterSet: 'SLOVENIA',       // Character set default SLOVENIA
+  removeSpecialCharacters: false, // Removes special characters - default: false
+  replaceSpecialCharacters: true, // Replaces special characters listed in config files - default: true
   // ip: "localhost",
   // port: 9000
 });
@@ -28,6 +30,9 @@ printer.printImage('./assets/olaii-logo-black-small.png', function(done){
   printer.invert(true);
   printer.println("Hello World inverted!");
   printer.invert(false);
+  printer.drawLine();
+
+  printer.println("Special characters: ČčŠšŽžĐđĆćßẞöÖÄäüÜé");
   printer.drawLine();
 
   printer.setTypeFontB();
@@ -62,7 +67,7 @@ printer.printImage('./assets/olaii-logo-black-small.png', function(done){
   });
 
   printer.pdf417("4126565129008670807191");
-  printer.printQR("4170807191412657080719141265708");
+  printer.printQR("https://olaii.com");
 
   printer.newLine();
 

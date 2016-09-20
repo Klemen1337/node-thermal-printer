@@ -1,5 +1,3 @@
-var unorm = require('unorm');
-var combining = /[\u0300-\u036F]/g;
 var fs = require('fs'),
     PNG = require('node-png').PNG;
 
@@ -11,8 +9,8 @@ var writeFile = require('write-file-queue')({
 
 var net = require("net");
 var config = undefined;
-var printerConfig;
 var buffer = null;
+var printerConfig;
 
 module.exports = {
   init: function(initConfig){
@@ -24,6 +22,8 @@ module.exports = {
 
     if(!initConfig.width) initConfig.width = 48;
     if(!initConfig.characterSet) initConfig.characterSet = "SLOVENIA";
+    if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = false;
+    if(typeof(initConfig.replaceSpecialCharacters) == "undefined") initConfig.replaceSpecialCharacters = true;
 
     printerConfig = initConfig;
   },
@@ -189,7 +189,7 @@ module.exports = {
   drawLine: function(){
     // module.exports.newLine();
     for(var i=0; i<printerConfig.width; i++){
-      append(new Buffer("-"));
+      append(new Buffer([196]));
     }
     module.exports.newLine();
   },
@@ -790,18 +790,28 @@ var setInternationalCharacterSet = function(charSet){
 
 
 var append = function(buff){
+
   if(typeof buff == "string"){
-    buff = unorm.nfkd(buff).replace(combining, '');
+
+    // Remove special characters
+    if(printerConfig.removeSpecialCharacters) {
+      var unorm = require('unorm');
+      var combining = /[\u0300-\u036F]/g;
+      buff = unorm.nfkd(buff).replace(combining, '');
+    }
 
     var endBuff = null;
     for(var i=0; i<buff.length; i++){
       var value = buff[i];
       var tempBuff = new Buffer(value);
+
       // Replace special characters
-      for(var key in config.specialCharacters){
-        if(value == key){
-          tempBuff = new Buffer([config.specialCharacters[key]]);
-          break;
+      if(printerConfig.replaceSpecialCharacters) {
+        for(var key in config.specialCharacters){
+          if(value == key){
+            tempBuff = new Buffer([config.specialCharacters[key]]);
+            break;
+          }
         }
       }
 
@@ -812,18 +822,13 @@ var append = function(buff){
     buff = endBuff;
   }
 
-
-
-
+  // Append character set
   if(!buffer && printerConfig.characterSet) buffer = setInternationalCharacterSet(printerConfig.characterSet);
+  
+  // Append new buffer
   if (buffer) {
     buffer = Buffer.concat([buffer,buff]);
   } else {
     buffer = buff;
   }
-};
-
-
-var fix = function(str){
-  return unorm.nfkd(str).replace(combining, '');
 };

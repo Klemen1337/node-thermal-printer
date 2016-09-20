@@ -20,7 +20,9 @@ $ npm install node-thermal-printer
 printer.init({
   type: 'star',                                     // Printer type: 'star' or 'epson'
   interface: '/dev/usb/lp0',                        // Printer interface
-  characterSet: 'SLOVENIA'                          // Printer character set
+  characterSet: 'SLOVENIA',                         // Printer character set
+  removeSpecialCharacters: false,                   // Removes special characters - default: false
+  replaceSpecialCharacters: true                    // Replaces special characters listed in config files - default: true
 });
 
 printer.isPrinterConnected( function(isConnected){ } )     // Check if printer is connected, callback passes bool of status
