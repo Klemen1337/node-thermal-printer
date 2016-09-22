@@ -4,8 +4,9 @@ printer.init({
   interface: '/dev/usb/lp0',
   width: 48,                      // Number of characters in one line (default 48)
   characterSet: 'SLOVENIA',       // Character set default SLOVENIA
-  removeSpecialCharacters: true, // Removes special characters - default: true
+  removeSpecialCharacters: false, // Removes special characters - default: false
   replaceSpecialCharacters: true, // Replaces special characters listed in config files - default: true
+  //lineChar: "=",                  // Use custom character for drawing lines
   // ip: "localhost",
   // port: 9000
 });

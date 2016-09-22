@@ -22,7 +22,7 @@ module.exports = {
 
     if(!initConfig.width) initConfig.width = 48;
     if(!initConfig.characterSet) initConfig.characterSet = "SLOVENIA";
-    if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = true;
+    if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = false;
     if(typeof(initConfig.replaceSpecialCharacters) == "undefined") initConfig.replaceSpecialCharacters = true;
 
     printerConfig = initConfig;
@@ -189,7 +189,8 @@ module.exports = {
   drawLine: function(){
     // module.exports.newLine();
     for(var i=0; i<printerConfig.width; i++){
-      append(new Buffer("-"));
+      if(printerConfig.lineChar) append(new Buffer(printerConfig.lineChar));
+      else append(new Buffer([196]));
     }
     module.exports.newLine();
   },
@@ -763,6 +764,27 @@ module.exports = {
 var setInternationalCharacterSet = function(charSet){
   if (printerConfig.type == 'star') {
     // ------------------------------ Star Character set ------------------------------
+    if(charSet == "USA") return config.CHARCODE_PC437;
+    if(charSet == "JAPANESE") return config.CHARCODE_JIS;
+    if(charSet == "MULTI") return config.CHARCODE_PC850;
+    if(charSet == "PORTUGUESE") return config.CHARCODE_PC860;
+    if(charSet == "CANADIAN") return config.CHARCODE_PC863;
+    if(charSet == "NORDIC") return config.CHARCODE_PC865;
+    if(charSet == "WEU") return config.CHARCODE_WEU;
+    if(charSet == "GREEK") return config.CHARCODE_GREEK;
+    if(charSet == "HEBREW") return config.CHARCODE_HEBREW;
+    if(charSet == "WESTEUROPE") return config.CHARCODE_PC1252;
+    if(charSet == "CIRLILLIC") return config.CHARCODE_PC866;
+    if(charSet == "LATIN2") return config.CHARCODE_PC852;
+    if(charSet == "SLOVENIA") return config.CHARCODE_PC852;
+    if(charSet == "EURO") return config.CHARCODE_PC858;
+    if(charSet == "THAI42") return config.CHARCODE_THAI42;
+    if(charSet == "THAI11") return config.CHARCODE_THAI11;
+    if(charSet == "THAI13") return config.CHARCODE_THAI13;
+    if(charSet == "THAI14") return config.CHARCODE_THAI14;
+    if(charSet == "THAI16") return config.CHARCODE_THAI16;
+    if(charSet == "THAI17") return config.CHARCODE_THAI17;
+    if(charSet == "THAI18") return config.CHARCODE_THAI18;
     return null;
   } else {
     // ------------------------------ Epson Character set ------------------------------
