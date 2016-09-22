@@ -22,7 +22,7 @@ module.exports = {
 
     if(!initConfig.width) initConfig.width = 48;
     if(!initConfig.characterSet) initConfig.characterSet = "SLOVENIA";
-    if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = false;
+    if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = true;
     if(typeof(initConfig.replaceSpecialCharacters) == "undefined") initConfig.replaceSpecialCharacters = true;
 
     printerConfig = initConfig;
@@ -189,7 +189,7 @@ module.exports = {
   drawLine: function(){
     // module.exports.newLine();
     for(var i=0; i<printerConfig.width; i++){
-      append(new Buffer([196]));
+      append(new Buffer("-"));
     }
     module.exports.newLine();
   },
