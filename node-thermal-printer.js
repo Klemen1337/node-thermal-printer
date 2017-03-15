@@ -448,7 +448,7 @@ module.exports = {
       console.error("Barcode not supported on STAR yet");
 
     } else {
-      let settings = settings || {};
+      var settings = settings || {};
 
       //Set HRI characters Position, 0-3 (none, top, bottom, top/bottom)
       if(settings.hriPos){
@@ -733,7 +733,7 @@ module.exports = {
 
 
   // ----------------------------------------------------- PRINT PDF417 -----------------------------------------------------
-  pdf417: function(data) {
+  pdf417: function(data, settings) {
     if (printerConfig.type == 'star') {
       //(1) Bar code type setting (<ESC> <GS> “x” “S”)
       //(2) Bar code data setting (<ESC> <GS> “x” “D”)
