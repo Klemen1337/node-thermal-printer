@@ -82,6 +82,7 @@ printer.init({
 });
 printer.alignCenter();
 printer.println("Hello world");
+printer.printImageBuffer(/* PNG image buffer */, function(done){})
 printer.printImage('./assets/olaii-logo-black.png', function(done){
   printer.cut();
   printer.execute(function(err){

@@ -581,63 +581,69 @@ module.exports = {
     fs.createReadStream(image).pipe(new PNG({
       filterType: 4
     })).on('parsed', function() {
+      module.exports._printImageBufferEpson(this.width, this.height, this.data, function(done){
+        callback(done);
+      });
+    });
+  },
 
-      // Get pixel rgba in 2D array
-      var pixels = [];
-      for (var i = 0; i < this.height; i++) {
-        var line = [];
-        for (var j = 0; j < this.width; j++) {
-          var idx = (this.width * i + j) << 2;
-          line.push({
-            r: this.data[idx],
-            g: this.data[idx + 1],
-            b: this.data[idx + 2],
-            a: this.data[idx + 3]
-          });
-        }
-        pixels.push(line);
+
+  _printImageBufferEpson: function(width, height, data, callback){
+    // Get pixel rgba in 2D array
+    var pixels = [];
+    for (var i = 0; i < height; i++) {
+      var line = [];
+      for (var j = 0; j < width; j++) {
+        var idx = (width * i + j) << 2;
+        line.push({
+          r: data[idx],
+          g: data[idx + 1],
+          b: data[idx + 2],
+          a: data[idx + 3]
+        });
       }
+      pixels.push(line);
+    }
 
-      var imageBuffer = new Buffer([]);
-      for (var i = 0; i < this.height; i++) {
-        for (var j = 0; j < parseInt(this.width/8); j++) {
-          var byte = 0x0;
-          for (var k = 0; k < 8; k++) {
-            var pixel = pixels[i][j*8 + k];
-            if(pixel.a > 126){ // checking transparency
-              grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
+    var imageBuffer = new Buffer([]);
+    for (var i = 0; i < height; i++) {
+      for (var j = 0; j < parseInt(width/8); j++) {
+        var byte = 0x0;
+        for (var k = 0; k < 8; k++) {
+          var pixel = pixels[i][j*8 + k];
+          if(pixel.a > 126){ // checking transparency
+            var grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
 
-              if(grayscale < 128){ // checking color
-                var mask = 1 << 7-k; // setting bitwise mask
-                byte |= mask; // setting the correct bit to 1
-              }
+            if(grayscale < 128){ // checking color
+              var mask = 1 << 7-k; // setting bitwise mask
+              byte |= mask; // setting the correct bit to 1
             }
           }
-
-          imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
         }
+
+        imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
       }
+    }
 
-      // Print raster bit image
-      // GS v 0
-      // 1D 76 30	m	xL xH	yL yH d1...dk
-      // xL = (this.width >> 3) & 0xff;
-      // xH = 0x00;
-      // yL = this.height & 0xff;
-      // yH = (this.height >> 8) & 0xff;
-      // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=94
+    // Print raster bit image
+    // GS v 0
+    // 1D 76 30	m	xL xH	yL yH d1...dk
+    // xL = (this.width >> 3) & 0xff;
+    // xH = 0x00;
+    // yL = this.height & 0xff;
+    // yH = (this.height >> 8) & 0xff;
+    // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=94
 
-      append(new Buffer ([0x1d, 0x76, 0x30, 48]));
-      append(new Buffer ([(this.width >> 3) & 0xff]));
-      append(new Buffer ([0x00]));
-      append(new Buffer ([this.height & 0xff]));
-      append(new Buffer ([(this.height >> 8) & 0xff]));
+    append(new Buffer ([0x1d, 0x76, 0x30, 48]));
+    append(new Buffer ([(width >> 3) & 0xff]));
+    append(new Buffer ([0x00]));
+    append(new Buffer ([height & 0xff]));
+    append(new Buffer ([(height >> 8) & 0xff]));
 
-      // append data
-      append(imageBuffer);
+    // append data
+    append(imageBuffer);
 
-      callback(true);
-    });
+    callback(true);
   },
 
 
@@ -646,60 +652,66 @@ module.exports = {
     fs.createReadStream(image).pipe(new PNG({
       filterType: 4
     })).on('parsed', function() {
+      module.exports._printImageBufferStar(this.width, this.height, this.data, function(done){
+        callback(done);
+      });
+    });
+  },
 
-      // Get pixel rgba in 2D array
-      var pixels = [];
-      for (var i = 0; i < this.height; i++) {
-        var line = [];
-        for (var j = 0; j < this.width; j++) {
-          var idx = (this.width * i + j) << 2;
-          line.push({
-            r: this.data[idx],
-            g: this.data[idx + 1],
-            b: this.data[idx + 2],
-            a: this.data[idx + 3]
-          });
-        }
-        pixels.push(line);
+
+  _printImageBufferStar: function(width, height, data, callback){
+    // Get pixel rgba in 2D array
+    var pixels = [];
+    for (var i = 0; i < height; i++) {
+      var line = [];
+      for (var j = 0; j < width; j++) {
+        var idx = (width * i + j) << 2;
+        line.push({
+          r: data[idx],
+          g: data[idx + 1],
+          b: data[idx + 2],
+          a: data[idx + 3]
+        });
       }
+      pixels.push(line);
+    }
 
-      append(new Buffer([0x1b, 0x30]));
+    append(new Buffer([0x1b, 0x30]));
 
-      // v3
-      for(var i = 0; i < Math.ceil(this.height/24); i++){
-        var imageBuffer = new Buffer([]);
-        for(var y = 0; y < 24; y++){
+    // v3
+    for(var i = 0; i < Math.ceil(height/24); i++){
+      var imageBuffer = new Buffer([]);
+      for(var y = 0; y < 24; y++){
 
-          for (var j = 0; j < Math.ceil(this.width/8); j++) {
-            var byte = 0x0;
+        for (var j = 0; j < Math.ceil(width/8); j++) {
+          var byte = 0x0;
 
-            for (var x = 0; x < 8; x++) {
+          for (var x = 0; x < 8; x++) {
 
-              if((i*24 + y < pixels.length) && (j*8 + x < pixels[i*24 + y].length)){
-                var pixel = pixels[i*24 + y][j*8 + x];
-                if(pixel.a > 126){ // checking transparency
-                  var grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
+            if((i*24 + y < pixels.length) && (j*8 + x < pixels[i*24 + y].length)){
+              var pixel = pixels[i*24 + y][j*8 + x];
+              if(pixel.a > 126){ // checking transparency
+                var grayscale = parseInt(0.2126 * pixel.r + 0.7152 * pixel.g + 0.0722 * pixel.b);
 
-                  if(grayscale < 128){ // checking color
-                    var mask = 1 << 7-x; // setting bitwise mask
-                    byte |= mask; // setting the correct bit to 1
-                  }
+                if(grayscale < 128){ // checking color
+                  var mask = 1 << 7-x; // setting bitwise mask
+                  byte |= mask; // setting the correct bit to 1
                 }
               }
             }
-
-            imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
           }
+
+          imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
         }
-        append(new Buffer([0x1b, 0x6b, parseInt(imageBuffer.length/24), 0x00]));
-        append(imageBuffer);
-        append(new Buffer("\n"));
       }
+      append(new Buffer([0x1b, 0x6b, parseInt(imageBuffer.length/24), 0x00]));
+      append(imageBuffer);
+      append(new Buffer("\n"));
+    }
 
-      append(new Buffer([0x1b, 0x7a, 0x01]));
+    append(new Buffer([0x1b, 0x7a, 0x01]));
 
-      callback(true);
-    });
+    callback(true);
   },
 
 
@@ -728,7 +740,25 @@ module.exports = {
     catch (e) {
       callback(false);
     }
+  },
 
+  // ----------------------------------------------------- PRINT IMAGE BUFFER -----------------------------------------------------
+  printImageBuffer: function(buffer, callback){
+    var png = new PNG({
+      filterType: 4
+    }).parse(buffer);
+
+    png.on('parsed', function() {
+      if (printerConfig.type == 'star'){
+        module.exports._printImageBufferStar(this.width, this.height, this.data, function(response){
+          callback(response);
+        });
+      } else {
+        module.exports._printImageBufferEpson(this.width, this.height, this.data, function(response){
+          callback(response);
+        });
+      }
+    });
   },
 
 
