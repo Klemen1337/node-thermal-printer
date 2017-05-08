@@ -296,8 +296,11 @@ module.exports = {
   },
 
 
-  printQR: function(str){
+  printQR: function(str, settings){
     if (printerConfig.type == 'star') {
+      if(settings) {
+        console.error('Settings not yet available for star')
+      }
       // ------------------------------ Star QR ------------------------------
       // [Name] Set QR code model
       // [Code] Hex. 1B 1D 79 53 30 n
@@ -372,6 +375,8 @@ module.exports = {
       append(config.QRCODE_PRINT);
 
     } else {
+      settings = settings || {};
+
       // ------------------------------ Epson QR ------------------------------
 
       // [Name] Select the QR code model
@@ -382,13 +387,24 @@ module.exports = {
       // [51 x33, micro qr code]
       // n2 = 0
       // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=140
-      append(config.QRCODE_MODEL1);
+      if(settings.model) {
+        if(settings.model == 1) append(config.QRCODE_MODEL1)
+        else if(settings.model == 3) append(config.QRCODE_MODEL3)
+        else append(config.QRCODE_MODEL2)
+      } else {
+        append(config.QRCODE_MODEL2)
+      }
 
       // [Name]: Set the size of module
       // 1D 28 6B 03 00 31 43 n
       // n depends on the printer
       // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=141
-      append(config.QRCODE_CELLSIZE_6);
+      if(settings.cellSize) {
+        let i = "QRCODE_CELLSIZE_".concat(settings.cellSize.toString())
+        append(config[i]);
+      } else {
+        append(config.QRCODE_CELLSIZE_3)
+      }
 
 
       // [Name] Select the error correction level
@@ -399,7 +415,12 @@ module.exports = {
       // [50 x32 -> 25%]
       // [51 x33 -> 30%]
       // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=142
-      append(config.QRCODE_CORRECTION_M);
+      if(settings.correction) {
+        let i = "QRCODE_CORRECTION_".concat(settings.correction.toUpperCase())
+        append(config[i]);
+      } else {
+        append(config.QRCODE_CORRECTION_M)
+      }
 
 
       // [Name] Store the data in the symbol storage area
@@ -421,63 +442,90 @@ module.exports = {
   },
 
 
-  printBarcode: function(data, settings){
+  printBarcode: function(data, type, settings){
     if (printerConfig.type == 'star'){
       // ------------------------------ Star Barcode ------------------------------
       console.error("Barcode not supported on STAR yet");
 
     } else {
-      // ------------------------------ Epson Barcode ------------------------------
-      // [Name] Select bar code height
-      // [Code] Hex 1D 68 n
-      // [Range] 1 ≤ n ≤ 255
-      // [Default] n = 162
-      // [Description] Selects the height of the bar code as n dots.
-      //append(new Buffer([162]));
+      var settings = settings || {};
 
-      // [Name] Print bar code
-      // [Code]  (1) 1D 6B m d1...dk 00
-      //         (2) 1D 6B m n d1...dn
-      // [Range] (1) 0 ≤ m ≤ 6 (k and d depend on the bar code system used)
-      //         (2) 65 ≤ m ≤ 73 (n and d depend on the bar code system used)
-      // [Description] Selects a bar code system and print the bar code.
+      //Set HRI characters Position, 0-3 (none, top, bottom, top/bottom)
+      if(settings.hriPos){
+        append(new Buffer([0x1d, 0x48])) // GS H
+        append(new Buffer([settings.hriPos]))
+      } else {
+        append(new Buffer([0x1d, 0x48, 0x00]))
+      }
 
-      // (1)
-      // m   Bar code       Range of k        Range of d
-      // --------------------------------------------------
-      // 0   UPC-A          11 <= k <= 12     48 <= d <= 57
-      // 1   UPC-E          11 <= k <= 12     48 <= d <= 57
-      // 2   JAN13(EAN13)   12 <= k <= 13     48 <= d <= 57
-      // 3   JAN8(EAN8)      7 <= k <= 8      48 <= d <= 57
-      // 4   CODE39          1 <= k           48 <= d <= 57, 65 <= d <= 90, d = 32, 36, 37, 43, 45, 46, 47
-      // 5   ITF             1 <= k (even)    48 <= d <= 57
-      // 6   CODEBAR(NW7)    1 <= k           48 <= d <= 57, 65 <= d <= 68, d = 36, 43, 45, 46, 47, 58
+      // Set HRI character font. 0-4, 48-52, 97, 98 (depending on printer, 0 and 1 available on all), default 0
+      if(settings.hriFont){
+        append(new Buffer([0x1d, 0x66])) // GS f
+        append(new Buffer([settings.hriFont]))
+      } else {
+        append(new Buffer([0x1d, 0x66, 0x00]))
+      }
 
-      // (2)
-      // m   Bar code       Range of n        Range of d
-      // --------------------------------------------------
-      // 65   UPC-A          11 <= n <= 12     48 <= d <= 57
-      // 66   UPC-E          11 <= n <= 12     48 <= d <= 57
-      // 67   JAN13(EAN13)   12 <= n <= 13     48 <= d <= 57
-      // 68   JAN8(EAN8)      7 <= n <= 8      48 <= d <= 57
-      // 69   CODE39          1 <= n <= 255    48 <= d <= 57, 65 <= d <= 90, d = 32, 36, 37, 43, 45, 46, 47
-      // 70   ITF             1 <= k <= 255    48 <= d <= 57
-      // 71   CODEBAR(NW7)    1 <= k <= 255    48 <= d <= 57, 65 <= d <= 68, d = 36, 43, 45, 46, 47, 58
-      // 72   CODE93          1 <= k <= 255     0 <= d <= 127
-      // 73   CODE128         2 <= n <= 255     0 <= d <= 127
-      //append(new Buffer([0x1d, 0x6B, 73]));
-      //append(new Buffer([data.length]));
-      //append(new Buffer(data));
+      // Set width 2-6, default 3
+      if(settings.width){
+        append(new Buffer([0x1d, 0x77])) // GS W
+        append(new Buffer([settings.width]))
+      } else {
+        append(new Buffer([0x1d, 0x77, 0x03]))
+      }
 
-      //append(new Buffer([0x1d, 0x6B, 50]));
-      //append(new Buffer([0x1d, 0x77, 2]));
-      //append(new Buffer([0x1d, 0x48, 2]));
+      // Set height 1 - 255 default 162
+      if(settings.height){
+        append(new Buffer([0x1d, 0x68])) // GS h
+        append(new Buffer([settings.height]))
+      } else {
+        append(new Buffer([0x1d, 0x68, 0xA2]))
+      }
 
-      append(new Buffer([0x1d, 0x6B, 0x49]));
-      append(new Buffer([data.length+1]));
-      append(new Buffer(data));
-      append(new Buffer([0x10]));
+      // Print Barcode
+      append(new Buffer([0x1d, 0x6b])) // GS k
+      // Select type and bit length of data
+      append(new Buffer([type, data.length]))
+      // Data
+      append(data)
+    }
+  },
 
+  maxiCode: function(data, settings){
+    if (printerConfig.type == 'star') {
+      console.error('MaxiCode not supported on Star yet')
+    }
+    else {
+      var settings = settings || {};
+
+      // Maxi Mode
+      // 2 - Formatted data/structured Carrier Message with a numeric postal code. (US)
+      // 3 - Formatted data/structured Carrier Message with a numeric postal code. (International)
+      // 4 - Unformatted data/Standard Error Correction.
+      // 5 - Unformatted data/Enhanced Error Correction.
+      // 6 - Used for programming hardware devices.
+
+      if(settings.mode) {
+        if(settings.mode == 2) append(config.MAXI_MODE2)
+        else if(settings.mode == 3) append(config.MAXI_MODE3)
+        else if(settings.mode == 5) append(config.MAXI_MODE5)
+        else if(settings.mode == 6) append(config.MAXI_MODE6)
+        else append(config.MAXI_MODE4)
+      } else {
+        append(config.MAXI_MODE4)
+      }
+
+      // Setup size of MaxiCode data
+      var s = data.length + 3;
+      var lsb = parseInt(s % 256);
+      var msb = parseInt(s / 256);
+
+      // Send Data
+      append(new Buffer([0x1d, 0x28, 0x6b, lsb, msb, 0x32, 0x50, 0x30]));
+      append(new Buffer(data.toString()));
+
+      // Print barcode
+      append(config.MAXI_PRINT);
     }
   },
 
@@ -685,7 +733,7 @@ module.exports = {
 
 
   // ----------------------------------------------------- PRINT PDF417 -----------------------------------------------------
-  pdf417: function(data) {
+  pdf417: function(data, settings) {
     if (printerConfig.type == 'star') {
       //(1) Bar code type setting (<ESC> <GS> “x” “S”)
       //(2) Bar code data setting (<ESC> <GS> “x” “D”)
@@ -726,7 +774,59 @@ module.exports = {
       append(new Buffer([0x1b, 0x1d, 0x78, 0x50]));
 
     } else {
-      console.error("PDF417 not supported on EPSON yet");
+      settings = settings || {};
+
+      // Set error correction ratio 1 - 40
+      if(settings.correction){
+        append(config.PDF417_CORRECTION)
+        append(new Buffer([settings.correction]))
+      } else {
+        append(config.PDF417_CORRECTION)
+        append(new Buffer([0x01]))
+      }
+
+      // Set row height 2 - 8
+      if(settings.rowHeight){
+        append(config.PDF417_ROW_HEIGHT)
+        append(new Buffer([settings.rowHeight]))
+      } else {
+        append(config.PDF417_ROW_HEIGHT)
+        append(new Buffer([0x03]))
+      }
+
+      // Set width of module 2 - 8
+      if(settings.width){
+        append(config.PDF417_WIDTH)
+        append(new Buffer([settings.width]))
+      } else {
+        append(config.PDF417_WIDTH)
+        append(new Buffer([0x03]))
+      }
+
+      // Manualy set columns 1 - 30
+      if(settings.columns){
+        append(config.PDF417_COLUMNS)
+        append(new Buffer([settings.columns]))
+      } else {
+        // Defualt to auto
+        append(config.PDF417_COLUMNS)
+        append(new Buffer([0x00]))
+      }
+
+      // Standrad or truncated option
+      if(settings.truncated) append(config.PDF417_OPTION_TRUNCATED)
+      else append(config.PDF417_OPTION_STANDARD)
+
+      // Set PDF417 bar code data
+      var s = data.length + 3;
+      var lsb = parseInt(s % 256);
+      var msb = parseInt(s / 256);
+
+      append(new Buffer([0x1d, 0x28, 0x6b, lsb, msb, 0x30, 0x50, 0x30]));
+      append(new Buffer(data.toString()));
+
+      //Print barcode
+      append(new Buffer(config.PDF417_PRINT))
     }
   },
 
@@ -846,7 +946,7 @@ var append = function(buff){
 
   // Append character set
   if(!buffer && printerConfig.characterSet) buffer = setInternationalCharacterSet(printerConfig.characterSet);
-  
+
   // Append new buffer
   if (buffer) {
     buffer = Buffer.concat([buffer,buff]);
