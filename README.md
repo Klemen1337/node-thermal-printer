@@ -135,9 +135,9 @@ printer.maxiCode("MaxiCode", {
 
 ### 1D Barcode Example
 ```js
-let data = "GS1-128"     // Barcode data (string or buffer)
-let type = 75            // Barcode type (See Reference)
-let settings = {         // Optional Settings
+var data = "GS1-128"     // Barcode data (string or buffer)
+var type = 74            // Barcode type (See Reference)
+var settings = {         // Optional Settings
   hriPos: 0,             // Human readable character 0 - 3 (none, top, bottom, both)
   hriFont: 0,            // Human readable character font
   width: 3,              // Barcode width

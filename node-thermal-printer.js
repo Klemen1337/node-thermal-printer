@@ -400,7 +400,7 @@ module.exports = {
       // n depends on the printer
       // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=141
       if(settings.cellSize) {
-        let i = "QRCODE_CELLSIZE_".concat(settings.cellSize.toString())
+        var i = "QRCODE_CELLSIZE_".concat(settings.cellSize.toString())
         append(config[i]);
       } else {
         append(config.QRCODE_CELLSIZE_3)
@@ -416,7 +416,7 @@ module.exports = {
       // [51 x33 -> 30%]
       // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=142
       if(settings.correction) {
-        let i = "QRCODE_CORRECTION_".concat(settings.correction.toUpperCase())
+        var i = "QRCODE_CORRECTION_".concat(settings.correction.toUpperCase())
         append(config[i]);
       } else {
         append(config.QRCODE_CORRECTION_M)
