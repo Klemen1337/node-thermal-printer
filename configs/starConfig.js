@@ -43,26 +43,24 @@ module.exports = {
     TXT_ALIGN_RT    : new Buffer([0x1b, 0x1d, 0x61, 0x02]), // Right justification
 
     // Char code table
-    CHARCODE_PC437  : new Buffer([0x1b, 0x74, 0x00]), // USA: Standard Europe
-    CHARCODE_JIS    : new Buffer([0x1b, 0x74, 0x01]), // Japanese Katakana
-    CHARCODE_PC850  : new Buffer([0x1b, 0x74, 0x02]), // Multilingual
-    CHARCODE_PC860  : new Buffer([0x1b, 0x74, 0x03]), // Portuguese
-    CHARCODE_PC863  : new Buffer([0x1b, 0x74, 0x04]), // Canadian-French
-    CHARCODE_PC865  : new Buffer([0x1b, 0x74, 0x05]), // Nordic
-    CHARCODE_WEU    : new Buffer([0x1b, 0x74, 0x06]), // Simplified Kanji, Hirakana
-    CHARCODE_GREEK  : new Buffer([0x1b, 0x74, 0x07]), // Simplified Kanji
-    CHARCODE_HEBREW : new Buffer([0x1b, 0x74, 0x08]), // Simplified Kanji
-    CHARCODE_PC1252 : new Buffer([0x1b, 0x74, 0x11]), // Western European Windows Code Set
-    CHARCODE_PC866  : new Buffer([0x1b, 0x74, 0x12]), // Cirillic //2
-    CHARCODE_PC852  : new Buffer([0x1b, 0x74, 0x13]), // Latin 2
-    CHARCODE_PC858  : new Buffer([0x1b, 0x74, 0x14]), // Euro
-    CHARCODE_THAI42 : new Buffer([0x1b, 0x74, 0x15]), // Thai character code 42
-    CHARCODE_THAI11 : new Buffer([0x1b, 0x74, 0x16]), // Thai character code 11
-    CHARCODE_THAI13 : new Buffer([0x1b, 0x74, 0x17]), // Thai character code 13
-    CHARCODE_THAI14 : new Buffer([0x1b, 0x74, 0x18]), // Thai character code 14
-    CHARCODE_THAI16 : new Buffer([0x1b, 0x74, 0x19]), // Thai character code 16
-    CHARCODE_THAI17 : new Buffer([0x1b, 0x74, 0x1a]), // Thai character code 17
-    CHARCODE_THAI18 : new Buffer([0x1b, 0x74, 0x1b]), // Thai character code 18
+    CHARCODE_PC437  : new Buffer([0x1b, 0x1d, 0x74, 0x00]), // USA: Standard Europe
+    CHARCODE_JIS    : new Buffer([0x1b, 0x1d, 0x74, 0x02]), // Japanese Katakana
+    CHARCODE_PC858  : new Buffer([0x1b, 0x1d, 0x74, 0x04]), // Multilingual
+    CHARCODE_PC860  : new Buffer([0x1b, 0x1d, 0x74, 0x06]), // Portuguese
+    CHARCODE_PC863  : new Buffer([0x1b, 0x1d, 0x74, 0x08]), // Canadian-French
+    CHARCODE_PC865  : new Buffer([0x1b, 0x1d, 0x74, 0x09]), // Nordic
+    CHARCODE_GREEK  : new Buffer([0x1b, 0x1d, 0x74, 0x0f]), // Greek
+    CHARCODE_HEBREW : new Buffer([0x1b, 0x1d, 0x74, 0x0d]), // Hebrew
+    CHARCODE_PC1252 : new Buffer([0x1b, 0x1d, 0x74, 0x20]), // Western European Windows Code Set
+    CHARCODE_PC866  : new Buffer([0x1b, 0x1d, 0x74, 0x0a]), // Cirillic //2
+    CHARCODE_PC852  : new Buffer([0x1b, 0x1d, 0x74, 0x05]), // Latin 2
+    CHARCODE_THAI42 : new Buffer([0x1b, 0x1d, 0x74, 0x60]), // Thai character code 42
+    CHARCODE_THAI11 : new Buffer([0x1b, 0x1d, 0x74, 0x61]), // Thai character code 11
+    CHARCODE_THAI13 : new Buffer([0x1b, 0x1d, 0x74, 0x62]), // Thai character code 13
+    CHARCODE_THAI14 : new Buffer([0x1b, 0x1d, 0x74, 0x63]), // Thai character code 14
+    CHARCODE_THAI16 : new Buffer([0x1b, 0x1d, 0x74, 0x64]), // Thai character code 16
+    CHARCODE_THAI17 : new Buffer([0x1b, 0x1d, 0x74, 0x65]), // Thai character code 17
+    CHARCODE_THAI18 : new Buffer([0x1b, 0x1d, 0x74, 0x66]), // Thai character code 18
 
     // Barcode format
     BARCODE_TXT_OFF : new Buffer([0x1d, 0x48, 0x00]), // HRI barcode chars OFF

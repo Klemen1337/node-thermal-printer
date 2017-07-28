@@ -897,11 +897,10 @@ var setInternationalCharacterSet = function(charSet){
     // ------------------------------ Star Character set ------------------------------
     if(charSet == "USA") return config.CHARCODE_PC437;
     if(charSet == "JAPANESE") return config.CHARCODE_JIS;
-    if(charSet == "MULTI") return config.CHARCODE_PC850;
+    if(charSet == "MULTI") return config.CHARCODE_PC858;
     if(charSet == "PORTUGUESE") return config.CHARCODE_PC860;
     if(charSet == "CANADIAN") return config.CHARCODE_PC863;
     if(charSet == "NORDIC") return config.CHARCODE_PC865;
-    if(charSet == "WEU") return config.CHARCODE_WEU;
     if(charSet == "GREEK") return config.CHARCODE_GREEK;
     if(charSet == "HEBREW") return config.CHARCODE_HEBREW;
     if(charSet == "WESTEUROPE") return config.CHARCODE_PC1252;
