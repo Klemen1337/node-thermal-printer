@@ -22,7 +22,8 @@ printer.init({
   interface: '/dev/usb/lp0',                        // Printer interface
   characterSet: 'SLOVENIA',                         // Printer character set
   removeSpecialCharacters: false,                   // Removes special characters - default: false
-  replaceSpecialCharacters: true                    // Replaces special characters listed in config files - default: true
+  replaceSpecialCharacters: true,                   // Replaces special characters listed in config files - default: true
+  extraSpecialCharacters:{'£':163}                  // Adds additional special characters to those listed in the config files
 });
 
 printer.isPrinterConnected( function(isConnected){ } )     // Check if printer is connected, callback passes bool of status
