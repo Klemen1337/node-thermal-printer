@@ -907,7 +907,6 @@ var setInternationalCharacterSet = function(charSet){
     if(charSet == "CIRLILLIC") return config.CHARCODE_PC866;
     if(charSet == "LATIN2") return config.CHARCODE_PC852;
     if(charSet == "SLOVENIA") return config.CHARCODE_PC852;
-    if(charSet == "EURO") return config.CHARCODE_PC858;
     if(charSet == "THAI42") return config.CHARCODE_THAI42;
     if(charSet == "THAI11") return config.CHARCODE_THAI11;
     if(charSet == "THAI13") return config.CHARCODE_THAI13;
