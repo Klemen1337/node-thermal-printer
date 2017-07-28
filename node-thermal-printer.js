@@ -24,6 +24,7 @@ module.exports = {
     if(!initConfig.characterSet) initConfig.characterSet = "SLOVENIA";
     if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = false;
     if(typeof(initConfig.replaceSpecialCharacters) == "undefined") initConfig.replaceSpecialCharacters = true;
+    if(initConfig.extraSpecialCharacters) config.specialCharacters = mergeObjects(config.specialCharacters, initConfig.extraSpecialCharacters);
 
     printerConfig = initConfig;
   },
@@ -940,6 +941,12 @@ var setInternationalCharacterSet = function(charSet){
   }
 };
 
+var mergeObjects = function(obj1, obj2) {
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
+}
 
 var append = function(buff){
 
