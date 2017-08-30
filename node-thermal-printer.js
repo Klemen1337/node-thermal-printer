@@ -605,6 +605,7 @@ module.exports = {
       pixels.push(line);
     }
 
+    var imageBuffer_array=[];
     var imageBuffer = new Buffer([]);
     for (var i = 0; i < height; i++) {
       for (var j = 0; j < parseInt(width/8); j++) {
@@ -621,9 +622,11 @@ module.exports = {
           }
         }
 
-        imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
+        imageBuffer_array.push(byte);
+       // imageBuffer = Buffer.concat([imageBuffer, new Buffer([byte])]);
       }
     }
+    imageBuffer= Buffer.from(imageBuffer_array);
 
     // Print raster bit image
     // GS v 0
