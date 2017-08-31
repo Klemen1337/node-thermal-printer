@@ -24,6 +24,7 @@ module.exports = {
     if(!initConfig.characterSet) initConfig.characterSet = "SLOVENIA";
     if(typeof(initConfig.removeSpecialCharacters) == "undefined") initConfig.removeSpecialCharacters = false;
     if(typeof(initConfig.replaceSpecialCharacters) == "undefined") initConfig.replaceSpecialCharacters = true;
+    if(initConfig.extraSpecialCharacters) config.specialCharacters = mergeObjects(config.specialCharacters, initConfig.extraSpecialCharacters);
 
     printerConfig = initConfig;
   },
@@ -896,18 +897,16 @@ var setInternationalCharacterSet = function(charSet){
     // ------------------------------ Star Character set ------------------------------
     if(charSet == "USA") return config.CHARCODE_PC437;
     if(charSet == "JAPANESE") return config.CHARCODE_JIS;
-    if(charSet == "MULTI") return config.CHARCODE_PC850;
+    if(charSet == "MULTI") return config.CHARCODE_PC858;
     if(charSet == "PORTUGUESE") return config.CHARCODE_PC860;
     if(charSet == "CANADIAN") return config.CHARCODE_PC863;
     if(charSet == "NORDIC") return config.CHARCODE_PC865;
-    if(charSet == "WEU") return config.CHARCODE_WEU;
     if(charSet == "GREEK") return config.CHARCODE_GREEK;
     if(charSet == "HEBREW") return config.CHARCODE_HEBREW;
     if(charSet == "WESTEUROPE") return config.CHARCODE_PC1252;
     if(charSet == "CIRLILLIC") return config.CHARCODE_PC866;
     if(charSet == "LATIN2") return config.CHARCODE_PC852;
     if(charSet == "SLOVENIA") return config.CHARCODE_PC852;
-    if(charSet == "EURO") return config.CHARCODE_PC858;
     if(charSet == "THAI42") return config.CHARCODE_THAI42;
     if(charSet == "THAI11") return config.CHARCODE_THAI11;
     if(charSet == "THAI13") return config.CHARCODE_THAI13;
@@ -940,6 +939,12 @@ var setInternationalCharacterSet = function(charSet){
   }
 };
 
+var mergeObjects = function(obj1, obj2) {
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
+}
 
 var append = function(buff){
 
