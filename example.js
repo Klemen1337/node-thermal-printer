@@ -1,14 +1,14 @@
 var printer = require("./node-thermal-printer");
 printer.init({
-  type: 'star',                  // 'star' or 'epson'
-  interface: '/dev/usb/lp0',
-  width: 48,                      // Number of characters in one line (default 48)
-  characterSet: 'SLOVENIA',       // Character set default SLOVENIA
-  removeSpecialCharacters: false, // Removes special characters - default: false
-  replaceSpecialCharacters: true, // Replaces special characters listed in config files - default: true
-  //lineChar: "=",                  // Use custom character for drawing lines
-  // ip: "localhost",
-  // port: 9000
+  type: printer.printerTypes.EPSON,  // 'star' or 'epson'
+  interface: '/dev/usb/lp0',         // Linux interface
+  width: 48,                         // Number of characters in one line (default 48)
+  characterSet: 'SLOVENIA',          // Character set default SLOVENIA
+  removeSpecialCharacters: false,    // Removes special characters - default: false
+  replaceSpecialCharacters: true,    // Replaces special characters listed in config files - default: true
+  // lineChar: "=",                  // Use custom character for drawing lines
+  // ip: "localhost",                // Ethernet printing IP
+  // port: 9000                      // Ethernet printing PORT
 });
 
 printer.isPrinterConnected(function(response){
@@ -18,6 +18,7 @@ printer.isPrinterConnected(function(response){
 
 printer.alignCenter();
 printer.printImage('./assets/olaii-logo-black-small.png', function(done){
+  printer.beep();
   printer.alignLeft();
   printer.newLine();
   printer.println("Hello World!");
