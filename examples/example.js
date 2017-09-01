@@ -1,4 +1,4 @@
-var printer = require("./node-thermal-printer");
+var printer = require("../node-thermal-printer");
 printer.init({
   type: printer.printerTypes.EPSON,  // 'star' or 'epson'
   interface: '/dev/usb/lp0',         // Linux interface
