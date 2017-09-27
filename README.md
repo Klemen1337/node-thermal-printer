@@ -168,6 +168,19 @@ printer.printBarcode(data, type, settings);
 | 78 | GS1 DataBar  Expanded        | 0 – 9, A – D, a – d, SP, !,  ", %, $, ', (, ), *, +, ,, -, .,  /, :, ;, <, =, >, ?, _, { | 2 - 255                |
 
 
+### Interfaces
+Example configuration strings for the `interface` option:
+* e.g. `\\.\COM1`  
+  On Windows to open a serial or parallel port. (Be sure to escape the string like that: `"interface": "\\\\.\\COM1"`)
+* `tcp://192.168.0.99:9100`  
+  Network print
+* `printer:auto`  
+  Windows node [printer](https://www.npmjs.com/package/printer) wrapper (Thanks to [kkaptan](https://github.com/Klemen1337/node-thermal-printer/issues/7#issuecomment-287342297)). Also supports [electron-printer](https://www.npmjs.com/package/electron-printer).
+  Instead of `auto` (which will select the first raw-only printer), a specific printer name may be used: `printer:EPSON TM-T88V Receipt`
+
+### Usage Tips
+`characterSet` may be configured with `"raw"`, so no replacement is done at all.
+
 ### Docs
 - STAR: http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf
 - EPSON: https://reference.epson-biz.com/modules/ref_escpos/index.php
@@ -176,3 +189,5 @@ printer.printBarcode(data, type, settings);
 ### Tested printers:
 - Star TSP700
 - Rongta RP80US
+- EPSON TM-T88V
+- Posman BTP-R880NP (Type "epson")
