@@ -5,14 +5,17 @@ Node.js module for EPSON and STAR thermal printers command line printing.
 
 
 ### Installation
-Dependency requires build-essentials
+```bash
+$ npm install node-thermal-printer
+```
+
+
+#### Linux specific
+Linux requires build-essentials
 ```bash
 sudo apt-get install build-essential
 ```
 
-```bash
-$ npm install node-thermal-printer
-```
 
 
 ### Features
@@ -73,6 +76,13 @@ print.getText();                                    // Returns printer buffer st
 print.getBuffer();                                  // Returns printer buffer
 print.getWidth();                                   // Get number of characters in one line
 ```
+
+### Interace options
+- `tcp://192.168.0.99:9100` - network printer with port
+- `printer:auto` - auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module
+- `printer:My Printer Name` - select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module module
+- `\\.\COM1` - print via local port or file
+
 
 ### Examples
 ```js
@@ -168,18 +178,9 @@ printer.printBarcode(data, type, settings);
 | 78 | GS1 DataBar  Expanded        | 0 – 9, A – D, a – d, SP, !,  ", %, $, ', (, ), *, +, ,, -, .,  /, :, ;, <, =, >, ?, _, { | 2 - 255                |
 
 
-### Interfaces
-Example configuration strings for the `interface` option:
-* e.g. `\\.\COM1`  
-  On Windows to open a serial or parallel port. (Be sure to escape the string like that: `"interface": "\\\\.\\COM1"`)
-* `tcp://192.168.0.99:9100`  
-  Network print
-* `printer:auto`  
-  Windows node [printer](https://www.npmjs.com/package/printer) wrapper (Thanks to [kkaptan](https://github.com/Klemen1337/node-thermal-printer/issues/7#issuecomment-287342297)). Also supports [electron-printer](https://www.npmjs.com/package/electron-printer).
-  Instead of `auto` (which will select the first raw-only printer), a specific printer name may be used: `printer:EPSON TM-T88V Receipt`
-
 ### Usage Tips
 `characterSet` may be configured with `"raw"`, so no replacement is done at all.
+
 
 ### Docs
 - STAR: http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf

@@ -6,9 +6,12 @@ var writeFile = require("write-file-queue")({
   //, debug : console.error 			// optionally pass a function to do dump debug information to
 });
 
+
 function File(path) {
   this.path = path;
 }
+
+
 File.prototype.execute = function(buffer, cb) {
   writeFile(this.path, buffer, function (err) {
     if (err) {
@@ -26,6 +29,8 @@ File.prototype.execute = function(buffer, cb) {
     }
   });
 };
+
+
 File.prototype.isPrinterConnected = function(exists){
   if (this.path){
     fs.exists(this.path, function(ex){

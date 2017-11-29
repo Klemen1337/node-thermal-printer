@@ -8,6 +8,8 @@ function PrinterIface(printerName, moduleName) {
     this.driver = require(moduleName || (electron ? "electron-printer" : "printer"));
   }
 }
+
+
 PrinterIface.prototype.getPrinterName = function() {
   var name = this.name;
   if (!name || name === "auto") {
@@ -21,6 +23,8 @@ PrinterIface.prototype.getPrinterName = function() {
   }
   return name;
 };
+
+
 PrinterIface.prototype.isPrinterConnected = function(exists){
   if (this.driver.getPrinter(this.getPrinterName())) {
     exists(true);
@@ -28,6 +32,8 @@ PrinterIface.prototype.isPrinterConnected = function(exists){
     exists(false);
   }
 };
+
+
 PrinterIface.prototype.execute = function(buffer, cb) {
   this.driver.printDirect({
     data: buffer,
