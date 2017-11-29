@@ -1,11 +1,8 @@
 {
   "name": "node-thermal-printer",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Made to work with Epson and Star thermal printers",
   "main": "node-thermal-printer.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Klemen1337/node-thermal-printer"
@@ -24,7 +21,7 @@
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
     "net": "^1.0.2",
-    "node-png": "^0.4.3",
+    "pngjs": "^3.2.0",
     "unorm": "^1.4.1",
     "write-file-queue": "0.0.1"
   }
