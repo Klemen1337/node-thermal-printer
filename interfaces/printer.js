@@ -1,11 +1,9 @@
-const electron = typeof process !== 'undefined' && process.versions && !!process.versions.electron;
-
 function PrinterIface(printerName, moduleName) {
   this.name = printerName;
   if (moduleName && typeof moduleName === "object") {
     this.driver = moduleName;
   } else {
-    this.driver = require(moduleName || (electron ? "electron-printer" : "printer"));
+    this.driver = require(moduleName || "printer");
   }
 }
 
