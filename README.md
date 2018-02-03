@@ -79,8 +79,8 @@ print.getWidth();                                   // Get number of characters 
 
 ### Interace options
 - `tcp://192.168.0.99:9100` - network printer with port
-- `printer:auto` - auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module
-- `printer:My Printer Name` - select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module module
+- `printer:auto` - auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) module
+- `printer:My Printer Name` - select system printer by name via [Printer](https://www.npmjs.com/package/printer) module
 - `\\.\COM1` - print via local port or file
 
 
