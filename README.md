@@ -74,6 +74,7 @@ printer.printImage('./assets/olaii-logo-black.png', function(done){ }); // Print
 print.clear();                                      // Clears printText value
 print.getText();                                    // Returns printer buffer string value
 print.getBuffer();                                  // Returns printer buffer
+print.setBuffer(newBuffer);                         // Set the printer buffer to a copy of newBuffer
 print.getWidth();                                   // Get number of characters in one line
 ```
 
