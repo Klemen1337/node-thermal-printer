@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
+    "encoding": "^0.1.12",
     "net": "^1.0.2",
     "pngjs": "^3.2.0",
     "unorm": "^1.4.1",
