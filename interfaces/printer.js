@@ -5,7 +5,9 @@ function PrinterIface(printerName, moduleName) {
   if (moduleName && typeof moduleName === "object") {
     this.driver = moduleName;
   } else {
-    this.driver = require(moduleName || (electron ? "electron-printer" : "printer"));
+    // electron-printer is out of dated, use node-printer if necessary
+    this.driver = require(moduleName || "printer");
+    // this.driver = require(moduleName || (electron ? "electron-printer" : "printer"));
   }
 }
 
