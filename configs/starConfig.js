@@ -62,6 +62,13 @@ module.exports = {
     CHARCODE_THAI17 : new Buffer([0x1b, 0x1d, 0x74, 0x65]), // Thai character code 17
     CHARCODE_THAI18 : new Buffer([0x1b, 0x1d, 0x74, 0x66]), // Thai character code 18
 
+    // Character code pages / iconv name of code table.
+    // Only code pages supported by iconv-lite are supported:
+    // https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings
+    CODE_PAGES: {
+        // TODO
+    },
+
     // Barcode format
     BARCODE_TXT_OFF : new Buffer([0x1d, 0x48, 0x00]), // HRI barcode chars OFF
     BARCODE_TXT_ABV : new Buffer([0x1d, 0x48, 0x01]), // HRI barcode chars above
@@ -127,26 +134,4 @@ module.exports = {
     PD_P50          : new Buffer([0x1d, 0x7c, 0x08]), // Printing Density +50%
     PD_P37          : new Buffer([0x1d, 0x7c, 0x07]), // Printing Density +37.5%
     PD_P25          : new Buffer([0x1d, 0x7c, 0x06]), // Printing Density +25%
-
-    specialCharacters: {
-      "Č": 172,
-      "č": 159,
-      "Š": 230,
-      "š": 231,
-      "Ž": 166,
-      "ž": 167,
-      "Đ": 209,
-      "đ": 208,
-      "Ć": 143,
-      "ć": 134,
-      "ß": 225,
-      "ẞ": 225,
-      "ö": 148,
-      "Ö": 153,
-      "Ä": 142,
-      "ä": 132,
-      "ü": 129,
-      "Ü": 154,
-      "é": 130
-    }
-}
+};

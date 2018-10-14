@@ -61,6 +61,42 @@ module.exports = {
     CHARCODE_VIETNAM    : new Buffer([0x1b, 0x52, 0x10]), // Vietnam
     CHARCODE_ARABIA     : new Buffer([0x1b, 0x52, 0x11]), // ARABIA
 
+    // Character code pages / iconv name of code table.
+    // Only code pages supported by iconv-lite are supported:
+    // https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings
+    CODE_PAGES: {
+        PC437_USA           : [Buffer.from([0x1b, 0x74, 0]), 'CP437'],
+        PC850_MULTILINGUAL  : [Buffer.from([0x1b, 0x74, 2]), 'CP850'],
+        PC860_PORTUGUESE    : [Buffer.from([0x1b, 0x74, 3]), 'CP860'],
+        PC863_CANADIAN_FRENCH : [Buffer.from([0x1b, 0x74, 4]), 'CP863'],
+        PC865_NORDIC        : [Buffer.from([0x1b, 0x74, 4]), 'CP865'],
+        PC851_GREEK         : [Buffer.from([0x1b, 0x74, 11]), 'CP860'],
+        // PC853_TURKISH       : [Buffer.from([0x1b, 0x74, 12]), 'CP853'],
+        PC857_TURKISH       : [Buffer.from([0x1b, 0x74, 13]), 'CP857'],
+        PC737_GREEK         : [Buffer.from([0x1b, 0x74, 14]), 'CP737'],
+        ISO8859_7_GREEK     : [Buffer.from([0x1b, 0x74, 15]), 'ISO-8859-7'],
+        WPC1252             : [Buffer.from([0x1b, 0x74, 16]), 'CP1252'],
+        PC866_CYRILLIC2     : [Buffer.from([0x1b, 0x74, 17]), 'CP866'],
+        PC852_LATIN2        : [Buffer.from([0x1b, 0x74, 18]), 'CP852'],
+        PC858_EURO          : [Buffer.from([0x1b, 0x74, 19]), 'CP858'],
+        WPC775_BALTIC_RIM   : [Buffer.from([0x1b, 0x74, 33]), 'CP775'],
+        PC855_CYRILLIC      : [Buffer.from([0x1b, 0x74, 34]), 'CP855'],
+        PC861_ICELANDIC     : [Buffer.from([0x1b, 0x74, 35]), 'CP861'],
+        PC862_HEBREW        : [Buffer.from([0x1b, 0x74, 36]), 'CP862'],
+        PC864_ARABIC        : [Buffer.from([0x1b, 0x74, 37]), 'CP864'],
+        PC869_GREEK         : [Buffer.from([0x1b, 0x74, 38]), 'CP869'],
+        ISO8859_2_LATIN2    : [Buffer.from([0x1b, 0x74, 39]), 'ISO-8859-2'],
+        ISO8859_15_LATIN9   : [Buffer.from([0x1b, 0x74, 40]), 'ISO-8859-15'],
+        PC1125_UKRANIAN     : [Buffer.from([0x1b, 0x74, 44]), 'CP1125'],
+        WPC1250_LATIN2      : [Buffer.from([0x1b, 0x74, 45]), 'WIN1250'],
+        WPC1251_CYRILLIC    : [Buffer.from([0x1b, 0x74, 46]), 'WIN1251'],
+        WPC1253_GREEK       : [Buffer.from([0x1b, 0x74, 47]), 'WIN1253'],
+        WPC1254_TURKISH     : [Buffer.from([0x1b, 0x74, 48]), 'WIN1254'],
+        WPC1255_HEBREW      : [Buffer.from([0x1b, 0x74, 49]), 'WIN1255'],
+        WPC1256_ARABIC      : [Buffer.from([0x1b, 0x74, 50]), 'WIN1256'],
+        WPC1257_BALTIC_RIM  : [Buffer.from([0x1b, 0x74, 51]), 'WIN1257'],
+        WPC1258_VIETNAMESE  : [Buffer.from([0x1b, 0x74, 52]), 'WIN1258']
+    },
 
     // Barcode format
     BARCODE_TXT_OFF : new Buffer([0x1d, 0x48, 0x00]), // HRI barcode chars OFF
@@ -139,26 +175,4 @@ module.exports = {
     PD_P50          : new Buffer([0x1d, 0x7c, 0x08]), // Printing Density +50%
     PD_P37          : new Buffer([0x1d, 0x7c, 0x07]), // Printing Density +37.5%
     PD_P25          : new Buffer([0x1d, 0x7c, 0x06]), // Printing Density +25%
-
-    specialCharacters: {
-      "Č": 94,
-      "č": 126,
-      "Š": 91,
-      "š": 123,
-      "Ž": 64,
-      "ž": 96,
-      "Đ": 92,
-      "đ": 124,
-      "Ć": 93,
-      "ć": 125,
-      "ß": 225,
-      "ẞ": 225,
-      "ö": 148,
-      "Ö": 153,
-      "Ä": 142,
-      "ä": 132,
-      "ü": 129,
-      "Ü": 154,
-      "é": 130
-    }
-}
+};

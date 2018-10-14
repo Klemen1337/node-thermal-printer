@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
+    "iconv-lite": "^0.4.24",
     "net": "^1.0.2",
     "pngjs": "^3.2.0",
     "unorm": "^1.4.1",
     "write-file-queue": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.11.7"
   }
 }
