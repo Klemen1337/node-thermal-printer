@@ -42,31 +42,85 @@ module.exports = {
     TXT_ALIGN_CT    : new Buffer([0x1b, 0x1d, 0x61, 0x01]), // Centering
     TXT_ALIGN_RT    : new Buffer([0x1b, 0x1d, 0x61, 0x02]), // Right justification
 
-    // Char code table
-    CHARCODE_PC437  : new Buffer([0x1b, 0x1d, 0x74, 0x00]), // USA: Standard Europe
-    CHARCODE_JIS    : new Buffer([0x1b, 0x1d, 0x74, 0x02]), // Japanese Katakana
-    CHARCODE_PC858  : new Buffer([0x1b, 0x1d, 0x74, 0x04]), // Multilingual
-    CHARCODE_PC860  : new Buffer([0x1b, 0x1d, 0x74, 0x06]), // Portuguese
-    CHARCODE_PC863  : new Buffer([0x1b, 0x1d, 0x74, 0x08]), // Canadian-French
-    CHARCODE_PC865  : new Buffer([0x1b, 0x1d, 0x74, 0x09]), // Nordic
-    CHARCODE_GREEK  : new Buffer([0x1b, 0x1d, 0x74, 0x0f]), // Greek
-    CHARCODE_HEBREW : new Buffer([0x1b, 0x1d, 0x74, 0x0d]), // Hebrew
-    CHARCODE_PC1252 : new Buffer([0x1b, 0x1d, 0x74, 0x20]), // Western European Windows Code Set
-    CHARCODE_PC866  : new Buffer([0x1b, 0x1d, 0x74, 0x0a]), // Cirillic //2
-    CHARCODE_PC852  : new Buffer([0x1b, 0x1d, 0x74, 0x05]), // Latin 2
-    CHARCODE_THAI42 : new Buffer([0x1b, 0x1d, 0x74, 0x60]), // Thai character code 42
-    CHARCODE_THAI11 : new Buffer([0x1b, 0x1d, 0x74, 0x61]), // Thai character code 11
-    CHARCODE_THAI13 : new Buffer([0x1b, 0x1d, 0x74, 0x62]), // Thai character code 13
-    CHARCODE_THAI14 : new Buffer([0x1b, 0x1d, 0x74, 0x63]), // Thai character code 14
-    CHARCODE_THAI16 : new Buffer([0x1b, 0x1d, 0x74, 0x64]), // Thai character code 16
-    CHARCODE_THAI17 : new Buffer([0x1b, 0x1d, 0x74, 0x65]), // Thai character code 17
-    CHARCODE_THAI18 : new Buffer([0x1b, 0x1d, 0x74, 0x66]), // Thai character code 18
+    // All code pages supported by printer.
+    CODE_PAGE_PC437_USA           : Buffer.from([0x1b, 0x74, 0]),
+    CODE_PAGE_KATAKANA            : Buffer.from([0x1b, 0x74, 1]),
+    CODE_PAGE_PC850_MULTILINGUAL  : Buffer.from([0x1b, 0x74, 2]),
+    CODE_PAGE_PC860_PORTUGUESE    : Buffer.from([0x1b, 0x74, 3]),
+    CODE_PAGE_PC863_CANADIAN_FRENCH : Buffer.from([0x1b, 0x74, 4]),
+    CODE_PAGE_PC865_NORDIC        : Buffer.from([0x1b, 0x74, 5]),
+    CODE_PAGE_PC851_GREEK         : Buffer.from([0x1b, 0x74, 11]),
+    CODE_PAGE_PC853_TURKISH       : Buffer.from([0x1b, 0x74, 12]),
+    CODE_PAGE_PC857_TURKISH       : Buffer.from([0x1b, 0x74, 13]),
+    CODE_PAGE_PC737_GREEK         : Buffer.from([0x1b, 0x74, 14]),
+    CODE_PAGE_ISO8859_7_GREEK     : Buffer.from([0x1b, 0x74, 15]),
+    CODE_PAGE_WPC1252             : Buffer.from([0x1b, 0x74, 16]),
+    CODE_PAGE_PC866_CYRILLIC2     : Buffer.from([0x1b, 0x74, 17]),
+    CODE_PAGE_PC852_LATIN2        : Buffer.from([0x1b, 0x74, 18]),
+    CODE_PAGE_PC858_EURO          : Buffer.from([0x1b, 0x74, 19]),
+    CODE_PAGE_KU42_THAI           : Buffer.from([0x1b, 0x74, 20]),
+    CODE_PAGE_TIS11_THAI          : Buffer.from([0x1b, 0x74, 21]),
+    CODE_PAGE_TIS18_THAI          : Buffer.from([0x1b, 0x74, 26]),
+    CODE_PAGE_TCVN3_VIETNAMESE_L  : Buffer.from([0x1b, 0x74, 30]),
+    CODE_PAGE_TCVN3_VIETNAMESE_U  : Buffer.from([0x1b, 0x74, 31]),
+    CODE_PAGE_PC720_ARABIC        : Buffer.from([0x1b, 0x74, 32]),
+    CODE_PAGE_WPC775_BALTIC_RIM   : Buffer.from([0x1b, 0x74, 33]),
+    CODE_PAGE_PC855_CYRILLIC      : Buffer.from([0x1b, 0x74, 34]),
+    CODE_PAGE_PC861_ICELANDIC     : Buffer.from([0x1b, 0x74, 35]),
+    CODE_PAGE_PC862_HEBREW        : Buffer.from([0x1b, 0x74, 36]),
+    CODE_PAGE_PC864_ARABIC        : Buffer.from([0x1b, 0x74, 37]),
+    CODE_PAGE_PC869_GREEK         : Buffer.from([0x1b, 0x74, 38]),
+    CODE_PAGE_ISO8859_2_LATIN2    : Buffer.from([0x1b, 0x74, 39]),
+    CODE_PAGE_ISO8859_15_LATIN9   : Buffer.from([0x1b, 0x74, 40]),
+    CODE_PAGE_PC1098_FARCI        : Buffer.from([0x1b, 0x74, 41]),
+    CODE_PAGE_PC1118_LITHUANIAN   : Buffer.from([0x1b, 0x74, 42]),
+    CODE_PAGE_PC1119_LITHUANIAN   : Buffer.from([0x1b, 0x74, 43]),
+    CODE_PAGE_PC1125_UKRANIAN     : Buffer.from([0x1b, 0x74, 44]),
+    CODE_PAGE_WPC1250_LATIN2      : Buffer.from([0x1b, 0x74, 45]),
+    CODE_PAGE_WPC1251_CYRILLIC    : Buffer.from([0x1b, 0x74, 46]),
+    CODE_PAGE_WPC1253_GREEK       : Buffer.from([0x1b, 0x74, 47]),
+    CODE_PAGE_WPC1254_TURKISH     : Buffer.from([0x1b, 0x74, 48]),
+    CODE_PAGE_WPC1255_HEBREW      : Buffer.from([0x1b, 0x74, 49]),
+    CODE_PAGE_WPC1256_ARABIC      : Buffer.from([0x1b, 0x74, 50]),
+    CODE_PAGE_WPC1257_BALTIC_RIM  : Buffer.from([0x1b, 0x74, 51]),
+    CODE_PAGE_WPC1258_VIETNAMESE  : Buffer.from([0x1b, 0x74, 52]),
+    CODE_PAGE_KZ1048_KAZAKHSTAN   : Buffer.from([0x1b, 0x74, 53]),
 
     // Character code pages / iconv name of code table.
-    // Only code pages supported by iconv-lite are supported:
+    // Only code pages supported by iconv-lite:
     // https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings
     CODE_PAGES: {
-        // TODO
+      PC437_USA             : 'CP437',
+      PC850_MULTILINGUAL    : 'CP850',
+      PC860_PORTUGUESE      : 'CP860',
+      PC863_CANADIAN_FRENCH : 'CP863',
+      PC865_NORDIC          : 'CP865',
+      PC851_GREEK           : 'CP860',
+      PC857_TURKISH         : 'CP857',
+      PC737_GREEK           : 'CP737',
+      ISO8859_7_GREEK       : 'ISO-8859-7',
+      WPC1252               : 'CP1252',
+      PC866_CYRILLIC2       : 'CP866',
+      PC852_LATIN2          : 'CP852',
+      PC858_EURO            : 'CP858',
+      WPC775_BALTIC_RIM     : 'CP775',
+      PC855_CYRILLIC        : 'CP855',
+      PC861_ICELANDIC       : 'CP861',
+      PC862_HEBREW          : 'CP862',
+      PC864_ARABIC          : 'CP864',
+      PC869_GREEK           : 'CP869',
+      ISO8859_2_LATIN2      : 'ISO-8859-2',
+      ISO8859_15_LATIN9     : 'ISO-8859-15',
+      PC1125_UKRANIAN       : 'CP1125',
+      WPC1250_LATIN2        : 'WIN1250',
+      WPC1251_CYRILLIC      : 'WIN1251',
+      WPC1253_GREEK         : 'WIN1253',
+      WPC1254_TURKISH       : 'WIN1254',
+      WPC1255_HEBREW        : 'WIN1255',
+      WPC1256_ARABIC        : 'WIN1256',
+      WPC1257_BALTIC_RIM    : 'WIN1257',
+      WPC1258_VIETNAMESE    : 'WIN1258',
+      KZ1048_KAZAKHSTAN     : 'RK1048'
     },
 
     // Barcode format

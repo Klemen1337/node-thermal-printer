@@ -20,17 +20,7 @@ export interface IPrinterConfig {
     interface: string,
 
     /**
-     * @deprecated Replaced by iconv and unicode
-     */
-    characterSet?: string,
-
-    /**
-     * If true, it replaces special characters by ascii equivalent?
+     * If true, it replaces special characters by ascii equivalent.
      */
     removeSpecialCharacters?: boolean,
-
-    /**
-     * If true, it replaces
-     */
-    replaceSpecialCharacters?: boolean
 }
