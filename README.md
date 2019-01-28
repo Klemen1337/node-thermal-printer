@@ -26,7 +26,10 @@ printer.init({
   characterSet: 'SLOVENIA',                         // Printer character set
   removeSpecialCharacters: false,                   // Removes special characters - default: false
   replaceSpecialCharacters: true,                   // Replaces special characters listed in config files - default: true
-  extraSpecialCharacters:{'£':163}                  // Adds additional special characters to those listed in the config files
+  extraSpecialCharacters:{'£':163},                 // Adds additional special characters to those listed in the config files
+  options:{                                         // Additional options
+    timeout: 5000                                   // Connection timeout (ms) [applicable only for network printers] - default: 3000
+  }
 });
 
 printer.isPrinterConnected( function(isConnected){ } )     // Check if printer is connected, callback passes bool of status
