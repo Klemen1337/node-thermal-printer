@@ -12,6 +12,7 @@ interface printer {
     removeSpecialCharacters?: boolean;
     replaceSpecialCharacters?: boolean;
     extraSpecialCharacters?: { [key: string]: string };
+    options?: { timeout?: number };
   }): void;
 
   execute(cb?: (err: Error | string | null) => void): void;

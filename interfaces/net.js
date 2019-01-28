@@ -1,7 +1,8 @@
 var net = require("net");
 
-function NetPrint(host, port) {
-  this.timeout = 3000;
+function NetPrint(host, port, options) {
+  options = options || {};
+  this.timeout = options.timeout || 3000;
   this.host = host;
   this.port = port || 9100;
 }
