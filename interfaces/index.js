@@ -1,7 +1,7 @@
 const parseNet = /^tcp:\/\/([^\/:]+)(?::(\d+))?\/?$/i;
 const parsePrinter = /^printer:([^\/]+)(?:\/([\w-]*))?$/i;
 
-function getInterface(uri) {
+function getInterface(uri, options) {
   if (typeof uri === "object") {
     return uri;
   }
@@ -9,7 +9,7 @@ function getInterface(uri) {
   const net = parseNet.exec(uri);
   if (net) {
     const Mod = require('./net');
-    return new Mod(net[1], net[2]);
+    return new Mod(net[1], net[2], options);
   }
 
   const printer = parsePrinter.exec(uri);
