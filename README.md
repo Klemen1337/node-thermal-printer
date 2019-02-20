@@ -34,7 +34,7 @@ printer.init({
 
 let isConnected = await printer.isPrinterConnected()        // Check if printer is connected, return bool of status
 let execute = await printer.execute();                      // Executes all the commands. Returns success or throws error
-let raw = printer.raw(Buffer.from("Hello world"));          // Print instantly. Returns success or throws error
+let raw = await printer.raw(Buffer.from("Hello world"));    // Print instantly. Returns success or throws error
 printer.print("Hello World");                               // Append text
 printer.println("Hello World");                             // Append text with new line
 printer.openCashDrawer();                                   // Kick the cash drawer
