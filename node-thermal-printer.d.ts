@@ -11,11 +11,15 @@ interface printer {
     characterSet?: string;
     removeSpecialCharacters?: boolean;
     replaceSpecialCharacters?: boolean;
-    extraSpecialCharacters?: { [key: string]: string };
-    options?: { timeout?: number };
+    extraSpecialCharacters?: { 
+      [key: string]: string
+    };
+    options?: { 
+      timeout?: number
+    };
   }): void;
 
-  execute(cb?: (err: Error | string | null) => void): void;
+  execute(): Promise;
   cut(): void;
   partialCut(): void;
   beep(): void;
@@ -45,8 +49,13 @@ interface printer {
   drawLine(): void;
   leftRight(left: string, right: string): void;
   table(data: string[]): void;
-  tableCustom(data: { text: string; align?: "CENTER" | "RIGHT" | "LEFT"; width?: number; bold?: boolean }[]): void;
-  isPrinterConnected(existsCallback: (exists: boolean) => void): void;
+  tableCustom(data: { 
+    text: string; 
+    align?: "CENTER" | "RIGHT" | "LEFT"; 
+    width?: number; 
+    bold?: boolean
+  }[]): void;
+  isPrinterConnected(): Promise<boolean>;
   printQR(
     str: string,
     settings?: {
@@ -89,9 +98,9 @@ interface printer {
       columns?: number;
     }
   ): void;
-  printImage(image: string, callback: (success: boolean) => void): void;
-  printImageBuffer(buffer: Buffer, callback: (success: boolean) => void): void;
-  raw(text: Buffer, cb?: (err: Error | string | null) => void): void;
+  printImage(image: string): Promise<Buffer>;
+  printImageBuffer(buffer: Buffer): Promise<string>;
+  raw(text: Buffer): Promise<string>;
 }
 
 export = printer;

@@ -1,7 +1,7 @@
 const parseNet = /^tcp:\/\/([^\/:]+)(?::(\d+))?\/?$/i;
 const parsePrinter = /^printer:([^\/]+)(?:\/([\w-]*))?$/i;
 
-function getInterface(uri, options) {
+function getInterface (uri, options) {
   if (typeof uri === "object") {
     return uri;
   }
