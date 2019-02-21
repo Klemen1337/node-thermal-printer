@@ -28,7 +28,7 @@ File.prototype.isPrinterConnected = function () {
   return new Promise((resolve, reject) => {
     if (this.path) {
       fs.exists(this.path, function (exists) {
-        resolve(exist);
+        resolve(exists);
       });
     } else {
       reject(new Error("No path"));
