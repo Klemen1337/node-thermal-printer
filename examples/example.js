@@ -1,8 +1,9 @@
-var printer = require("../node-thermal-printer");
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const PrinterTypes = require("../node-thermal-printer").types;
 
 async function example () {
-  printer.init({
-    type: printer.printerTypes.EPSON,  // 'star' or 'epson'
+  let printer = new ThermalPrinter({
+    type: PrinterTypes.STAR,  // 'star' or 'epson'
     interface: 'tcp://172.16.10.15',
     options: {
       timeout: 1000
@@ -21,7 +22,6 @@ async function example () {
   printer.alignCenter();
   await printer.printImage('./assets/olaii-logo-black-small.png');
 
-  printer.beep();
   printer.alignLeft();
   printer.newLine();
   printer.println("Hello World!");
@@ -65,13 +65,13 @@ async function example () {
   printer.println("This is normal");
   printer.drawLine();
 
-  printer.printBarcode("4126570807191");
-
   try {
+    printer.printBarcode("4126570807191");
     printer.code128("4126570807191", {
       height: 50,
       text: 1
     });
+    printer.beep();
   } catch (error) {
     console.error(error);
   }
@@ -101,7 +101,6 @@ async function example () {
   } catch (error) {
     console.error("Print error:", error);
   }
-  
 }
 
 example();

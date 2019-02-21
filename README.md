@@ -20,8 +20,11 @@ sudo apt-get install build-essential
 
 ### Features
 ```js
-printer.init({
-  type: 'star',                                             // Printer type: 'star' or 'epson'
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const PrinterTypes = require("../node-thermal-printer").types;
+
+let printer = new ThermalPrinter({
+  type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
   characterSet: 'SLOVENIA',                                 // Printer character set
   removeSpecialCharacters: false,                           // Removes special characters - default: false
@@ -90,9 +93,11 @@ print.getWidth();                                           // Get number of cha
 
 ### Examples
 ```js
-var printer = require("node-thermal-printer");
-printer.init({
-  type: 'epson',
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const PrinterTypes = require("../node-thermal-printer").types;
+
+let printer = new ThermalPrinter({
+  type: PrinterTypes.EPSON,
   interface: 'tcp://xxx.xxx.xxx.xxx'
 });
 
