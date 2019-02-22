@@ -6,7 +6,7 @@ const qr = require('qr-image');
 async function printImage () {
   let printer = new ThermalPrinter({
     type: Types.EPSON,
-    interface: process.argv[1]
+    interface: process.argv[2]
   });
 
   var qr_buffer = qr.imageSync(

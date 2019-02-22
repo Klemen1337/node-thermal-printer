@@ -5,12 +5,12 @@ const arguments = process.argv;
 // Setup printers
 let printer = new ThermalPrinter({
   type: Types.EPSON,
-  interface: process.argv[1]
+  interface: process.argv[2]
 });
 
 let printer2 = new ThermalPrinter({
   type: Types.EPSON,
-  interface: process.argv[2]
+  interface: process.argv[3]
 });
 
 
