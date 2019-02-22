@@ -1,17 +1,16 @@
-var printer = require("../node-thermal-printer");
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const Types = require("../node-thermal-printer").types;
+
 
 async function testConnection () {
-  // Test network printer connection
-  printer.init({
-    type: printer.printerTypes.EPSON,
-    interface: 'tcp://172.16.10.15',
-    options: {
-      timeout: 1000
-    }
+  let printer = new ThermalPrinter({
+    type: Types.EPSON,
+    interface: process.argv[1]
   });
 
   let isConnected = await printer.isPrinterConnected();
   console.log("Printer connected:", isConnected);
 }
+
 
 testConnection();

@@ -1,8 +1,9 @@
-var printer = require("../node-thermal-printer");
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const Types = require("../node-thermal-printer").types;
 
-printer.init({
-  type: printer.printerTypes.EPSON,
-  interface: '/dev/usb/lp0'
+let printer = new ThermalPrinter({
+  type: Types.EPSON,
+  interface: process.argv[1]
 });
 
 // Print all avaliable charcodes

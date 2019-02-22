@@ -1,13 +1,12 @@
-var printer = require("../node-thermal-printer");
-var qr = require('qr-image');
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const Types = require("../node-thermal-printer").types;
+const qr = require('qr-image');
+
 
 async function printImage () {
-  printer.init({
-    type: printer.printerTypes.EPSON,
-    interface: 'tcp://172.16.10.15',
-    options: {
-      timeout: 1000
-    }
+  let printer = new ThermalPrinter({
+    type: Types.EPSON,
+    interface: process.argv[1]
   });
 
   var qr_buffer = qr.imageSync(

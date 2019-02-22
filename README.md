@@ -92,6 +92,7 @@ print.getWidth();                                           // Get number of cha
 
 
 ### Examples
+
 ```js
 const ThermalPrinter = require("../node-thermal-printer").printer;
 const PrinterTypes = require("../node-thermal-printer").types;

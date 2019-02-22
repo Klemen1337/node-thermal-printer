@@ -1,12 +1,10 @@
-var printer = require("../node-thermal-printer");
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const Types = require("../node-thermal-printer").types;
 
 async function printImage () {
-  printer.init({
-    type: printer.printerTypes.EPSON,
-    interface: 'tcp://172.16.10.15',
-    options: {
-      timeout: 1000
-    }
+  let printer = new ThermalPrinter({
+    type: Types.EPSON,
+    interface: process.argv[1]
   });
 
   await printer.printImage('./assets/olaii-logo-black-small.png');
