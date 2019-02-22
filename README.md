@@ -1,4 +1,4 @@
-# node-thermal-printer
+# Node Thermal Printer
 Node.js module for EPSON and STAR thermal printers command line printing.
 
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -15,7 +15,6 @@ Linux requires build-essentials
 ```bash
 sudo apt-get install build-essential
 ```
-
 
 
 ### Features
@@ -35,7 +34,7 @@ let printer = new ThermalPrinter({
   }
 });
 
-let isConnected = await printer.isPrinterConnected()        // Check if printer is connected, return bool of status
+let isConnected = await printer.isPrinterConnected();       // Check if printer is connected, return bool of status
 let execute = await printer.execute();                      // Executes all the commands. Returns success or throws error
 let raw = await printer.raw(Buffer.from("Hello world"));    // Print instantly. Returns success or throws error
 printer.print("Hello World");                               // Append text
@@ -84,15 +83,17 @@ print.setBuffer(newBuffer);                                 // Set the printer b
 print.getWidth();                                           // Get number of characters in one line
 ```
 
+
 ### Interace options
-- `tcp://192.168.0.99:9100` - network printer with port
-- `printer:auto` - auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module
-- `printer:My Printer Name` - select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module module
-- `\\.\COM1` - print via local port or file
+| Value | Descripton |
+|-------|------------|
+| `tcp://192.168.0.99:9100` | Network printer with port |
+| `printer:auto` | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
+| `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module module |
+| `\\.\COM1` | Print via local port or file |
 
 
-### Examples
-
+### Example
 ```js
 const ThermalPrinter = require("../node-thermal-printer").printer;
 const PrinterTypes = require("../node-thermal-printer").types;
@@ -115,6 +116,7 @@ try {
 }
 ```
 
+
 ### 2D Barcode Examples
 Example settings are the default when not specified.
 
@@ -122,7 +124,7 @@ Example settings are the default when not specified.
 printer.code128("Code128", {
     width: "LARGE",          // "SMALL", "MEDIUM", "LARGE",
     height: 80,              // 50 < x < 80
-    text: 2,                 // 1 - No text
+    text: 2                  // 1 - No text
                              // 2 - Text on bottom
                              // 3 - No text inline
                              // 4 - Text on bottom inline
@@ -131,7 +133,7 @@ printer.code128("Code128", {
 printer.printQR("QR Code", {
     cellSize: 3,             // 1 - 8
     correction: 'M',         // L(7%), M(15%), Q(25%), H(30%)
-    model: 2,                // 1 - Model 1
+    model: 2                 // 1 - Model 1
                              // 2 - Model 2 (standard)
                              // 3 - Micro QR
 });
@@ -153,6 +155,7 @@ printer.maxiCode("MaxiCode", {
 });
 ```
 
+
 ### 1D Barcode Example
 ```js
 var data = "GS1-128"     // Barcode data (string or buffer)
@@ -167,8 +170,8 @@ var settings = {         // Optional Settings
 printer.printBarcode(data, type, settings);
 ```
 
-### Epson Barcode Reference
 
+### Epson Barcode Reference
 |  # | Type                         | Possible Characters                                                                      | Length of Data         |
 |:--:|------------------------------|------------------------------------------------------------------------------------------|------------------------|
 | 65 | UPC-A                        | 0 - 9                                                                                    | 11, 12                 |
