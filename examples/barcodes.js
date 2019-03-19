@@ -11,7 +11,7 @@ printer.maxiCode("4126565");
 
 printer.newLine();
 printer.newLine();
-printer.println("BARCODE");
+printer.println("CODE93");
 printer.printBarcode("4126565");
 
 printer.newLine();

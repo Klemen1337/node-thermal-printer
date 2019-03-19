@@ -170,6 +170,7 @@ var settings = {         // Optional Settings
 printer.printBarcode(data, type, settings);
 ```
 
+---
 
 ### Epson Barcode Reference
 |  # | Type                         | Possible Characters                                                                      | Length of Data         |
@@ -189,6 +190,56 @@ printer.printBarcode(data, type, settings);
 | 77 | GS1 DataBar  Limited         | 0 – 9                                                                                    | 13                     |
 | 78 | GS1 DataBar  Expanded        | 0 – 9, A – D, a – d, SP, !,  ", %, $, ', (, ), *, +, ,, -, .,  /, :, ;, <, =, >, ?, _, { | 2 - 255                |
 
+---
+
+### STAR Barcode Reference
+```js
+var data = "TEST"        // Barcode data (string or buffer)
+var type = 7             // Barcode type (See Reference)
+var settings = {         // Optional Settings
+  characters: 1,         // Add characters (See Reference)
+  mode: 3,               // Barcode mode (See Reference)
+  height: 150,           // Barcode height (0≤ height ≤255)
+}
+
+printer.printBarcode(data, type, settings);
+```
+
+### Type
+| # | Type      |
+|:-:|-----------|
+| 0 | UPC-E     |
+| 1 | UPC-A     |
+| 2 | JAN/EAN8  |
+| 3 | JAN/EAN13 |
+| 4 | Code39    |
+| 5 | ITF       |
+| 6 | CODE128   |
+| 7 | CODE93    |
+| 8 | NW-7      |
+
+#### Settings characters
+| # | Description                                                                         |
+|:-:|-------------------------------------------------------------------------------------|
+| 1 | No added under-bar characters. Executes line feed after printing a bar code         |
+| 2 | Adds under-bar characters. Executes line feed after printing a bar code             |
+| 3 | No added under-bar characters. Does not execute line feed after printing a bar code |
+| 4 | Adds under-bar characters. Does not execute line feed after printing a bar code     |
+
+#### Settings mode
+| # | UPC-E, UPC-A, JAN/EAN8, JAN/EAN13, Code128, Code93  | Code39, NW-7             | ITF                       |
+|:-:|-----------------------------------------------------|--------------------------|---------------------------|
+| 1 | Minimum module 2 dots                               | Narrow: Wide = 2:6 dots  | Narrow: Wide = 2:5 dots   |
+| 2 | Minimum module 3 dots                               | Narrow: Wide = 3:9 dots  | Narrow: Wide = 4:10 dots  |
+| 3 | Minimum module 4 dots                               | Narrow: Wide = 4:12 dots | Narrow: Wide = 6:15 dots  |
+| 4 |                                                     | Narrow: Wide = 2:5 dots  | Narrow: Wide = 2:4 dots   |
+| 5 |                                                     | Narrow: Wide = 3:8 dots  | Narrow: Wide = 4:8 dots   |
+| 6 |                                                     | Narrow: Wide = 4:10 dots | Narrow: Wide = 6:12 dots  |
+| 7 |                                                     | Narrow: Wide = 2:4 dots  | Narrow: Wide = 2:6 dots   |
+| 8 |                                                     | Narrow: Wide = 3:6 dots  | Narrow: Wide = 3:9 dots   |
+| 9 |                                                     | Narrow: Wide = 4:8 dots  | Narrow: Wide = 4:12 dots  |
+
+---
 
 ### Usage Tips
 `characterSet` may be configured with `"raw"`, so no replacement is done at all.
