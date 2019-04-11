@@ -13,7 +13,7 @@ async function example () {
     characterSet: 'SLOVENIA',          // Character set default SLOVENIA
     removeSpecialCharacters: false,    // Removes special characters - default: false
     replaceSpecialCharacters: true,    // Replaces special characters listed in config files - default: true
-    // lineChar: "=",                  // Use custom character for drawing lines
+    lineCharacter: "=",                // Use custom character for drawing lines
   });
 
   let isConnected = await printer.isPrinterConnected();
