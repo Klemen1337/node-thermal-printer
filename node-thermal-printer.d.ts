@@ -45,6 +45,7 @@ interface printer {
   setTextDoubleHeight(): void;
   setTextDoubleWidth(): void;
   setTextQuadArea(): void;
+  setTextSize(height: number, width: number): void;
   newLine(): void;
   drawLine(): void;
   leftRight(left: string, right: string): void;

@@ -64,6 +64,7 @@ printer.setTextNormal();                                    // Set text to norma
 printer.setTextDoubleHeight();                              // Set text to double height
 printer.setTextDoubleWidth();                               // Set text to double width
 printer.setTextQuadArea();                                  // Set text to quad area
+printer.setTextSize(7,7);                                   // Set text height (0-7) and width (0-7)
 
 printer.leftRight("Left", "Right");                         // Prints text left and right
 printer.table(["One", "Two", "Three"]);                     // Prints table equaly
