@@ -21,11 +21,12 @@ sudo apt-get install build-essential
 ```js
 const ThermalPrinter = require("../node-thermal-printer").printer;
 const PrinterTypes = require("../node-thermal-printer").types;
+const PrinterCharSets = require("../node-thermal-printer").charSets;
 
 let printer = new ThermalPrinter({
   type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
-  characterSet: 'SLOVENIA',                                 // Printer character set
+  characterSet: PrinterCharSets.STAR.SLOVENIA,              // Printer character set
   removeSpecialCharacters: false,                           // Removes special characters - default: false
   replaceSpecialCharacters: true,                           // Replaces special characters listed in config files - default: true
   extraSpecialCharacters:{ '£':163 },                       // Adds additional special characters to those listed in the config files
