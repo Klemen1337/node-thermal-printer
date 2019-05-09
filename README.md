@@ -29,7 +29,7 @@ let printer = new ThermalPrinter({
   characterSet: PrinterCharSets.STAR.SLOVENIA,              // Printer character set
   removeSpecialCharacters: false,                           // Removes special characters - default: false
   replaceSpecialCharacters: true,                           // Replaces special characters listed in config files - default: true
-  convertEncoding: 'CP1125',                                // Try to convert text sent for printing to a suitable encoding - default: true
+  encoding: 'CP1125',                                       // Converts text to encoding selected, see iconv, default is none
   extraSpecialCharacters:{ '£':163 },                       // Adds additional special characters to those listed in the config files
   lineCharacter: "-",                                       // Set character for lines - default: "-"
   options:{                                                 // Additional options
