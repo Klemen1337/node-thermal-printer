@@ -26,10 +26,10 @@ const PrinterCharSets = require("../node-thermal-printer").charSets;
 let printer = new ThermalPrinter({
   type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
-  characterSet: PrinterCharSets.STAR.SLOVENIA,              // Printer character set
+  characterSet: PrinterCharSets.STAR.SLOVENIA,              // Printer character set, may be string or Buffer
   removeSpecialCharacters: false,                           // Removes special characters - default: false
   replaceSpecialCharacters: true,                           // Replaces special characters listed in config files - default: true
-  encoding: 'CP1125',                                       // Converts text to encoding selected, see iconv, default is none
+  encoding: 'CP1125',                                       // Converts text to encoding selected, see iconv - default: undefined
   extraSpecialCharacters:{ '£':163 },                       // Adds additional special characters to those listed in the config files
   lineCharacter: "-",                                       // Set character for lines - default: "-"
   options:{                                                 // Additional options
