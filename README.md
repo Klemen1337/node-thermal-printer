@@ -259,3 +259,4 @@ printer.printBarcode(data, type, settings);
 - Rongta RP80US
 - EPSON TM-T88V
 - Posman BTP-R880NP (Type "epson")
+- Epson TM T20II
