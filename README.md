@@ -289,5 +289,6 @@ printer.printBarcode(data, type, settings);
 ### Tested printers:
 - Star TSP700
 - Rongta RP80US
+- Rongta RP326-USE
 - EPSON TM-T88V
 - Posman BTP-R880NP (Type "epson")
