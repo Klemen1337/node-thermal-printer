@@ -9,18 +9,14 @@ async function example () {
     options: {
       timeout: 1000
     },
-    width: 48,                         // Number of characters in one line (default 48)
-    characterSet: 'SLOVENIA',          // Character set default SLOVENIA
+    width: 48,                         // Number of characters in one line - default: 48
+    characterSet: 'SLOVENIA',          // Character set - default: SLOVENIA
     removeSpecialCharacters: false,    // Removes special characters - default: false
-    replaceSpecialCharacters: true,    // Replaces special characters listed in config files - default: true
-    lineCharacter: "=",                // Use custom character for drawing lines
+    lineCharacter: "-",                // Use custom character for drawing lines - default: -
   });
 
   let isConnected = await printer.isPrinterConnected();
   console.log("Printer connected:", isConnected);
-
-  printer.setBuffer(Buffer.from("This is a test"));
-  printer.clear();
 
   printer.alignCenter();
   await printer.printImage('./assets/olaii-logo-black-small.png');

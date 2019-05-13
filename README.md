@@ -25,11 +25,9 @@ const PrinterTypes = require("../node-thermal-printer").types;
 let printer = new ThermalPrinter({
   type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
-  characterSet: 'SLOVENIA',                                 // Printer character set
+  characterSet: 'SLOVENIA',                                 // Printer character set - default: SLOVENIA
   removeSpecialCharacters: false,                           // Removes special characters - default: false
-  replaceSpecialCharacters: true,                           // Replaces special characters listed in config files - default: true
-  extraSpecialCharacters:{ '£':163 },                       // Adds additional special characters to those listed in the config files
-  lineCharacter: "-",                                       // Set character for lines - default: "-"
+  lineCharacter: "=",                                       // Set character for lines - default: "-"
   options:{                                                 // Additional options
     timeout: 5000                                           // Connection timeout (ms) [applicable only for network printers] - default: 3000
   }
@@ -45,6 +43,7 @@ printer.cut();                                              // Cuts the paper (i
 printer.partialCut();                                       // Cuts the paper leaving a small bridge in middle (if printer supports multiple cut modes)
 printer.beep();                                             // Sound internal beeper/buzzer (if available)
 printer.upsideDown(true);                                   // Content is printed upside down (rotated 180 degrees)
+printer.setCharacterSet("SLOVENIA");                        // Set character set - default set on init
 
 printer.bold(true);                                         // Set text bold
 printer.invert(true);                                       // Background/text color inversion
@@ -88,11 +87,11 @@ print.getWidth();                                           // Get number of cha
 
 ### Interace options
 | Value | Descripton |
-|-------|------------|
+|---------------------------|------------|
 | `tcp://192.168.0.99:9100` | Network printer with port |
-| `printer:auto` | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
+| `printer:auto`            | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
 | `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module module |
-| `\\.\COM1` | Print via local port or file |
+| `\\.\COM1`                | Print via local port or file |
 
 
 ### Example
@@ -240,6 +239,41 @@ printer.printBarcode(data, type, settings);
 | 7 |                                                     | Narrow: Wide = 2:4 dots  | Narrow: Wide = 2:6 dots   |
 | 8 |                                                     | Narrow: Wide = 3:6 dots  | Narrow: Wide = 3:9 dots   |
 | 9 |                                                     | Narrow: Wide = 4:8 dots  | Narrow: Wide = 4:12 dots  |
+
+
+### Character sets
+- PC437_USA
+- PC850_MULTILINGUAL
+- PC860_PORTUGUESE
+- PC863_CANADIAN_FRENCH
+- PC865_NORDIC
+- PC851_GREEK
+- PC857_TURKISH
+- PC737_GREEK
+- ISO8859_7_GREEK
+- WPC1252
+- PC866_CYRILLIC2
+- PC852_LATIN2
+- SLOVENIA
+- PC858_EURO
+- WPC775_BALTIC_RIM
+- PC855_CYRILLIC
+- PC861_ICELANDIC
+- PC862_HEBREW
+- PC864_ARABIC
+- PC869_GREEK
+- ISO8859_2_LATIN2
+- ISO8859_15_LATIN9
+- PC1125_UKRANIAN
+- WPC1250_LATIN2
+- WPC1251_CYRILLIC
+- WPC1253_GREEK
+- WPC1254_TURKISH
+- WPC1255_HEBREW
+- WPC1256_ARABIC
+- WPC1257_BALTIC_RIM
+- WPC1258_VIETNAMESE
+- KZ1048_KAZAKHSTAN
 
 ---
 

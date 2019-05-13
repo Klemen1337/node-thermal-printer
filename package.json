@@ -1,6 +1,6 @@
 {
   "name": "node-thermal-printer",
-  "version": "4.0.3",
+  "version": "4.1.0",
   "description": "Made to work with Epson and Star thermal printers",
   "main": "node-thermal-printer.js",
   "repository": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
+    "iconv-lite": "0.4.24",
     "pngjs": "3.3.3",
     "unorm": "1.4.1",
     "write-file-queue": "0.0.1"

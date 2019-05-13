@@ -10,10 +10,6 @@ interface printer {
     width?: number;
     characterSet?: string;
     removeSpecialCharacters?: boolean;
-    replaceSpecialCharacters?: boolean;
-    extraSpecialCharacters?: { 
-      [key: string]: string
-    };
     options?: { 
       timeout?: number
     };
@@ -28,6 +24,7 @@ interface printer {
   getBuffer(): Buffer;
   clear(): void;
   add(buffer: Buffer): void;
+  setCharacterSet(characterSet: String): void;
   print(text: string): void;
   println(text: string): void;
   printVerticalTab(): void;
