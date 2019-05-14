@@ -94,6 +94,36 @@ print.getWidth();                                           // Get number of cha
 | `\\.\COM1`                | Print via local port or file |
 
 
+#### System Printer Drivers
+When using a system printer, you need to provide the driver.
+Use electron-printer or printer driver:
+```js
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const PrinterTypes = require("../node-thermal-printer").types;
+const electron = typeof process !== 'undefined' && process.versions && !!process.versions.electron;
+
+let printer = new ThermalPrinter({
+  type: PrinterTypes.EPSON',
+  interface: 'printer:My Printer',
+  driver: require(electron ? 'electron-printer' : 'printer')
+});
+```
+
+Use a custom printer driver:
+```js
+const ThermalPrinter = require("../node-thermal-printer").printer;
+const PrinterTypes = require("../node-thermal-printer").types;
+
+let printer = new ThermalPrinter({
+  type: PrinterTypes.EPSON',
+  interface: 'printer:My Printer',
+  driver: MyCustomDriver
+});
+
+// you can also set the driver after init:
+printer.setPrinterDriver(MyCustomDriver)
+
+
 ### Example
 ```js
 const ThermalPrinter = require("../node-thermal-printer").printer;
