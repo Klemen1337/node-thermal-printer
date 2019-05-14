@@ -67,10 +67,10 @@ printer.setTextSize(7,7);                                   // Set text height (
 
 printer.leftRight("Left", "Right");                         // Prints text left and right
 printer.table(["One", "Two", "Three"]);                     // Prints table equaly
-printer.tableCustom([                                       // Prints table with custom settings (text, align, width, bold)
+printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
   { text:"Left", align:"LEFT", width:0.5 },
   { text:"Center", align:"CENTER", width:0.25, bold:true },
-  { text:"Right", align:"RIGHT", width:0.25 }
+  { text:"Right", align:"RIGHT", cols:8 }
 ]);
 
 printer.code128("Code128");                                 // Print code128 bar code

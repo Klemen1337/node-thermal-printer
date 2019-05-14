@@ -93,6 +93,11 @@ async function example () {
     { text:"Right", align:"RIGHT", width:0.25 }
   ]);
 
+  printer.tableCustom([
+    { text:"Left", align:"LEFT", cols:8 },
+    { text:"Center", align:"CENTER", cols:10, bold:true },
+    { text:"Right", align:"RIGHT", cols:10 }
+  ]);
 
   printer.cut();
   printer.openCashDrawer();
