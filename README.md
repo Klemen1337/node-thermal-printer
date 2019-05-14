@@ -271,6 +271,22 @@ printer.printBarcode(data, type, settings);
 | 9 |                                                     | Narrow: Wide = 4:8 dots  | Narrow: Wide = 4:12 dots  |
 
 
+---
+
+
+### Docs
+- STAR: http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf
+- EPSON: https://reference.epson-biz.com/modules/ref_escpos/index.php
+
+
+### Tested printers:
+- Star TSP700
+- Rongta RP80US
+- Rongta RP326-USE
+- EPSON TM-T88V
+- Posman BTP-R880NP (Type "epson")
+
+
 ### Character sets
 - PC437_USA
 - PC850_MULTILINGUAL
@@ -304,21 +320,3 @@ printer.printBarcode(data, type, settings);
 - WPC1257_BALTIC_RIM
 - WPC1258_VIETNAMESE
 - KZ1048_KAZAKHSTAN
-
----
-
-### Usage Tips
-`characterSet` may be configured with `"raw"`, so no replacement is done at all.
-
-
-### Docs
-- STAR: http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf
-- EPSON: https://reference.epson-biz.com/modules/ref_escpos/index.php
-
-
-### Tested printers:
-- Star TSP700
-- Rongta RP80US
-- Rongta RP326-USE
-- EPSON TM-T88V
-- Posman BTP-R880NP (Type "epson")
