@@ -320,3 +320,8 @@ printer.printBarcode(data, type, settings);
 - WPC1257_BALTIC_RIM
 - WPC1258_VIETNAMESE
 - KZ1048_KAZAKHSTAN
+
+
+
+## CHANGELOG
+See [CHANGELOG.md](./CHANGELOG.md)
