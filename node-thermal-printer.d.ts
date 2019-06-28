@@ -124,7 +124,7 @@ declare class ThermalPrinter {
 
   /**
    * Set text upside down
-   * @param enabled is enabled 
+   * @param Boolean is enabled 
    */
   upsideDown(enabled: boolean): void;
 
@@ -334,7 +334,7 @@ declare class ThermalPrinter {
 
   /**
    * Manually append content to the current buffer
-   * @param content string or buffer to append
+   * @param {string|Buffer} - content string or buffer to append
    */
   append(content: string | Buffer): void;
 }

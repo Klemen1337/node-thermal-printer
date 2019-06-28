@@ -44,6 +44,7 @@ printer.partialCut();                                       // Cuts the paper le
 printer.beep();                                             // Sound internal beeper/buzzer (if available)
 printer.upsideDown(true);                                   // Content is printed upside down (rotated 180 degrees)
 printer.setCharacterSet("SLOVENIA");                        // Set character set - default set on init
+printer.setPrinterDriver(Object)                            // Set printer drive - default set on init
 
 printer.bold(true);                                         // Set text bold
 printer.invert(true);                                       // Background/text color inversion
