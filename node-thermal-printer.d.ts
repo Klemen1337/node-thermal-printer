@@ -23,8 +23,10 @@ declare class ThermalPrinter {
     interface: string;
     width?: number;
     characterSet?: string;
+    lineCharacter?: string;
+    driver?: Object;
     removeSpecialCharacters?: boolean;
-    options?: { 
+    options?: {
       timeout?: number
     };
   });
@@ -121,6 +123,12 @@ declare class ThermalPrinter {
   underlineThick(enabled: boolean): void;
 
   /**
+   * Set text upside down
+   * @param enabled is enabled 
+   */
+  upsideDown(enabled: boolean): void;
+
+  /**
    * Set text background and text color inverted
    * @param Boolean is enabled
   */
@@ -210,9 +218,9 @@ declare class ThermalPrinter {
    * Insert table of data with custom cell settings
    * @param Array Array of objects
   */
-  tableCustom(data: { 
-    text: string; 
-    align?: "CENTER" | "RIGHT" | "LEFT"; 
+  tableCustom(data: {
+    text: string;
+    align?: "CENTER" | "RIGHT" | "LEFT";
     width?: number;
     cols?: number;
     bold?: boolean;
@@ -322,11 +330,17 @@ declare class ThermalPrinter {
    * Manually set the printer driver
    * @param Object driver the printer driver
   */
-  setPrinterDriver (driver: Object): void;
+  setPrinterDriver(driver: Object): void;
+
+  /**
+   * Manually append content to the current buffer
+   * @param content string or buffer to append
+   */
+  append(content: string | Buffer): void;
 }
 
 
-export { 
-  ThermalPrinter as printer, 
-  printerTypes as types
+export {
+  ThermalPrinter as printer,
+  PrinterTypes as types
 };
