@@ -86,7 +86,7 @@ print.getWidth();                                           // Get number of cha
 ```
 
 
-### Interace options
+### Interface options
 | Value | Descripton |
 |---------------------------|------------|
 | `tcp://192.168.0.99:9100` | Network printer with port |
