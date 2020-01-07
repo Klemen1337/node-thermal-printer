@@ -16,20 +16,6 @@ Linux requires build-essentials
 sudo apt-get install build-essential
 ```
 
-### Examples
-Network printer
-```bash
-node examples/example.js tcp://xxx.xxx.xxx.xxx
-```
-Pritner name via Printer module
-```bash
-node examples/example.js 'printer:My Printer'
-```
-Local port or file
-```bash
-node examples/example.js '\\.\COM1'
-```
-
 
 ### Features
 ```js
@@ -97,6 +83,20 @@ print.getText();                                            // Returns printer b
 print.getBuffer();                                          // Returns printer buffer
 print.setBuffer(newBuffer);                                 // Set the printer buffer to a copy of newBuffer
 print.getWidth();                                           // Get number of characters in one line
+```
+
+### How to run examples (Set to EPSON)
+Network printer
+```bash
+node examples/example.js tcp://xxx.xxx.xxx.xxx
+```
+Pritner name via Printer module
+```bash
+node examples/example.js 'printer:My Printer'
+```
+Local port or file
+```bash
+node examples/example.js '\\.\COM1'
 ```
 
 
