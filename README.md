@@ -16,6 +16,20 @@ Linux requires build-essentials
 sudo apt-get install build-essential
 ```
 
+### Examples
+Network printer
+```bash
+node examples/example.js tcp://xxx.xxx.xxx.xxx
+```
+Pritner name via Printer module
+```bash
+node examples/example.js 'printer:My Printer'
+```
+Local port or file
+```bash
+node examples/example.js '\\.\COM1'
+```
+
 
 ### Features
 ```js
@@ -91,7 +105,7 @@ print.getWidth();                                           // Get number of cha
 |---------------------------|------------|
 | `tcp://192.168.0.99:9100` | Network printer with port |
 | `printer:auto`            | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
-| `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module module |
+| `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
 | `\\.\COM1`                | Print via local port or file |
 
 
