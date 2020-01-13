@@ -104,23 +104,22 @@ node examples/example.js '\\.\COM1'
 | Value | Descripton |
 |---------------------------|------------|
 | `tcp://192.168.0.99:9100` | Network printer with port |
-| `printer:auto`            | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
-| `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
+| `printer:auto`            | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) module |
+| `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) module |
 | `\\.\COM1`                | Print via local port or file |
 
 
 #### System Printer Drivers
 When using a system printer, you need to provide the driver.
-Use electron-printer or printer driver:
+Use [printer driver](https://www.npmjs.com/package/printer).
 ```js
 const ThermalPrinter = require("node-thermal-printer").printer;
 const PrinterTypes = require("node-thermal-printer").types;
-const electron = typeof process !== 'undefined' && process.versions && !!process.versions.electron;
 
 let printer = new ThermalPrinter({
   type: PrinterTypes.EPSON,
   interface: 'printer:My Printer',
-  driver: require(electron ? 'electron-printer' : 'printer')
+  driver: require('printer')
 });
 ```
 
