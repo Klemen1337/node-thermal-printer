@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Klemen1337/node-thermal-printer",
   "dependencies": {
     "iconv-lite": "0.5.0",
+    "jpeg-js": "^0.3.6",
     "pngjs": "3.3.3",
     "unorm": "1.4.1",
     "write-file-queue": "0.0.1"
