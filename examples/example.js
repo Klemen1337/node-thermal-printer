@@ -19,7 +19,7 @@ async function example () {
   console.log("Printer connected:", isConnected);
 
   printer.alignCenter();
-  await printer.printImage('./assets/olaii-logo-black-small.png');
+  await printer.printImage('../assets/olaii-logo-black-small.png');
 
   printer.alignLeft();
   printer.newLine();
