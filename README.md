@@ -90,7 +90,7 @@ Network printer
 ```bash
 node examples/example.js tcp://xxx.xxx.xxx.xxx
 ```
-Pritner name via Printer module
+Printer name via Printer module
 ```bash
 node examples/example.js 'printer:My Printer'
 ```
