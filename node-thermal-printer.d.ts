@@ -6,9 +6,29 @@
 /**
  * Supported printer types are EPSON and STAR
  */
+import { OpenOptions } from "serialport";
+
 declare enum PrinterTypes {
   EPSON = "epson",
   STAR = "star"
+}
+
+interface PrinterConfig {
+  type?: PrinterTypes;
+  interface: string;
+  width?: number;
+  characterSet?: string;
+  lineCharacter?: string;
+  driver?: Object;
+  removeSpecialCharacters?: boolean;
+  options?: {
+    commandTimeout?: number
+  } & (
+    | { // network-Interface
+      timeout?: number
+    }
+    | OpenOptions // serialport-Interface
+  );
 }
 
 declare class ThermalPrinter {
@@ -16,20 +36,8 @@ declare class ThermalPrinter {
 
   /**
    * Constructor
-   * @param Object config (type, interface, width, characterSet, removeSpecialCharacters, options)
   */
-  constructor(config: {
-    type?: PrinterTypes;
-    interface: string;
-    width?: number;
-    characterSet?: string;
-    lineCharacter?: string;
-    driver?: Object;
-    removeSpecialCharacters?: boolean;
-    options?: {
-      timeout?: number
-    };
-  });
+  constructor(config: PrinterConfig);
 
   /**
    * Send printing buffer to printer
@@ -337,6 +345,17 @@ declare class ThermalPrinter {
    * @param {string|Buffer} - content string or buffer to append
    */
   append(content: string | Buffer): void;
+
+  /**
+   * Fetches the Drawer-Status
+   * Only works with supported Interfaces. The `printer`-Interface doesn't support reading!
+   */
+  readPeripheralStatus(): Promise<boolean>;
+  /**
+   * Fetches the Paper-Status
+   * Only works with supported Interfaces. The `printer`-Interface doesn't support reading!
+   */
+  readPaperStatus(): Promise<number>;
 }
 
 
