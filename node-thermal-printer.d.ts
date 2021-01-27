@@ -1,3 +1,5 @@
+import { OpenOptions } from "serialport";
+
 // Type definitions for node-thermal-printer 4.1.0
 // Project: https://github.com/Klemen1337/node-thermal-printer
 // Definitions by: Klemen Kastelic<https://github.com/Klemen1337>
@@ -6,7 +8,6 @@
 /**
  * Supported printer types are EPSON and STAR
  */
-import { OpenOptions } from "serialport";
 
 declare enum PrinterTypes {
   EPSON = "epson",
@@ -19,6 +20,9 @@ interface PrinterConfig {
   width?: number;
   characterSet?: string;
   lineCharacter?: string;
+  /**
+   * @var require("printer") or require("electron-printer") only needed for interface `printer:`
+   */
   driver?: Object;
   removeSpecialCharacters?: boolean;
   options?: {
@@ -85,25 +89,25 @@ declare class ThermalPrinter {
 
   /**
    * Add buffer to printing buffer
-   * @param Buffer
+   * @param {Buffer} buffer
   */
   add(buffer: Buffer): void;
 
   /**
    * Set character set
-   * @param String character set
+   * @param {String} characterSet character set
   */
   setCharacterSet(characterSet: String): void;
 
   /**
    * Add text
-   * @param String text
+   * @param {String} text
   */
   print(text: string): void;
 
   /**
    * Add text with new line
-   * @param String text
+   * @param {String} text
   */
   println(text: string): void;
 
@@ -114,31 +118,31 @@ declare class ThermalPrinter {
 
   /**
    * Set text bold
-   * @param Boolean is enabled
+   * @param {Boolean} enabled is enabled
   */
   bold(enabled: boolean): void;
 
   /**
    * Set text undeline
-   * @param Boolean is enabled
+   * @param {Boolean} enabled is enabled
   */
   underline(enabled: boolean): void;
 
   /**
    * Set text undeline and bold
-   * @param Boolean is enabled
+   * @param {Boolean} enabled is enabled
   */
   underlineThick(enabled: boolean): void;
 
   /**
    * Set text upside down
-   * @param Boolean is enabled 
+   * @param {Boolean} enabled is enabled
    */
   upsideDown(enabled: boolean): void;
 
   /**
    * Set text background and text color inverted
-   * @param Boolean is enabled
+   * @param {Boolean} enabled is enabled
   */
   invert(enabled: boolean): void;
 
@@ -204,27 +208,27 @@ declare class ThermalPrinter {
 
   /**
    * Set height and width font size
-   * @param Number height
-   * @param Number width
+   * @param {Number} height
+   * @param {Number} width
   */
   setTextSize(height: number, width: number): void;
 
   /**
    * Add font to left side and right side
-   * @param String left side text
-   * @param String right side text
+   * @param {String} left left side text
+   * @param {String} right right side text
   */
   leftRight(left: string, right: string): void;
 
   /**
    * Insert table of data (width split equally)
-   * @param Array Array of values
+   * @param {Array} data Array of values
   */
   table(data: string[]): void;
 
   /**
    * Insert table of data with custom cell settings
-   * @param Array Array of objects
+   * @param {Array} data Array of objects
   */
   tableCustom(data: {
     text: string;
@@ -242,8 +246,8 @@ declare class ThermalPrinter {
 
   /**
    * Print QR code
-   * @param String QR data
-   * @param Object Settings (cellSize, correction, model)
+   * @param {String} str QR data
+   * @param {Object} settings Settings (cellSize, correction, model)
   */
   printQR(
     str: string,
@@ -256,9 +260,9 @@ declare class ThermalPrinter {
 
   /**
    * Add barcode
-   * @param String barcode data
-   * @param Number type of barcode
-   * @param Object barcode settings (hriPos, hriFont, width, height)
+   * @param {String} data barcode data
+   * @param {Number} type type of barcode
+   * @param {Object} settings barcode settings (hriPos, hriFont, width, height)
   */
   printBarcode(
     data: string,
@@ -273,8 +277,8 @@ declare class ThermalPrinter {
 
   /**
    * Add maxiCode barcode
-   * @param String barcode data
-   * @param Object barcode settings (mode)
+   * @param {String} data barcode data
+   * @param {Object} settings barcode settings (mode)
   */
   maxiCode(
     data: string,
@@ -285,8 +289,8 @@ declare class ThermalPrinter {
 
   /**
    * Add code128 barcode
-   * @param String barcode data
-   * @param Object barcode settings (width, height, text)
+   * @param {String} data barcode data
+   * @param {Object} settings barcode settings (width, height, text)
   */
   code128(
     data: string,
@@ -299,8 +303,8 @@ declare class ThermalPrinter {
 
   /**
    * Add pdf417 barcode
-   * @param String barcode data
-   * @param Object settings (rowHeight, width, correction, truncated, columns)
+   * @param {String} data barcode data
+   * @param {Object} settings (rowHeight, width, correction, truncated, columns)
   */
   pdf417(
     data: string,
@@ -315,34 +319,34 @@ declare class ThermalPrinter {
 
   /**
    * Add image
-   * @param String file path
+   * @param {String} image file path
    * @returns Promise<Buffer> image buffer
   */
   printImage(image: string): Promise<Buffer>;
 
   /**
    * Add image buffer
-   * @param Buffer image buffer
+   * @param {Buffer} buffer image buffer
    * @returns Promise<Buffer> printer image buffer
   */
   printImageBuffer(buffer: Buffer): Promise<Buffer>;
 
   /**
    * Send buffer to printer
-   * @param Buffer
+   * @param {Buffer} text
    * @returns Promise<String>
   */
   raw(text: Buffer): Promise<String>;
 
   /**
    * Manually set the printer driver
-   * @param Object driver the printer driver
+   * @param {Object} driver Object driver the printer driver
   */
   setPrinterDriver(driver: Object): void;
 
   /**
    * Manually append content to the current buffer
-   * @param {string|Buffer} - content string or buffer to append
+   * @param {string|Buffer} content string or buffer to append
    */
   append(content: string | Buffer): void;
 
