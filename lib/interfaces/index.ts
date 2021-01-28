@@ -12,7 +12,7 @@ export default function getInterface (uri: string, options = {}, driver: any) {
   if (typeof uri === "object") {
     return uri;
   } else if (net) {
-    const Network = require('./network');
+    const Network = require('./network').default;
     return new Network(net[1], net[2], options);
   } else if (printer) {
     const Printer = require('./printer');
