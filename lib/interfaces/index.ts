@@ -18,7 +18,7 @@ export default function getInterface (uri: string, options = {}, driver: any) {
     const Printer = require('./printer');
     return new Printer(printer[1], driver);
   } else if (serial) {
-    const Serial = require('./serialport');
+    const Serial = require('./serialport').default;
     return new Serial(serial[1], { ...(options || {}), ...(serial[2] && parseQueryOptions(serial[2]) || {})});
   } else {
     const File = require('./file');

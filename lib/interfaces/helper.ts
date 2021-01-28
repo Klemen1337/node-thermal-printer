@@ -6,7 +6,11 @@ export class PromiseResolver<T> {
 
 export function parseQueryOptions(optionsString: string) {
   const options = new URLSearchParams(optionsString);
-  return Array.from(options.entries()).reduce((o, [k, v]) => { o[k] = v; return o}, {} as {[key: string]: number | string});
+  return Array.from(options.entries()).reduce((o, [k, v]) => {
+    const nv = Number(v);
+    o[k] = nv.toString() === v ? nv : v;
+    return o;
+  }, {} as {[key: string]: number | string});
 }
 
 export default class PromiseQueue<T> {
