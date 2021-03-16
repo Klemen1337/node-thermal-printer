@@ -1,8 +1,4 @@
 export default class Interface {
-  getPrinterName() {
-    throw new Error("'getPrinterName' function not implemented.");
-  }
-
   async isPrinterConnected(): Promise<boolean> {
     throw new Error("'isPrinterConnected' function not implemented.");
   }
