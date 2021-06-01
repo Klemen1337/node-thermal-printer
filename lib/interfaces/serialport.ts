@@ -4,13 +4,19 @@ import SerialPort, { OpenOptions, Readable } from "serialport";
 import PromiseQueue from "./helper";
 import Interface from "./interface";
 
+interface Options {
+  /**
+   * Bei jedem Execute abwarten bis die Daten tatsächlich auf die Verbindung geschrieben wurden (drain)
+   */
+  drain?: boolean
+}
 export default class SerialInterface extends Interface {
   public port!: SerialPort;
   private promiseQueue = new PromiseQueue<Buffer>();
   private stream!: Readable;
   private connected: Promise<boolean>;
 
-  constructor(port: string, options: OpenOptions = {}) {
+  constructor(port: string, private options: OpenOptions & Options = {}) {
     super();
     this.connected = new Promise(resolve => {
       this.port = new SerialPort(
@@ -49,9 +55,12 @@ export default class SerialInterface extends Interface {
 
   public async execute(cmd: Buffer) {
     this.port.write(cmd);
+    if (this.options.drain) {
+      await new Promise<void>((resolve, reject) => this.port.drain(err => err ? reject(err) : resolve()));
+    }
   }
   public async executeCommand(cmd: Buffer, timeout?: number) {
-    this.port.write(cmd);
+    await this.execute(cmd);
     return this.promiseQueue.readBlocking(timeout);
   }
 
