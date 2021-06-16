@@ -102,11 +102,12 @@ node examples/example.js '\\.\COM1'
 
 ### Interface options
 | Value | Descripton |
-|---------------------------|------------|
-| `tcp://192.168.0.99:9100` | Network printer with port |
-| `printer:auto`            | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
-| `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
-| `\\.\COM1`                | Print via local port or file |
+|-----------------------------|------------|
+| `tcp://192.168.0.99:9100`   | Network printer with port |
+| `printer:auto`              | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
+| `printer:My Printer Name`   | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
+| `\\.\COM1`                  | Print via OS device or file |
+| `serial:COM1?baudRate=9600` | Use [serialport](https://www.npmjs.com/package/serialport) module for local ports |
 
 
 #### System Printer Drivers
