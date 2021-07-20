@@ -8,7 +8,8 @@
  */
 declare enum PrinterTypes {
   EPSON = "epson",
-  STAR = "star"
+  STAR = "star",
+  BROTHER= "brother",
 }
 
 declare class ThermalPrinter {
@@ -41,6 +42,14 @@ declare class ThermalPrinter {
    * Add cut
   */
   cut(): void;
+  /**
+   * init for brother printer
+  */
+  init() : void;
+  /**
+   * start commande for brother printer
+  */
+  start() : void;
 
   /**
    * Add parital cut
