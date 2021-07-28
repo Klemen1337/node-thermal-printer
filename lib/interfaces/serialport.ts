@@ -54,12 +54,16 @@ export default class SerialInterface extends Interface {
   }
 
   public async execute(cmd: Buffer) {
+    if (!this.port.isOpen) {
+      await new Promise<void>((resolve, reject) => this.port.open(err => err ? reject(err) : resolve()));
+    }
     this.port.write(cmd);
     if (this.options.drain) {
       await new Promise<void>((resolve, reject) => this.port.drain(err => err ? reject(err) : resolve()));
     }
   }
   public async executeCommand(cmd: Buffer, timeout?: number) {
+    this.promiseQueue.flush();
     await this.execute(cmd);
     return this.promiseQueue.readBlocking(timeout);
   }

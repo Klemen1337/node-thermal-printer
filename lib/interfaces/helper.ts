@@ -29,6 +29,9 @@ export default class PromiseQueue<T> {
   public isBufferEmpty() {
     return this.entryQueue.length === 0;
   }
+  public flush() {
+    this.entryQueue.splice(0, this.entryQueue.length);
+  }
 
   public push(...entries: T[]) {
     for (const e of entries) {
