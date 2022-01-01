@@ -346,6 +346,10 @@ declare class ThermalPrinter {
    * @param {string|Buffer} - content string or buffer to append
    */
   append(content: string | Buffer): void;
+   /**
+   * set inter
+  */
+    SetInternationalCharacterSet() : void;
 }
 
 
