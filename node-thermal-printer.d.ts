@@ -8,6 +8,7 @@
  */
 declare enum PrinterTypes {
   EPSON = "epson",
+  TANCA = "tanca",
   STAR = "star"
 }
 
@@ -341,6 +342,6 @@ declare class ThermalPrinter {
 
 
 export {
-  ThermalPrinter as printer,
-  PrinterTypes as types
+    ThermalPrinter as printer,
+    PrinterTypes as types
 };
