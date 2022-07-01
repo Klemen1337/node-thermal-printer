@@ -4,7 +4,7 @@ const Types = require("../node-thermal-printer").types;
 
 async function testConnection () {
   let printer = new ThermalPrinter({
-    type: Types.EPSON,
+    type: Types.BROTHER,
     interface: process.argv[2]
   });
 
