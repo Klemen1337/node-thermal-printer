@@ -14,22 +14,25 @@ async function example() {
     lineCharacter: "-", // Use custom character for drawing lines
   });
 
-  let isConnected = await printer.isPrinterConnected();
-  console.log("Printer connected:", isConnected);
+  printer.alignLeft();
+  printer.newLine();
+  printer.println("ČčŠšĆćĐđŽž");
+  printer.drawLine();
+  printer.setCharacterSet("PC855_CYRILLIC");
+  printer.println(
+    "Все люди рождаются свободными и равными в своем достоинстве и правах."
+  );
+  printer.drawLine();
+  printer.setCharacterSet("JAPAN");
+  printer.println("すべての人々は自由に生まれ、尊厳と権利において平等です");
+  printer.drawLine();
+  printer.setCharacterSet("CHINA");
+  printer.println("所有人生而自由，在尊嚴和權利上一律平等");
+  printer.drawLine();
+  printer.setCharacterSet("PC862_HEBREW");
+  printer.println("כל בני האדם נולדים חופשיים ושווים בכבוד ובזכויות.");
 
-  printer.init();
-
-  printer.alignCenter();
-  printer.printQR("code", { cellSize: 10 });
-  printer.newLine()
-  
-  printer.setTypeFontA();
-  printer.setTextSize(30, 7);
-
-  printer.drawLine(); // Draws a line
-
-  printer.println("2313001");
-  printer.start();
+  printer.cut();
 
   try {
     await printer.execute();
