@@ -78,11 +78,11 @@ printer.code128("Code128");                                 // Print code128 bar
 printer.printQR("QR CODE");                                 // Print QR code
 await printer.printImage('./assets/olaii-logo-black.png');  // Print PNG image
 
-print.clear();                                              // Clears printText value
-print.getText();                                            // Returns printer buffer string value
-print.getBuffer();                                          // Returns printer buffer
-print.setBuffer(newBuffer);                                 // Set the printer buffer to a copy of newBuffer
-print.getWidth();                                           // Get number of characters in one line
+printer.clear();                                              // Clears printText value
+printer.getText();                                            // Returns printer buffer string value
+printer.getBuffer();                                          // Returns printer buffer
+printer.setBuffer(newBuffer);                                 // Set the printer buffer to a copy of newBuffer
+printer.getWidth();                                           // Get number of characters in one line
 ```
 
 ### How to run examples (Set to EPSON)
