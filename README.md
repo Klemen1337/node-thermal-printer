@@ -300,7 +300,7 @@ printer.printBarcode(data, type, settings);
 - Rongta RP326-USE
 - EPSON TM-T88V
 - Posman BTP-R880NP (Type "epson")
-
+- EPSON TM-T20X
 
 ### Character sets
 - PC437_USA
