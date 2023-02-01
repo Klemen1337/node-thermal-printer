@@ -1,33 +1,35 @@
 # Node Thermal Printer
+
 Node.js module for EPSON, Tanca and STAR thermal printers command line printing.
 
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Installation
 
-### Installation
 ```bash
-$ npm install node-thermal-printer
+npm install node-thermal-printer
 ```
 
+### Linux specific
 
-#### Linux specific
 Linux requires build-essentials
+
 ```bash
 sudo apt-get install build-essential
 ```
 
+## Features
 
-### Features
 ```js
-const ThermalPrinter = require("../node-thermal-printer").printer;
-const PrinterTypes = require("../node-thermal-printer").types;
+const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('node-thermal-printer');
 
 let printer = new ThermalPrinter({
   type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
-  characterSet: 'SLOVENIA',                                 // Printer character set - default: SLOVENIA
+  characterSet: CharacterSet.SLOVENIA,                      // Printer character set - default: SLOVENIA
   removeSpecialCharacters: false,                           // Removes special characters - default: false
   lineCharacter: "=",                                       // Set character for lines - default: "-"
+  breakLine: BreakLine.WORD,                                // Break line after WORD or CHARACTERS. Disabled with NONE - default: WORD
   options:{                                                 // Additional options
     timeout: 5000                                           // Connection timeout (ms) [applicable only for network printers] - default: 3000
   }
@@ -85,22 +87,28 @@ printer.setBuffer(newBuffer);                                 // Set the printer
 printer.getWidth();                                           // Get number of characters in one line
 ```
 
-### How to run examples (Set to EPSON)
+## How to run examples (Set to EPSON)
+
 Network printer
+
 ```bash
 node examples/example.js tcp://xxx.xxx.xxx.xxx
 ```
+
 Pritner name via Printer module
+
 ```bash
 node examples/example.js 'printer:My Printer'
 ```
+
 Local port or file
+
 ```bash
 node examples/example.js '\\.\COM1'
 ```
 
+## Interface options
 
-### Interface options
 | Value | Descripton |
 |---------------------------|------------|
 | `tcp://192.168.0.99:9100` | Network printer with port |
@@ -108,10 +116,11 @@ node examples/example.js '\\.\COM1'
 | `printer:My Printer Name` | Select system printer by name via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
 | `\\.\COM1`                | Print via local port or file |
 
+### System Printer Drivers
 
-#### System Printer Drivers
 When using a system printer, you need to provide the driver.
 Use electron-printer or printer driver:
+
 ```js
 const ThermalPrinter = require("node-thermal-printer").printer;
 const PrinterTypes = require("node-thermal-printer").types;
@@ -125,6 +134,7 @@ let printer = new ThermalPrinter({
 ```
 
 Use a custom printer driver:
+
 ```js
 const ThermalPrinter = require("node-thermal-printer").printer;
 const PrinterTypes = require("node-thermal-printer").types;
@@ -140,6 +150,7 @@ printer.setPrinterDriver(MyCustomDriver)
 ```
 
 ### Network printing example
+
 ```js
 const ThermalPrinter = require("node-thermal-printer").printer;
 const PrinterTypes = require("node-thermal-printer").types;
@@ -162,8 +173,8 @@ try {
 }
 ```
 
+## 2D Barcode Examples
 
-### 2D Barcode Examples
 Example settings are the default when not specified.
 
 ```js
@@ -201,8 +212,8 @@ printer.maxiCode("MaxiCode", {
 });
 ```
 
+## 1D Barcode Example
 
-### 1D Barcode Example
 ```js
 var data = "GS1-128"     // Barcode data (string or buffer)
 var type = 74            // Barcode type (See Reference)
@@ -219,6 +230,7 @@ printer.printBarcode(data, type, settings);
 ---
 
 ### Epson Barcode Reference
+
 |  # | Type                         | Possible Characters                                                                      | Length of Data         |
 |:--:|------------------------------|------------------------------------------------------------------------------------------|------------------------|
 | 65 | UPC-A                        | 0 - 9                                                                                    | 11, 12                 |
@@ -238,7 +250,8 @@ printer.printBarcode(data, type, settings);
 
 ---
 
-### STAR Barcode Reference
+## STAR Barcode Reference
+
 ```js
 var data = "TEST"        // Barcode data (string or buffer)
 var type = 7             // Barcode type (See Reference)
@@ -252,6 +265,7 @@ printer.printBarcode(data, type, settings);
 ```
 
 ### Type
+
 | # | Type      |
 |:-:|-----------|
 | 0 | UPC-E     |
@@ -264,7 +278,8 @@ printer.printBarcode(data, type, settings);
 | 7 | CODE93    |
 | 8 | NW-7      |
 
-#### Settings characters
+### Settings characters
+
 | # | Description                                                                         |
 |:-:|-------------------------------------------------------------------------------------|
 | 1 | No added under-bar characters. Executes line feed after printing a bar code         |
@@ -272,7 +287,8 @@ printer.printBarcode(data, type, settings);
 | 3 | No added under-bar characters. Does not execute line feed after printing a bar code |
 | 4 | Adds under-bar characters. Does not execute line feed after printing a bar code     |
 
-#### Settings mode
+### Settings mode
+
 | # | UPC-E, UPC-A, JAN/EAN8, JAN/EAN13, Code128, Code93  | Code39, NW-7             | ITF                       |
 |:-:|-----------------------------------------------------|--------------------------|---------------------------|
 | 1 | Minimum module 2 dots                               | Narrow: Wide = 2:6 dots  | Narrow: Wide = 2:5 dots   |
@@ -285,25 +301,25 @@ printer.printBarcode(data, type, settings);
 | 8 |                                                     | Narrow: Wide = 3:6 dots  | Narrow: Wide = 3:9 dots   |
 | 9 |                                                     | Narrow: Wide = 4:8 dots  | Narrow: Wide = 4:12 dots  |
 
-
 ---
 
+## Docs
 
-### Docs
-- STAR: http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf
-- EPSON: https://reference.epson-biz.com/modules/ref_escpos/index.php
+- STAR: <http://www.starmicronics.com/support/mannualfolder/starline_cm_rev1.15_en.pdf>
+- EPSON: <https://reference.epson-biz.com/modules/ref_escpos/index.php>
 
+## Tested printers
 
-### Tested printers:
 - Star TSP700
 - Rongta RP80US
 - Rongta RP326-USE
 - EPSON TM-T88V
-- Posman BTP-R880NP (Type "epson")
 - EPSON TM-T20X
 - EPSON TM-T82IIIL
+- Posman BTP-R880NP (Type "epson")
 
-### Character sets
+## Character sets
+
 - PC437_USA
 - PC850_MULTILINGUAL
 - PC860_PORTUGUESE
@@ -337,7 +353,6 @@ printer.printBarcode(data, type, settings);
 - WPC1258_VIETNAMESE
 - KZ1048_KAZAKHSTAN
 
-
-
 ## CHANGELOG
+
 See [CHANGELOG.md](./CHANGELOG.md)
