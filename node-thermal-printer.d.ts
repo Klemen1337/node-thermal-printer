@@ -12,6 +12,52 @@ declare enum PrinterTypes {
   STAR = "star"
 }
 
+declare enum BreakLine {
+  NONE = 'NONE', // No word break
+  CHARACTER = 'CHARACTER', // Break by characters
+  WORD = 'WORD' // Break by words
+}
+
+declare enum CharacterSet {
+  PC437_USA = 'PC437_USA',
+  PC850_MULTILINGUAL = 'PC850_MULTILINGUAL',
+  PC860_PORTUGUESE = 'PC860_PORTUGUESE',
+  PC863_CANADIAN_FRENCH = 'PC863_CANADIAN_FRENCH',
+  PC865_NORDIC = 'PC865_NORDIC',
+  PC851_GREEK = 'PC851_GREEK',
+  PC857_TURKISH = 'PC857_TURKISH',
+  PC737_GREEK = 'PC737_GREEK',
+  ISO8859_7_GREEK = 'ISO8859_7_GREEK',
+  WPC1252 = 'WPC1252',
+  PC866_CYRILLIC2 = 'PC866_CYRILLIC2',
+  PC852_LATIN2 = 'PC852_LATIN2',
+  SLOVENIA = 'SLOVENIA',
+  PC858_EURO = 'PC858_EURO',
+  WPC775_BALTIC_RIM = 'WPC775_BALTIC_RIM',
+  PC855_CYRILLIC = 'PC855_CYRILLIC',
+  PC861_ICELANDIC = 'PC861_ICELANDIC',
+  PC862_HEBREW = 'PC862_HEBREW',
+  PC864_ARABIC = 'PC864_ARABIC',
+  PC869_GREEK = 'PC869_GREEK',
+  ISO8859_2_LATIN2 = 'ISO8859_2_LATIN2',
+  ISO8859_15_LATIN9 = 'ISO8859_15_LATIN9',
+  PC1125_UKRANIAN = 'PC1125_UKRANIAN',
+  WPC1250_LATIN2 = 'WPC1250_LATIN2',
+  WPC1251_CYRILLIC = 'WPC1251_CYRILLIC',
+  WPC1253_GREEK = 'WPC1253_GREEK',
+  WPC1254_TURKISH = 'WPC1254_TURKISH',
+  WPC1255_HEBREW = 'WPC1255_HEBREW',
+  WPC1256_ARABIC = 'WPC1256_ARABIC',
+  WPC1257_BALTIC_RIM = 'WPC1257_BALTIC_RIM',
+  WPC1258_VIETNAMESE = 'WPC1258_VIETNAMESE',
+  KZ1048_KAZAKHSTAN = 'KZ1048_KAZAKHSTAN',
+  JAPAN = 'JAPAN',
+  KOREA = 'KOREA',
+  CHINA = 'CHINA',
+  HK_TW = 'HK_TW',
+  TCVN_VIETNAMESE = 'TCVN_VIETNAMESE'
+}
+
 declare class ThermalPrinter {
   printerTypes: PrinterTypes;
 
@@ -23,10 +69,11 @@ declare class ThermalPrinter {
     type?: PrinterTypes;
     interface: string;
     width?: number;
-    characterSet?: string;
+    characterSet?: CharacterSet;
     lineCharacter?: string;
     driver?: Object;
     removeSpecialCharacters?: boolean;
+    breakLine?: BreakLine;
     options?: {
       timeout?: number
     };
@@ -342,6 +389,12 @@ declare class ThermalPrinter {
 
 
 export {
-    ThermalPrinter as printer,
-    PrinterTypes as types
+  ThermalPrinter as printer,
+  PrinterTypes as types,
+  BreakLine as breakLine,
+  CharacterSet as characterSet,
+  ThermalPrinter,
+  PrinterTypes,
+  BreakLine,
+  CharacterSet
 };
