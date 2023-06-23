@@ -81,9 +81,14 @@ declare class ThermalPrinter {
 
   /**
    * Send printing buffer to printer
+   * @param Object Options (docname)
    * @returns Promise<String>
   */
-  execute(): Promise<String>;
+  execute(
+    options?: {
+      docname?: string;
+    }
+  ): Promise<String>;
 
   /**
    * Add cut
