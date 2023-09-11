@@ -60,7 +60,10 @@ declare enum CharacterSet {
 }
 
 declare type CutOptions = {
-  feed?: boolean;
+  /**
+   * @default 2
+   */
+  verticalTabAmount: number;
 }
 
 declare class ThermalPrinter {
