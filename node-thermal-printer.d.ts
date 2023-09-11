@@ -59,6 +59,10 @@ declare enum CharacterSet {
   TCVN_VIETNAMESE = 'TCVN_VIETNAMESE'
 }
 
+declare type CutOptions = {
+  feed?: boolean;
+}
+
 declare class ThermalPrinter {
   printerTypes: PrinterTypes;
 
@@ -94,12 +98,12 @@ declare class ThermalPrinter {
   /**
    * Add cut
   */
-  cut(): void;
+  cut(options?: CutOptions): void;
 
   /**
-   * Add parital cut
+   * Add partial cut
   */
-  partialCut(): void;
+  partialCut(options?: CutOptions): void;
 
   /**
    * Add beep
