@@ -1,10 +1,21 @@
 # Changelog
 
+## v4.3.0 (13.9.2023)
+
+- added experimental getStatus for epson printer,
+- added wait for response flag to network interface,
+- added example for get status with a network printer,
+- added optional cut feeding ([jdgjsag67251](https://github.com/jdgjsag67251)),
+- added encoding for TIS11 and TIS66 code pages (Thai language) ([kumkao](https://github.com/kumkao)),
+- added options param to execute command ([avivsalman](https://github.com/avivsalman)),
+- added support for Daruma thermal printer ([riquemoraes](https://github.com/riquemoraes)),
+- fixed make library work with browser ([yelhouti](https://github.com/yelhouti))
+
 ## v4.2.1 (27.6.2023)
 
 - fixed keep initial CharacterSet after clear ([perbyhring](https://github.com/perbyhring)),
 - fixed printing code 128 barcodes ([zigzagzak](https://github.com/zigzagzak)),
-- removed super calling when there is constructor to avoid unnecessary console error ([avivsalman](https://github.com/avivsalman))
+- removed super calling when there is constructor to avoid unnecessary console error ([avivsalman](https://github.com/avivsalman)),
 - removed console.log when printing ([OverSamu](https://github.com/OverSamu))
 
 ## v4.2.0 (1.2.2023)

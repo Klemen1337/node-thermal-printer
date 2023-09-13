@@ -1,7 +1,7 @@
 {
   "name": "node-thermal-printer",
-  "version": "4.2.1",
-  "description": "Print on Epson, Tanca and Star thermal printers with NodeJS",
+  "version": "4.3.0",
+  "description": "Print on Epson, Star, Tranca and Drauma thermal printers with NodeJS",
   "main": "node-thermal-printer.js",
   "repository": {
     "type": "git",
@@ -12,7 +12,9 @@
     "thermal",
     "printer",
     "epson",
-    "star"
+    "star",
+    "daruma",
+    "tranca"
   ],
   "author": "Klemen Kastelic <klemen.kast@gmail.com> (http://kastelic.net/)",
   "license": "ISC",
