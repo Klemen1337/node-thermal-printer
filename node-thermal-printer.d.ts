@@ -112,7 +112,7 @@ declare class ThermalPrinter {
   /**
    * Add beep
   */
-  beep(): void;
+  beep(numberOfBeeps?: number, lengthOfTheSound?: number): void;
 
   /**
    * Get number of characters in one line
