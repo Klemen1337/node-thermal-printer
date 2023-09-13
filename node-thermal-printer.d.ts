@@ -89,12 +89,13 @@ declare class ThermalPrinter {
 
   /**
    * Send printing buffer to printer
-   * @param Object Options (docname)
+   * @param Object Options (docname, waitForResponse)
    * @returns Promise<String>
   */
   execute(
     options?: {
       docname?: string;
+      waitForResponse?: boolean;
     }
   ): Promise<String>;
 
