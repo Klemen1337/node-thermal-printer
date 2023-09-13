@@ -1,6 +1,6 @@
 # Node Thermal Printer
 
-Node.js module for EPSON, STAR, Tanca and Drauma thermal printers command line printing.
+Node.js module for Epson, Star, Tanca, Drauma, and Brother thermal printers command line printing.
 
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -328,6 +328,7 @@ printer.printBarcode(data, type, settings);
 - EPSON TM-T20X
 - EPSON TM-T82IIIL
 - Posman BTP-R880NP (Type "epson")
+- Brother TD-4550DNWB
 
 ## Character sets
 
