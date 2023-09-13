@@ -1,5 +1,12 @@
 # Changelog
 
+## v4.4.0 (13.9.2023)
+
+- added Brother support from ([younessssssss](https://github.com/younessssssss))
+- added code128 for epson support from ([treeindark](https://github.com/treeindark))
+- worked on epson default settings,
+- fixed epson beep command
+
 ## v4.3.0 (13.9.2023)
 
 - added experimental getStatus for epson printer,
