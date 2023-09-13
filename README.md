@@ -167,9 +167,9 @@ printer.cut();
 
 try {
   let execute = printer.execute()
-  console.error("Print done!");
+  console.log("Print done!");
 } catch (error) {
-  console.log("Print failed:", error);
+  console.error("Print failed:", error);
 }
 ```
 
