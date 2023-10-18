@@ -37,7 +37,7 @@ const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('node-
 let printer = new ThermalPrinter({
   type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
-  characterSet: CharacterSet.SLOVENIA,                      // Printer character set - default: SLOVENIA
+  characterSet: CharacterSet.PC852_LATIN2,                  // Printer character set
   removeSpecialCharacters: false,                           // Removes special characters - default: false
   lineCharacter: "=",                                       // Set character for lines - default: "-"
   breakLine: BreakLine.WORD,                                // Break line after WORD or CHARACTERS. Disabled with NONE - default: WORD
@@ -56,7 +56,7 @@ printer.cut();                                              // Cuts the paper (i
 printer.partialCut();                                       // Cuts the paper leaving a small bridge in middle (if printer supports multiple cut modes)
 printer.beep();                                             // Sound internal beeper/buzzer (if available)
 printer.upsideDown(true);                                   // Content is printed upside down (rotated 180 degrees)
-printer.setCharacterSet("SLOVENIA");                        // Set character set - default set on init
+printer.setCharacterSet(CharacterSet.PC852_LATIN2);         // Set character set - default set on init
 printer.setPrinterDriver(Object)                            // Set printer drive - default set on init
 
 printer.bold(true);                                         // Set text bold
@@ -64,7 +64,7 @@ printer.invert(true);                                       // Background/text c
 printer.underline(true);                                    // Underline text (1 dot thickness)
 printer.underlineThick(true);                               // Underline text with thick line (2 dot thickness)
 printer.drawLine();                                         // Draws a line
-printer.newLine();                                          // Insers break line
+printer.newLine();                                          // Inserts break line
 
 printer.alignCenter();                                      // Align text to center
 printer.alignLeft();                                        // Align text to left
@@ -80,7 +80,7 @@ printer.setTextQuadArea();                                  // Set text to quad 
 printer.setTextSize(7,7);                                   // Set text height (0-7) and width (0-7)
 
 printer.leftRight("Left", "Right");                         // Prints text left and right
-printer.table(["One", "Two", "Three"]);                     // Prints table equaly
+printer.table(["One", "Two", "Three"]);                     // Prints table equally
 printer.tableCustom([                                       // Prints table with custom settings (text, align, width, cols, bold)
   { text:"Left", align:"LEFT", width:0.5 },
   { text:"Center", align:"CENTER", width:0.25, bold:true },
@@ -120,7 +120,7 @@ node examples/example.js '\\.\COM1'
 
 ## Interface options
 
-| Value | Descripton |
+| Value | Description |
 |---------------------------|------------|
 | `tcp://192.168.0.99:9100` | Network printer with port |
 | `printer:auto`            | Auto select raw system printer via [Printer](https://www.npmjs.com/package/printer) or [Electron printer](https://www.npmjs.com/package/electron-printer) module |
