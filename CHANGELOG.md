@@ -1,5 +1,13 @@
 # Changelog
 
+## v4.4.1 (18.10.2023)
+
+- fixed star code page commands,
+- changed to no default character set,
+- changed no interface is available
+- fixed fold sometimes fails because it is not string
+
+
 ## v4.4.0 (13.9.2023)
 
 - added Brother support from ([younessssssss](https://github.com/younessssssss))
