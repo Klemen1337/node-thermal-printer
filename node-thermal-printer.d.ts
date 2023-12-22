@@ -253,8 +253,9 @@ declare class ThermalPrinter {
 
   /**
     * Draw a line of characters
+    * @param String optional character to be repeated
   */
-  drawLine(): void;
+  drawLine(character?: string): void;
 
   /**
    * Set height and width font size
