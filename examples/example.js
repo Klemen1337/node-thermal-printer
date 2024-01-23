@@ -66,6 +66,9 @@ async function example() {
   printer.setTextNormal();
   printer.println('This is normal');
   printer.drawLine();
+  
+  printer.println('Draw a line with a custom character');
+  printer.drawLine('=');
 
   try {
     printer.printBarcode('4126570807191');
