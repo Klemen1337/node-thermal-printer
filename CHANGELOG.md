@@ -1,5 +1,12 @@
 # Changelog
 
+## v4.4.2 (23.1.2024)
+
+- fixed network hang ([treeindark](https://github.com/treeindark))
+- added Daruma cash drawer kick codes ([Rafatcb](https://github.com/Rafatcb))
+- added accept an optional character on drawLine ([Rafatcb](https://github.com/Rafatcb))
+
+
 ## v4.4.1 (18.10.2023)
 
 - fixed star code page commands,

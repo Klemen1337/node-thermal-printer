@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 Klemen Kastelic
+Copyright (c) 2024 Klemen Kastelic
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
