@@ -133,6 +133,13 @@ declare class ThermalPrinter {
   getBuffer(): Buffer;
 
   /**
+   * Set printing buffer
+   * @param Buffer
+   * @returns void
+   */
+  setBuffer(newBuffer: Buffer): void;
+
+  /**
    * Clear printing buffer
   */
   clear(): void;
