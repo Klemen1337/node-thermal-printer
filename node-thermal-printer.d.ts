@@ -83,7 +83,8 @@ declare class ThermalPrinter {
     removeSpecialCharacters?: boolean;
     breakLine?: BreakLine;
     options?: {
-      timeout?: number
+      timeout?: number,
+      waitForResponse?: boolean
     };
   });
 
