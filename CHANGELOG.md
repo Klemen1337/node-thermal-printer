@@ -1,11 +1,15 @@
 # Changelog
 
+## v4.4.3 (26.8.2024)
+
+- fixed ReferenceError: waitForResponse is not defined (#259) ([ssxv](https://github.com/ssxv))
+- added setBuffer method to ThermalPrinter class (#253) ([borisloor06](https://github.com/borisloor06))
+
 ## v4.4.2 (23.1.2024)
 
 - fixed network hang ([treeindark](https://github.com/treeindark))
 - added Daruma cash drawer kick codes ([Rafatcb](https://github.com/Rafatcb))
 - added accept an optional character on drawLine ([Rafatcb](https://github.com/Rafatcb))
-
 
 ## v4.4.1 (18.10.2023)
 
@@ -13,7 +17,6 @@
 - changed to no default character set,
 - changed no interface is available
 - fixed fold sometimes fails because it is not string
-
 
 ## v4.4.0 (13.9.2023)
 
