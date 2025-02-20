@@ -2,7 +2,7 @@ const qr = require('qr-image');
 const ThermalPrinter = require('../node-thermal-printer').printer;
 const Types = require('../node-thermal-printer').types;
 
-async function printImage() {
+async function printImage () {
   const printer = new ThermalPrinter({
     type: Types.EPSON,
     interface: process.argv[2],

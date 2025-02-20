@@ -2,8 +2,17 @@
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "prettier.enable": false,
-  "vetur.format.enable": false,
   "editor.rulers": [
     140
+  ],
+  "cSpell.words": [
+    "attrname",
+    "CELLSIZE",
+    "Daruma",
+    "QRCODE",
+    "Tanca",
+    "TCVN",
+    "UKRANIAN",
+    "UNDERL"
   ]
 }

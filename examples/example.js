@@ -1,6 +1,6 @@
-const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('../node-thermal-printer')
+const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('../node-thermal-printer');
 
-async function example() {
+async function example () {
   const printer = new ThermalPrinter({
     type: PrinterTypes.EPSON, // 'star' or 'epson'
     interface: process.argv[2],
@@ -66,7 +66,7 @@ async function example() {
   printer.setTextNormal();
   printer.println('This is normal');
   printer.drawLine();
-  
+
   printer.println('Draw a line with a custom character');
   printer.drawLine('=');
 

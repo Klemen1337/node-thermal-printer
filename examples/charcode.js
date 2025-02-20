@@ -6,7 +6,7 @@ const printer = new ThermalPrinter({
   interface: process.argv[2],
 });
 
-// Print all avaliable charcodes
+// Print all available charcodes
 for (let i = 33; i < 255; i++) {
   printer.print(`${i}: `);
   printer.add(Buffer.from([i]));

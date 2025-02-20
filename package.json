@@ -29,6 +29,9 @@
     "write-file-queue": "0.0.1"
   },
   "devDependencies": {
-    "@types/node": "^10.14.2"
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^10.14.2",
+    "eslint": "^9.20.1",
+    "globals": "^15.15.0"
   }
 }
