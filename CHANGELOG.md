@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.4.4 (20.2.2025)
+
+- fixed fold function when string contains \n,
+- updated eslint
+
 ## v4.4.3 (26.8.2024)
 
 - fixed ReferenceError: waitForResponse is not defined (#259) ([ssxv](https://github.com/ssxv))

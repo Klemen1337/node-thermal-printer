@@ -1,4 +1,4 @@
-# Node Thermal Printer
+# Node Thermal Printer v4.4.4
 
 Node.js module for Epson, Star, Tanca, Daruma, and Brother thermal printers command line printing.
 
