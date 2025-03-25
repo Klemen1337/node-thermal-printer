@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.4.5 (25.3.2025)
+
+- added Brother printer type to .d.ts
+
 ## v4.4.4 (20.2.2025)
 
 - fixed fold function when string contains \n,
