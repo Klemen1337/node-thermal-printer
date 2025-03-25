@@ -1,16 +1,17 @@
-// Type definitions for node-thermal-printer 4.1.0
+// Type definitions for node-thermal-printer 4.4.4
 // Project: https://github.com/Klemen1337/node-thermal-printer
 // Definitions by: Klemen Kastelic<https://github.com/Klemen1337>
 // TypeScript Version: 3.5.2
 
 /**
- * Supported printer types are EPSON, TANCA, STAR and DARUMA
+ * Supported printer types are EPSON, TANCA, STAR, DARUMA and BROTHER
  */
 declare enum PrinterTypes {
   EPSON = "epson",
-  TANCA = "tanca",
   STAR = "star",
-  DARUMA = "daruma"
+  TANCA = "tanca",
+  DARUMA = "daruma",
+  BROTHER = "brother"
 }
 
 declare enum BreakLine {
@@ -180,13 +181,13 @@ declare class ThermalPrinter {
   bold(enabled: boolean): void;
 
   /**
-   * Set text undeline
+   * Set text underline
    * @param Boolean is enabled
   */
   underline(enabled: boolean): void;
 
   /**
-   * Set text undeline and bold
+   * Set text underline and bold
    * @param Boolean is enabled
   */
   underlineThick(enabled: boolean): void;
