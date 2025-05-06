@@ -4,14 +4,15 @@
 // TypeScript Version: 3.5.2
 
 /**
- * Supported printer types are EPSON, TANCA, STAR, DARUMA and BROTHER
+ * Supported printer types are EPSON, TANCA, STAR, DARUMA, BROTHER and CUSTOM
  */
 declare enum PrinterTypes {
   EPSON = "epson",
   STAR = "star",
   TANCA = "tanca",
   DARUMA = "daruma",
-  BROTHER = "brother"
+  BROTHER = "brother",
+  CUSTOM = "custom"
 }
 
 declare enum BreakLine {
