@@ -1,6 +1,6 @@
 {
   "name": "node-thermal-printer",
-  "version": "4.4.5",
+  "version": "4.5.0",
   "description": "Print on Epson, Star, Tranca, Daruma, Brother and Custom thermal printers with Node.js",
   "main": "node-thermal-printer.js",
   "repository": {

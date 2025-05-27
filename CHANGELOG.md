@@ -1,5 +1,14 @@
 # Changelog
 
+## v4.5.0 (27.5.2025)
+
+- added support for CUSTOM printer (#270) ([yoyo53](https://github.com/yoyo53)),
+- added check if interface and printer types are set on init,
+- added hide network logs behind debug flag,
+- updated iconv-lite to v0.6.3,
+- updated pngjs to v7.0.0,
+- updated unorm to v1.6.0
+
 ## v4.4.5 (25.3.2025)
 
 - added Brother printer type to .d.ts
@@ -80,5 +89,5 @@
 - added changelog,
 - updated `iconv-lite` from v0.4.24 to v0.5.0 closes #109,
 - updated readme,
-- updated typescript type informations file,
+- updated typescript type information file,
 - renamed printerTypes to PrinterTypes
