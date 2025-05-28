@@ -37,8 +37,9 @@ new webpack.IgnorePlugin({
 ```js
 const { ThermalPrinter, PrinterTypes, CharacterSet, BreakLine } = require('node-thermal-printer');
 
-let printer = new ThermalPrinter({
+const printer = new ThermalPrinter({
   type: PrinterTypes.STAR,                                  // Printer type: 'star' or 'epson'
+  width: 48,                                                // Number of characters in one line
   interface: 'tcp://xxx.xxx.xxx.xxx',                       // Printer interface
   characterSet: CharacterSet.PC852_LATIN2,                  // Printer character set
   removeSpecialCharacters: false,                           // Removes special characters - default: false
@@ -49,9 +50,9 @@ let printer = new ThermalPrinter({
   }
 });
 
-let isConnected = await printer.isPrinterConnected();       // Check if printer is connected, return bool of status
-let execute = await printer.execute();                      // Executes all the commands. Returns success or throws error
-let raw = await printer.raw(Buffer.from("Hello world"));    // Print instantly. Returns success or throws error
+const isConnected = await printer.isPrinterConnected();     // Check if printer is connected, return bool of status
+const execute = await printer.execute();                    // Executes all the commands. Returns success or throws error
+const raw = await printer.raw(Buffer.from("Hello world"));  // Print instantly. Returns success or throws error
 printer.print("Hello World");                               // Append text
 printer.println("Hello World");                             // Append text with new line
 printer.openCashDrawer();                                   // Kick the cash drawer
@@ -94,11 +95,11 @@ printer.code128("Code128");                                 // Print code128 bar
 printer.printQR("QR CODE");                                 // Print QR code
 await printer.printImage('./assets/olaii-logo-black.png');  // Print PNG image
 
-printer.clear();                                              // Clears printText value
-printer.getText();                                            // Returns printer buffer string value
-printer.getBuffer();                                          // Returns printer buffer
-printer.setBuffer(newBuffer);                                 // Set the printer buffer to a copy of newBuffer
-printer.getWidth();                                           // Get number of characters in one line
+printer.clear();                                            // Clears printText value
+printer.getText();                                          // Returns printer buffer string value
+printer.getBuffer();                                        // Returns printer buffer
+printer.setBuffer(newBuffer);                               // Set the printer buffer to a copy of newBuffer
+printer.getWidth();                                         // Get number of characters in one line
 ```
 
 ## How to run examples (Set to EPSON)
