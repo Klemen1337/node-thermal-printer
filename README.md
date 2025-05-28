@@ -3,6 +3,9 @@
 Node.js module for Epson, Star, Tanca, Daruma, Brother, and Custom thermal printers command line printing.
 
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![npm version](https://badge.fury.io/js/node-thermal-printer.svg)](https://badge.fury.io/js/node-thermal-printer)
+
+<a href="https://www.buymeacoffee.com/klemen1337" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 25px !important;" ></a>
 
 ## Installation
 
