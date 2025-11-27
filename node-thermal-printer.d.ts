@@ -261,6 +261,17 @@ declare class ThermalPrinter {
   newLine(): void;
 
   /**
+   * Set line spacing in dots (0-255)
+   * @param spacing Line spacing value in dots
+   */
+  setLineSpacing(spacing: number): void;
+
+  /**
+   * Reset line spacing to printer default
+   */
+  resetLineSpacing(): void;
+
+  /**
     * Draw a line of characters
     * @param String optional character to be repeated
   */
