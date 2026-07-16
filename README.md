@@ -5,7 +5,7 @@ Node.js module for Epson, Star, Tanca, Daruma, Brother, and Custom thermal print
 [![Join the chat at https://gitter.im/Klemen1337/node-thermal-printer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Klemen1337/node-thermal-printer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/node-thermal-printer.svg)](https://badge.fury.io/js/node-thermal-printer)
 
-<a href="https://www.paypal.com/donate/?business=KD54MNPU3RWY2" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Buy Me A Coffee" ></a>
+<a href="https://www.paypal.com/paypalme/klemenkastelic" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Buy Me A Coffee" ></a>
 
 ## Installation
 
