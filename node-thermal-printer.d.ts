@@ -1,4 +1,4 @@
-// Type definitions for node-thermal-printer 4.6.0
+// Type definitions for node-thermal-printer 4.6.1
 // Project: https://github.com/Klemen1337/node-thermal-printer
 // Definitions by: Klemen Kastelic<https://github.com/Klemen1337>
 // TypeScript Version: 3.5.2

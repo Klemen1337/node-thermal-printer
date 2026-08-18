@@ -1,5 +1,11 @@
 # Changelog
 
+## v4.6.1 (18.8.2026)
+
+- fixed brother micron pitch 10 cpi key,
+- fixed no interface on init error not needed when used with node-printer,
+- applied eslint to code.js
+
 ## v4.6.0 (27.1.2026)
 
 - fixed correct break line condition (#274)  ([OverSamu](https://github.com/OverSamu))
